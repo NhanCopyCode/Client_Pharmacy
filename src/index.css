@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: 'quicksand';
+    src: url('./assets/fonts/Quicksand-Regular.ttf');
+}
+
+@theme {
+    --color-primary: #003cbf;
+    --color-lightBlue: rgb(127, 173, 255);
+    --color-darkBlue: rgb(15, 98, 249);
+    --color-success: #5dac46;
+    --font-quicksand: 'quicksand', 'sans-serif';
+    --breakpoint-xxl: 1300px;
+    --breakpoint-xl: 1140px;
+    --breakpoint-md: 960px;
+    --breakpoint-sm: 720px;
+
+}
+
+* {
+    font-family: 'quicksand', 'sans-serif';
+}
