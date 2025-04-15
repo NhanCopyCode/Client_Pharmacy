@@ -7,6 +7,7 @@ function Button({
 	border,
 	background = "bg-primary",
 	iconSize = "w-[15px] h-[15px]",
+	buttonSize,
 	rounded = "rounded-md",
 	hoverEffect = "hover:bg-success",
 	cursor = "cursor-pointer",
@@ -18,7 +19,7 @@ function Button({
 	children,
 	onClick
 }) {
-	let className = `${fontSize} ${fontWeight} ${color} ${border} ${background} ${rounded} ${hoverEffect} ${cursor} ${padding} ${buttonWidth} ${buttonHeight} flex items-center justify-center  gap-1 transition-all duration-150 ease-linear`;
+	let className = `${fontSize} ${fontWeight} ${buttonSize} ${color} ${border} ${background} ${rounded} ${hoverEffect} ${cursor} ${padding} ${buttonWidth} ${buttonHeight} flex items-center justify-center  gap-1 transition-all duration-150 ease-linear`;
 	let classIcon = `${iconSize} flex items-center justify-center`;
 	return (
 		<div onClick={onClick} className={className}>
@@ -34,6 +35,7 @@ Button.propTypes = {
 	color: PropTypes.string,
 	border: PropTypes.string,
 	background: PropTypes.string,
+	buttonSize: PropTypes.string,
 	iconSize: PropTypes.string,
 	rounded: PropTypes.string,
 	hoverEffect: PropTypes.string,
