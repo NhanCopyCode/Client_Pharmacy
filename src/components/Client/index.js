@@ -9,3 +9,5 @@ export { default as OverlayGray } from "./OverlayGray";
 export { default as CategoryItemHeader } from "./CategoryItemHeader";
 export { default as NavBar } from "./NavBar";
 export { default as NavbarHeaderItem } from "./NavbarHeaderItem";
+export { default as NotificationItemHeader } from "./NotificationItemHeader";
+export { default as NotificationContainer } from "./NotificationContainer";

@@ -3,10 +3,10 @@ import Tippy from "@tippyjs/react/headless";
 
 import { IoLocationOutline } from "react-icons/io5";
 import { IoIosHeartEmpty } from "react-icons/io";
-import { IoNotificationsOutline } from "react-icons/io5";
 import { BsCart } from "react-icons/bs";
 import CartItem from "./CartItem";
 import Button from "./Button";
+import NotificationContainer from "./NotificationContainer";
 
 function HeaderCart() {
 	return (
@@ -23,12 +23,8 @@ function HeaderCart() {
 					3
 				</span>
 			</Link>
-			<Link className="w-[30px] h-[30px] relative">
-				<IoNotificationsOutline className="w-full h-full" />
-				<span className="absolute top-[-2px] right-[-3px] rounded-[50%] text-white w-[15px] h-[15px] text-center flex items-center justify-center bg-success text-[12px]">
-					3
-				</span>
-			</Link>
+			{/* Notification here */}
+			<NotificationContainer />
 			<Tippy
 				interactive
 				placement="bottom-start"
@@ -59,8 +55,8 @@ function HeaderCart() {
 								fontWeight="font-light"
 								color="text-white"
 								background="bg-[#1b74e7]"
-                                rounded="rounded-xl"
-                                hoverEffect="hover:bg-primary"
+								rounded="rounded-xl"
+								hoverEffect="hover:bg-primary"
 							>
 								Thanh toán
 							</Button>
