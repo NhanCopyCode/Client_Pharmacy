@@ -7,3 +7,5 @@ export { default as SearchHeaderPost } from "./SearchHeaderPost";
 export { default as CartItem } from "./CartItem";
 export { default as OverlayGray } from "./OverlayGray";
 export { default as CategoryItemHeader } from "./CategoryItemHeader";
+export { default as NavBar } from "./NavBar";
+export { default as NavbarHeaderItem } from "./NavbarHeaderItem";

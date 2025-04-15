@@ -13,23 +13,32 @@ function Button({
 	hoverEffect = "hover:bg-success",
 	cursor = "cursor-pointer",
 	padding = "py-[5px] px-[10px]",
-    buttonWidth,
-    buttonHeight,
+	buttonWidth,
+	buttonHeight,
 	leftIcon,
 	rightIcon,
 	children,
-	onClick
+	onClick,
+	onMouseEnter = () => {},
+	onMouseLeave = () => {},
 }) {
-	let className = `${subClass} ${fontSize} ${fontWeight} ${buttonSize} ${color} ${border} ${background} ${rounded} ${hoverEffect} ${cursor} ${padding} ${buttonWidth} ${buttonHeight} flex items-center justify-center  gap-1 transition-all duration-150 ease-linear`;
-	let classIcon = `${iconSize} flex items-center justify-center`;
+	const className = `${subClass} ${fontSize} ${fontWeight} ${buttonSize} ${color} ${border} ${background} ${rounded} ${hoverEffect} ${cursor} ${padding} ${buttonWidth} ${buttonHeight} flex items-center justify-center gap-1 transition-all duration-150 ease-linear`;
+	const classIcon = `${iconSize} flex items-center justify-center`;
+
 	return (
-		<div onClick={onClick} className={className}>
+		<div
+			onClick={onClick}
+			onMouseEnter={onMouseEnter}
+			onMouseLeave={onMouseLeave}
+			className={className}
+		>
 			{leftIcon && <div className={classIcon}>{leftIcon}</div>}
 			{children}
 			{rightIcon && <div className={classIcon}>{rightIcon}</div>}
 		</div>
 	);
 }
+
 Button.propTypes = {
 	subClass: PropTypes.string,
 	fontSize: PropTypes.string,
@@ -49,6 +58,8 @@ Button.propTypes = {
 	rightIcon: PropTypes.node,
 	children: PropTypes.node.isRequired,
 	onClick: PropTypes.func,
+	onMouseEnter: PropTypes.func,
+	onMouseLeave: PropTypes.func,
 };
 
 export default Button;

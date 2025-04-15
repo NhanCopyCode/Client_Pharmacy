@@ -9,6 +9,7 @@ import {
 	Button,
 	CategoryItemHeader,
 	HeaderCart,
+	NavBar,
 	OverlayGray,
 } from "../../components/Client";
 import { IoCallOutline } from "react-icons/io5";
@@ -30,8 +31,8 @@ function Header() {
 	};
 	return (
 		<>
-			<div className="h-[155px] bg-linear-to-bl from-lightBlue to-darkBlue font-bold text-white">
-				<div className="xxl:w-7xl xl:w-6xl md:w-4xl sm:w-3xl w-xl m-auto relative">
+			<div className=" bg-linear-to-bl from-lightBlue to-darkBlue font-bold text-white ">
+				<div className="xxl:w-7xl xl:w-6xl md:w-4xl sm:w-3xl w-xl m-auto relative h-[155px]">
 					<div className="flex items-center justify-between h-[41px] py-[5px]">
 						<div className="text-sm w-[50%] z-0">
 							<Swiper
@@ -149,7 +150,7 @@ function Header() {
 					</div>
 
 					{isShowCategory && (
-						<div className="absolute top-[146%] w-full bg-white text-black shadow-md rounded-xl z-20">
+						<div className="absolute top-[100%] w-full bg-white text-black shadow-md rounded-xl z-20">
 							<div className="flex items-start">
 								<div className="col-span-3 p-[10px] flex flex-col gap-2">
 									<div
@@ -179,22 +180,22 @@ function Header() {
 								</div>
 								<div className="col-span-9 flex flex-wrap gap-2 p-[10px]">
 									<div className="grid grid-cols-12 gap-3">
-										<div className="col-span-3">
+										<div className="md:col-span-3 sm:col-span-4 col-span-6">
 											<CategoryItemHeader />
 										</div>
-										<div className="col-span-3">
+										<div className="md:col-span-3 sm:col-span-4 col-span-6">
 											<CategoryItemHeader />
 										</div>
-										<div className="col-span-3">
+										<div className="md:col-span-3 sm:col-span-4 col-span-6">
 											<CategoryItemHeader />
 										</div>
-										<div className="col-span-3">
+										<div className="md:col-span-3 sm:col-span-4 col-span-6">
 											<CategoryItemHeader />
 										</div>
-										<div className="col-span-3">
+										<div className="md:col-span-3 sm:col-span-4 col-span-6">
 											<CategoryItemHeader />
 										</div>
-										<div className="col-span-3">
+										<div className="md:col-span-3 sm:col-span-4 col-span-6">
 											<CategoryItemHeader />
 										</div>
 									</div>
@@ -202,6 +203,8 @@ function Header() {
 							</div>
 						</div>
 					)}
+
+					<NavBar />
 				</div>
 			</div>
 
