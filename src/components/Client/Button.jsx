@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 
 function Button({
+	subClass,
 	fontSize = "font-[14px]",
 	fontWeight = "font-medium",
 	color = "text-white",
@@ -19,7 +20,7 @@ function Button({
 	children,
 	onClick
 }) {
-	let className = `${fontSize} ${fontWeight} ${buttonSize} ${color} ${border} ${background} ${rounded} ${hoverEffect} ${cursor} ${padding} ${buttonWidth} ${buttonHeight} flex items-center justify-center  gap-1 transition-all duration-150 ease-linear`;
+	let className = `${subClass} ${fontSize} ${fontWeight} ${buttonSize} ${color} ${border} ${background} ${rounded} ${hoverEffect} ${cursor} ${padding} ${buttonWidth} ${buttonHeight} flex items-center justify-center  gap-1 transition-all duration-150 ease-linear`;
 	let classIcon = `${iconSize} flex items-center justify-center`;
 	return (
 		<div onClick={onClick} className={className}>
@@ -30,6 +31,7 @@ function Button({
 	);
 }
 Button.propTypes = {
+	subClass: PropTypes.string,
 	fontSize: PropTypes.string,
 	fontWeight: PropTypes.string,
 	color: PropTypes.string,

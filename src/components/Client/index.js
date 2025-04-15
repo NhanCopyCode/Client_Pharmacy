@@ -4,3 +4,6 @@ export { default as Navigation } from "./Navigation";
 export { default as HeaderCart } from "./HeaderCart";
 export { default as SearchHeaderProduct } from "./SearchHeaderProduct";
 export { default as SearchHeaderPost } from "./SearchHeaderPost";
+export { default as CartItem } from "./CartItem";
+export { default as OverlayGray } from "./OverlayGray";
+export { default as CategoryItemHeader } from "./CategoryItemHeader";
