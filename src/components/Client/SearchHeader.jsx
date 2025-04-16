@@ -121,7 +121,7 @@ function SearchHeader() {
 					className="w-[90%] bg-white outline-none px-[10px] text-black text-sm font-medium h-full"
 					value={inputValue}
 					onChange={handleInputChange}
-					onFocus={(e) => setIsFocus(true)}
+					onFocus={() => setIsFocus(true)}
 					placeholder=""
 				/>
 				<div className="absolute left-[10px] w-full text-black font-light text-sm pointer-events-none">

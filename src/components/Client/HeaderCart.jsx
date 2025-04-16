@@ -30,7 +30,7 @@ function HeaderCart() {
 				placement="bottom-start"
 				render={(attrs) => (
 					<div
-						className="bg-white shadow-md rounded-md border border-darkBlue w-[350px] p-[5px] "
+						className="bg-white shadow-md rounded-md border border-darkBlue w-[350px] p-[5px] relative z-50 "
 						tabIndex={-1}
 						{...attrs}
 					>
