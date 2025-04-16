@@ -15,3 +15,6 @@ export { default as HeaderSidebar } from "./HeaderSidebar";
 export { default as Slider } from "./Slider";
 export { default as Container } from "./Container";
 export { default as SpecialCategory } from "./SpecialCategory";
+export { default as SpecialCategoryItem } from "./SpecialCategoryItem";
+export { default as SwiperNextButton } from "./SwiperNextButton";
+export { default as SwiperPrevButton } from "./SwiperPrevButton";
