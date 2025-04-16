@@ -63,7 +63,7 @@ function Header() {
 	return (
 		<>
 			<div className=" bg-linear-to-bl from-lightBlue to-darkBlue font-bold text-white ">
-				<div className="xxl:w-7xl xl:w-6xl md:w-4xl sm:w-3xl w-xl m-auto relative min-h-[155px]">
+				<div className="xxl:w-7xl xl:w-6xl md:w-4xl sm:w-3xl w-xl max-w-[100%] m-auto relative min-h-[155px]">
 					<div className="flex items-center justify-between h-[41px] py-[5px]">
 						<div className="text-sm w-[50%] z-0">
 							<Swiper
@@ -148,9 +148,10 @@ function Header() {
 							<Button
 								subClass={"inline-block md:hidden"}
 								hoverEffect="hover:bg-white hover:text-primary"
+								rounded="rounded-xl"
 								onClick={handleShowHeaderSidebar}
 							>
-								<IoIosMenu className="w-5 h-5" />
+								<IoIosMenu className="w-7 h-7" />
 							</Button>
 							<Link
 								to={"/"}
@@ -158,7 +159,7 @@ function Header() {
 							>
 								<img
 									src={Logo}
-									className="w-full object-cover"
+									className="h-full w-full object-contain"
 								/>
 							</Link>
 							<Button
@@ -184,14 +185,14 @@ function Header() {
 								<SearchHeader />
 							</div>
 						</div>
-						<div className="col-span-4 md:hidden inline-block h-full">
+						<div className="col-span-4 md:hidden inline-block h-full mb-3">
 							<Link
 								to={"/"}
 								className="h-[65px] items-center justify-center flex md:hidden"
 							>
 								<img
 									src={Logo}
-									className="h-full object-cover"
+									className="w-full object-cover"
 								/>
 							</Link>
 						</div>

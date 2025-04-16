@@ -1,5 +1,12 @@
+import { Container, Slider, SpecialCategory } from "../../components/Client";
+
 function HomePage() {
-    return ( <div>This is Home page</div> );
+    return (
+		<Container>
+			<Slider />
+            <SpecialCategory />
+		</Container>
+	);
 }
 
 export default HomePage;

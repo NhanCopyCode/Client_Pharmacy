@@ -9,7 +9,7 @@ function HeaderSidebar() {
 	const [isShowPost, setShowPost] = useState(false);
 	const [isShowProduct, setShowProduct] = useState(false);
 	return (
-		<div className="fixed z-20 top-0 left-0 h-full w-[70%] bg-white shadow-sm md:hidden inline-block">
+		<div className="fixed z-20 top-0 left-0 h-full overflow-y-auto w-[70%] bg-white shadow-sm md:hidden inline-block">
 			<div className="w-full py-5 border-b border-primary ">
 				<img
 					src={Logo}
