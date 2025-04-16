@@ -11,3 +11,4 @@ export { default as NavBar } from "./NavBar";
 export { default as NavbarHeaderItem } from "./NavbarHeaderItem";
 export { default as NotificationItemHeader } from "./NotificationItemHeader";
 export { default as NotificationContainer } from "./NotificationContainer";
+export { default as HeaderSidebar } from "./HeaderSidebar";

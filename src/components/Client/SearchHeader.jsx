@@ -114,7 +114,7 @@ function SearchHeader() {
 		>
 			<div
 				ref={widthInput}
-				className="flex flex-1 items-center justify-between bg-white rounded-xl overflow-hidden h-[50px] relative"
+				className="flex flex-1 items-center justify-between bg-white rounded-xl overflow-hidden h-[50px] relative "
 			>
 				<input
 					ref={inputRef}

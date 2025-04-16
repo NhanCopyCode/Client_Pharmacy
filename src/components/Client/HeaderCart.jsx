@@ -11,13 +11,13 @@ import NotificationContainer from "./NotificationContainer";
 function HeaderCart() {
 	return (
 		<div className="flex items-center gap-2">
-			<Link className="w-[30px] h-[30px] relative">
+			<Link className="w-[30px] h-[30px] relative hidden md:inline-block">
 				<IoLocationOutline className="w-full h-full" />
 				<span className="absolute top-[-2px] right-[-3px] rounded-[50%] text-white w-[15px] h-[15px] text-center flex items-center justify-center bg-success text-[12px]">
 					3
 				</span>
 			</Link>
-			<Link className="w-[30px] h-[30px] relative">
+			<Link className="w-[30px] h-[30px] relative hidden md:inline-block">
 				<IoIosHeartEmpty className="w-full h-full" />
 				<span className="absolute top-[-2px] right-[-3px] rounded-[50%] text-white w-[15px] h-[15px] text-center flex items-center justify-center bg-success text-[12px]">
 					3
@@ -65,7 +65,9 @@ function HeaderCart() {
 				)}
 			>
 				<div className="flex items-center justify-center gap-1 bg-primary rounded-xl h-[50px] p-[10px] text-white hover:text-darkBlue hover:bg-white transition-all duration-150 ease-linear cursor-pointer">
-					<span className=" text-sm font-medium">Giỏ hàng</span>
+					<span className=" text-sm font-medium hidden md:inline-block">
+						Giỏ hàng
+					</span>
 					<div className="w-[30px] h-[30px] relative">
 						<BsCart className="w-full h-full" />
 						<span className="absolute top-[-2px] right-[-3px] rounded-[50%] text-white w-[15px] h-[15px] text-center flex items-center justify-center bg-success text-[12px]">
