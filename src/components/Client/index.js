@@ -18,3 +18,5 @@ export { default as SpecialCategory } from "./SpecialCategory";
 export { default as SpecialCategoryItem } from "./SpecialCategoryItem";
 export { default as SwiperNextButton } from "./SwiperNextButton";
 export { default as SwiperPrevButton } from "./SwiperPrevButton";
+export { default as DiscountContainer } from "./DiscountContainer";
+export { default as DiscountItem } from "./DiscountItem";

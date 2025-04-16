@@ -1,10 +1,11 @@
-import { Container, Slider, SpecialCategory } from "../../components/Client";
+import { Container, DiscountContainer, Slider, SpecialCategory } from "../../components/Client";
 
 function HomePage() {
     return (
 		<Container>
 			<Slider />
             <SpecialCategory />
+			<DiscountContainer />
 		</Container>
 	);
 }

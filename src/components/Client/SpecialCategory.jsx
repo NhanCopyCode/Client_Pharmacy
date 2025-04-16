@@ -25,7 +25,24 @@ function SpecialCategory() {
 					// install Swiper modules
 					modules={[Navigation]}
 					spaceBetween={20}
-					slidesPerView={9}
+					slidesPerView={2}
+					breakpoints={{
+						640: {
+							slidesPerView: 3,
+						},
+						768: {
+							slidesPerView: 5,
+						},
+						1024: {
+							slidesPerView: 6,
+						},
+						1280: {
+							slidesPerView: 8,
+						},
+						1536: {
+							slidesPerView: 9,
+						},
+					}}
 					navigation={{
 						nextEl: ".custom-next",
 						prevEl: ".custom-prev",
