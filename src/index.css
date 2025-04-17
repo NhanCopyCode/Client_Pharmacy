@@ -16,10 +16,44 @@
     --breakpoint-md: 960px;
     --breakpoint-sm: 720px;
     --color-redColor: red;
+    --color-darkRed: #bd110f;
     --color-blue: #1b74e7;
 
 }
 
 * {
     font-family: 'quicksand', 'sans-serif';
+}
+
+@keyframes scalePulse {
+
+    0%,
+    100% {
+        transform: scale(0.8);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+
+    }
+}
+
+@keyframes progress_bar_fill {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 40px 0;
+    }
+}
+
+.scale-pulse {
+    animation: scalePulse 1.5s ease-in-out infinite;
+}
+
+.progress_bar_fill {
+    animation: progress_bar_fill 2s linear infinite;
 }

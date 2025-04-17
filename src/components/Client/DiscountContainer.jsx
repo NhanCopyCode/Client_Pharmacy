@@ -19,7 +19,7 @@ function DiscountContainer() {
 			<Swiper
 				// install Swiper modules
 				modules={[Navigation]}
-				spaceBetween={20}
+				spaceBetween={10}
 				slidesPerView={1}
 				navigation={{
 					nextEl: ".discount-next",
@@ -30,7 +30,7 @@ function DiscountContainer() {
 						slidesPerView: 2,
 					},
 					850: {
-						slidesPerView: 3,
+						slidesPerView: 2,
 					},
 					1024: {
 						slidesPerView: 4,
