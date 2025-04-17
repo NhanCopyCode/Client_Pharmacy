@@ -8,7 +8,7 @@ import "swiper/css";
 
 function Slider() {
 	return (
-		<div className="mt-6">
+		<div className="mt-6 relative z-0">
 			<Swiper
 				slidesPerView={1}
 				effect="fade"

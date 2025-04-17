@@ -13,17 +13,17 @@ import DiscountItem from "./DiscountItem";
 
 function DiscountContainer() {
 	return (
-		<div className="relative mt-6">
-			<SwiperPrevButton />
-			<SwiperNextButton />
+		<div className="relative mt-6 z-0">
+			<SwiperPrevButton prevButton={"discount-prev"} />
+			<SwiperNextButton nextButton={"discount-next"} />
 			<Swiper
 				// install Swiper modules
 				modules={[Navigation]}
 				spaceBetween={20}
 				slidesPerView={1}
 				navigation={{
-					nextEl: ".custom-next",
-					prevEl: ".custom-prev",
+					nextEl: ".discount-next",
+					prevEl: ".discount-prev",
 				}}
 				breakpoints={{
 					640: {
@@ -35,7 +35,6 @@ function DiscountContainer() {
 					1024: {
 						slidesPerView: 4,
 					},
-					
 				}}
 			>
 				<SwiperSlide className="w-full">

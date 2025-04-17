@@ -1,4 +1,4 @@
-import { Container, DiscountContainer, Slider, SpecialCategory } from "../../components/Client";
+import { Container, DiscountContainer, OverlayGray, PromotionContainer, Slider, SpecialCategory } from "../../components/Client";
 
 function HomePage() {
     return (
@@ -6,6 +6,7 @@ function HomePage() {
 			<Slider />
             <SpecialCategory />
 			<DiscountContainer />
+			<PromotionContainer />
 		</Container>
 	);
 }

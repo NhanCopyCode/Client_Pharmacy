@@ -18,9 +18,9 @@ function SpecialCategory() {
 			<h2 className="text-[30px] text-black font-bold ">
 				Danh mục nổi bật
 			</h2>
-			<div className="relative">
-				<SwiperPrevButton />
-				<SwiperNextButton />
+			<div className="relative z-0">
+				<SwiperPrevButton prevButton={"special-prev"} />
+				<SwiperNextButton nextButton={"special-next"} />
 				<Swiper
 					// install Swiper modules
 					modules={[Navigation]}
@@ -44,8 +44,8 @@ function SpecialCategory() {
 						},
 					}}
 					navigation={{
-						nextEl: ".custom-next",
-						prevEl: ".custom-prev",
+						nextEl: ".special-next",
+						prevEl: ".special-prev",
 					}}
 				>
 					<SwiperSlide>

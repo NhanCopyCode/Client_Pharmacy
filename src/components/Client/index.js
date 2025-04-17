@@ -20,3 +20,4 @@ export { default as SwiperNextButton } from "./SwiperNextButton";
 export { default as SwiperPrevButton } from "./SwiperPrevButton";
 export { default as DiscountContainer } from "./DiscountContainer";
 export { default as DiscountItem } from "./DiscountItem";
+export { default as PromotionContainer } from "./PromotionContainer";
