@@ -24,3 +24,8 @@ export { default as PromotionContainer } from "./PromotionContainer";
 export { default as ProductCart } from "./ProductCart";
 export { default as NewProductContainer } from "./NewProductContainer";
 export { default as BannerPromotion } from "./BannerPromotion";
+export { default as SpecialProductContainer } from "./SpecialProductContainer";
+export { default as IntroduceComponent } from "./IntroduceComponent";
+export { default as ListProduct } from "./ListProduct";
+export { default as InformationContainer } from "./InformationContainer";
+export { default as InformationItem } from "./InformationItem";

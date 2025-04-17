@@ -33,7 +33,7 @@ function PromotionContainer() {
 				</div>
 			</div>
 
-			<div>
+			<div className="mt-4">
 				<Swiper
 					slidesPerView={1}
 					spaceBetween={20}
@@ -51,28 +51,38 @@ function PromotionContainer() {
 						},
 						1200: {
 							slidesPerView: 5,
-						}
+						},
 					}}
 				>
 					<SwiperSlide>
-						<ProductCard displayNumProductSold={true}/>
+						<ProductCard displayNumProductSold={true} />
 					</SwiperSlide>
 					<SwiperSlide>
-						<ProductCard displayNumProductSold={true}/>
+						<ProductCard displayNumProductSold={true} />
 					</SwiperSlide>
 					<SwiperSlide>
-						<ProductCard displayNumProductSold={true}/>
+						<ProductCard displayNumProductSold={true} />
 					</SwiperSlide>
 					<SwiperSlide>
-						<ProductCard displayNumProductSold={true}/>
+						<ProductCard displayNumProductSold={true} />
 					</SwiperSlide>
 					<SwiperSlide>
-						<ProductCard displayNumProductSold={true}/>
+						<ProductCard displayNumProductSold={true} />
 					</SwiperSlide>
 				</Swiper>
 			</div>
 			<div className="flex items-center justify-center mt-6">
-				<Button border="border-2 border-white" rounded="rounded-md" hoverEffect="hover:border-success hover:bg-success" fontWeight="font-medium">Xem tất cả</Button>
+				<Button
+					fontSize="text-[16px]"
+					padding="py-[5px] px-[15px]"
+					background="bg-white"
+					color="text-black"
+					border="border-2 border-primary"
+					hoverEffect="hover:bg-primary hover:text-white"
+					fontWeight="font-medium"
+				>
+					Xem tất cả
+				</Button>
 			</div>
 		</div>
 	);

@@ -13,7 +13,7 @@ function NewProductContainer() {
 		<div className="mt-8">
 			<h2 className="text-[30px] text-black font-bold ">Sản phẩm mới</h2>
 
-			<div>
+			<div className="mt-4">
 				<Swiper
 					className="!pb-8"
 					slidesPerView={1}

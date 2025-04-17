@@ -2,11 +2,15 @@ import Button from "./Button";
 import { FaRegHeart } from "react-icons/fa";
 import { BsMinecart } from "react-icons/bs";
 
-function ProductCard({ hoverEffect, displayNumProductSold = false, numProductSold }) {
+function ProductCard({
+	hoverEffect,
+	displayNumProductSold = false,
+	numProductSold,
+}) {
 	return (
 		<div
 			className={`${hoverEffect} cursor-pointer hover:shadow-[0_0px_2px_0_#003cbf,_0_0px_6px_0px_#003cbf]
- rounded-md shadow-xl border border-gray-200  bg-white relative mt-4 overflow-hidden group`}
+ rounded-md shadow-xl border border-gray-200  bg-white relative overflow-hidden group`}
 		>
 			<div className="flex items-center justify-between p-[5px] absolute top-0 w-[100%] z-[2]">
 				<Button
