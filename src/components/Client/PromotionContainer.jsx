@@ -55,19 +55,19 @@ function PromotionContainer() {
 					}}
 				>
 					<SwiperSlide>
-						<ProductCard />
+						<ProductCard displayNumProductSold={true}/>
 					</SwiperSlide>
 					<SwiperSlide>
-						<ProductCard />
+						<ProductCard displayNumProductSold={true}/>
 					</SwiperSlide>
 					<SwiperSlide>
-						<ProductCard />
+						<ProductCard displayNumProductSold={true}/>
 					</SwiperSlide>
 					<SwiperSlide>
-						<ProductCard />
+						<ProductCard displayNumProductSold={true}/>
 					</SwiperSlide>
 					<SwiperSlide>
-						<ProductCard />
+						<ProductCard displayNumProductSold={true}/>
 					</SwiperSlide>
 				</Swiper>
 			</div>

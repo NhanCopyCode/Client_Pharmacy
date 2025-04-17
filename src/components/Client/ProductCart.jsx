@@ -2,10 +2,13 @@ import Button from "./Button";
 import { FaRegHeart } from "react-icons/fa";
 import { BsMinecart } from "react-icons/bs";
 
-function ProductCard() {
+function ProductCard({ hoverEffect, displayNumProductSold = false, numProductSold }) {
 	return (
-		<div className="rounded-md shadow-md bg-white relative mt-4 overflow-hidden">
-			<div className="flex items-center justify-between p-[5px] absolute top-0 w-[100%]">
+		<div
+			className={`${hoverEffect} cursor-pointer hover:shadow-[0_0px_2px_0_#003cbf,_0_0px_6px_0px_#003cbf]
+ rounded-md shadow-xl border border-gray-200  bg-white relative mt-4 overflow-hidden group`}
+		>
+			<div className="flex items-center justify-between p-[5px] absolute top-0 w-[100%] z-[2]">
 				<Button
 					background="bg-darkRed"
 					fontSize="text-sm"
@@ -14,11 +17,14 @@ function ProductCard() {
 				>
 					- 11%
 				</Button>
-				<FaRegHeart className="w-5 h-5 hover:cursor-pointer text-darkRed" color="redColor"/>
+				<FaRegHeart
+					className="w-5 h-5 hover:cursor-pointer text-darkRed"
+					color="redColor"
+				/>
 			</div>
 			<div className="w-[100%] h-[250px] flex items-center justify-center">
 				<img
-					className="h-full object-cover "
+					className="h-full object-cover  group-hover:scale-105 transition-transform duration-300"
 					src="https://bizweb.dktcdn.net/thumb/large/100/491/197/products/hebe-tuyp-truoc-908f63e863.png?v=1689758514757"
 				/>
 			</div>
@@ -46,10 +52,16 @@ function ProductCard() {
 						<BsMinecart className="w-[18px] h-[18px]" />
 					</Button>
 				</div>
-				<div className="h-2 w-[100%] rounded-md bg-[#dfdfdf] mt-2 relative">
-					<span className="w-[38%] bg-primary inline-block rounded-md h-2 absolute left-0 progress_bar_fill bg-[linear-gradient(45deg,_rgba(255,255,255,0.15)_25%,_transparent_25%,_transparent_50%,_rgba(255,255,255,0.15)_50%,_rgba(255,255,255,0.15)_75%,_transparent_75%,_transparent)] bg-[length:40px_40px]"></span>
-				</div>
-				<span className="text-black font-bold text-sm">Đã bán 21</span>
+				{displayNumProductSold && (
+					<>
+						<div className="h-2 w-[100%] rounded-md bg-[#dfdfdf] mt-2 relative">
+							<span className="w-[38%] bg-primary inline-block rounded-md h-2 absolute left-0 progress_bar_fill bg-[linear-gradient(45deg,_rgba(255,255,255,0.15)_25%,_transparent_25%,_transparent_50%,_rgba(255,255,255,0.15)_50%,_rgba(255,255,255,0.15)_75%,_transparent_75%,_transparent)] bg-[length:40px_40px]"></span>
+						</div>
+						<span className="text-black font-bold text-sm">
+							Đã bán 21
+						</span>
+					</>
+				)}
 			</div>
 		</div>
 	);

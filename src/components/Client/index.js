@@ -22,3 +22,4 @@ export { default as DiscountContainer } from "./DiscountContainer";
 export { default as DiscountItem } from "./DiscountItem";
 export { default as PromotionContainer } from "./PromotionContainer";
 export { default as ProductCart } from "./ProductCart";
+export { default as NewProductContainer } from "./NewProductContainer";
