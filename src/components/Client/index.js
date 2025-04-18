@@ -29,3 +29,5 @@ export { default as IntroduceComponent } from "./IntroduceComponent";
 export { default as ListProduct } from "./ListProduct";
 export { default as InformationContainer } from "./InformationContainer";
 export { default as InformationItem } from "./InformationItem";
+export { default as ProductTrending } from "./ProductTrending";
+export { default as ProductTrendingItem } from "./ProductTrendingItem";
