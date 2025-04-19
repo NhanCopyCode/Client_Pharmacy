@@ -31,3 +31,6 @@ export { default as InformationContainer } from "./InformationContainer";
 export { default as InformationItem } from "./InformationItem";
 export { default as ProductTrending } from "./ProductTrending";
 export { default as ProductTrendingItem } from "./ProductTrendingItem";
+export { default as VideoItem } from "./VideoItem";
+export { default as ModalVideo } from "./ModalVideo";
+export { default as VideoContainer } from "./VideoContainer";
