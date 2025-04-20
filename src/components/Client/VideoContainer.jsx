@@ -15,8 +15,8 @@ function VideoContainer() {
 				Góc dinh dưỡng
 			</h2>
 			<div className="mt-4 relative">
-				<SwiperPrevButton prevButton={"product-prev"} />
-				<SwiperNextButton nextButton={"product-next"} />
+				<SwiperPrevButton prevButton={"video-prev"} />
+				<SwiperNextButton nextButton={"video-next"} />
 				<Swiper
 					slidesPerView={1}
 					spaceBetween={15}
@@ -33,18 +33,34 @@ function VideoContainer() {
 							slidesPerView: 4,
 						},
 					}}
+					navigation={{
+						nextEl: ".video-next",
+						prevEl: ".video-prev",
+					}}
 				>
 					<SwiperSlide>
-						<VideoItem />
+						<VideoItem
+							title={"Xin chào mọi người"}
+							url={"https://www.youtube.com/embed/ioE-uoXKZTE"}
+						/>
 					</SwiperSlide>
 					<SwiperSlide>
-						<VideoItem />
+						<VideoItem
+							title={"Xin chào mọi người"}
+							url={"https://www.youtube.com/embed/cgHK_paW-ZE"}
+						/>
 					</SwiperSlide>
 					<SwiperSlide>
-						<VideoItem />
+						<VideoItem
+							title={"Xin chào mọi người"}
+							url={"https://www.youtube.com/watch?v=ioE-uoXKZTE"}
+						/>
 					</SwiperSlide>
 					<SwiperSlide>
-						<VideoItem />
+						<VideoItem
+							title={"Xin chào mọi người"}
+							url={"https://www.youtube.com/watch?v=ioE-uoXKZTE"}
+						/>
 					</SwiperSlide>
 				</Swiper>
 			</div>

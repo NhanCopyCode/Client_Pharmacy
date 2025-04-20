@@ -34,3 +34,6 @@ export { default as ProductTrendingItem } from "./ProductTrendingItem";
 export { default as VideoItem } from "./VideoItem";
 export { default as ModalVideo } from "./ModalVideo";
 export { default as VideoContainer } from "./VideoContainer";
+export { default as PolicyContainer } from "./PolicyContainer";
+export { default as PolicyItem } from "./PolicyItem";
+export { default as FooterItem } from "./FooterItem";
