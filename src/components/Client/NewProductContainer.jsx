@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 import "swiper/css";
-import ProductCard from "./ProductCart";
+import ProductCard from "./ProductCard";
 import { Link } from "react-router-dom";
 import Button from "./Button";
 

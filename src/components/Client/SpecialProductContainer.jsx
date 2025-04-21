@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css/pagination";
 import "swiper/css";
-import ProductCard from "./ProductCart";
+import ProductCard from "./ProductCard";
 import Button from "./Button";
 
 function SpecialProductContainer() {

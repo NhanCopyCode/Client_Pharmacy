@@ -8,14 +8,16 @@ function Footer() {
 			<div className="min-h-[60px] bg-darkBlue mt-14">
 				<Container>
 					<div className="flex xl:flex-row flex-col gap-4 xl:gap-0 items-center justify-between py-[10px]">
-						<div className="rounded-xl overflow-hidden  flex items-center h-full">
+						<div className="rounded-xl overflow-hidden  flex items-center h-full w-[56%]">
 							<input
-								className="h-[100%] w-[340px] p-[10px] text-sm bg-white text-gray-700 border-0 outline-0"
+								className="h-[100%]  p-[10px] text-sm bg-white text-gray-700 border-0 outline-0 w-[76%]"
 								placeholder="Nhập email nhận tin khuyến mãi"
 							/>
-							<button className="bg-primary px-5 text-white text-sm uppercase inline-block h-10">
-								Đăng ký
-							</button>
+							<div dir="rtl">
+								<button className=" w-[120px] rounded-s-xl bg-primary px-5 text-white text-sm uppercase inline-block h-10 cursor-pointer hover:bg-primary/80">
+									Đăng ký
+								</button>
+							</div>
 						</div>
 
 						<div className="flex items-center gap-3">
@@ -47,7 +49,7 @@ function Footer() {
 
 			<Container>
 				<div className="bg-white grid grid-cols-12 py-[50px]">
-					<div className="col-span-3">
+					<div className="xl:col-span-3 md:col-span-12 col-span-12">
 						<img src={Logo} className="w-[220px] object-cover" />
 						<p className="text-sm text-black font-medium mt-4">
 							Cửa hàng thực phẩm chức năng Dola Pharmacy là địa
@@ -85,18 +87,18 @@ function Footer() {
 							</li>
 						</ul>
 					</div>
-					<div className="col-span-2">
+					<div className="xl:col-span-2 md:col-span-6 col-span-12 mt-8 xl:mt-0">
 						<FooterItem />
 					</div>
 
-					<div className="col-span-2">
+					<div className="xl:col-span-2 md:col-span-6 col-span-12 mt-8 xl:mt-0">
 						<FooterItem />
 					</div>
 
-					<div className="col-span-2">
+					<div className="xl:col-span-2 md:col-span-6 col-span-12 mt-8 xl:mt-0">
 						<FooterItem />
 					</div>
-					<div className="col-span-3">
+					<div className="xl:col-span-3 md:col-span-6 col-span-12 mt-8 xl:mt-0 px-[15px]">
 						<h4 className="text-[16px] text-darkBlue uppercase font-bold">
 							Chính sách
 						</h4>

@@ -1,14 +1,14 @@
 import { Outlet } from "react-router-dom";
 
 import { Header, Footer, BannerTopHeader } from "../../pages/Client";
-import { Navigation } from '../../components/Client';
+import { BreadCrumb } from '../../components/Client';
 
 function HomePage() {
 	return (
 		<div>
 			<BannerTopHeader />
 			<Header />
-			<Navigation />
+			<BreadCrumb />
 			<Outlet />
 			<Footer />
 		</div>

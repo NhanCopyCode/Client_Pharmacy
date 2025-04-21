@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/pagination";
 import "swiper/css";
 import Button from "./Button";
-import ProductCard from "./ProductCart";
+import ProductCard from "./ProductCard";
 function ListProduct() {
 	return (
 		<div className="mt-12">
@@ -125,7 +125,9 @@ function ListProduct() {
 						</div>
 
 						<div className="col-span-12 ">
-                            <h3 className="text-[16px] font-bold text-black">Tìm kiếm nhiều nhất: </h3>
+							<h3 className="text-[16px] font-bold text-black">
+								Tìm kiếm nhiều nhất:{" "}
+							</h3>
 							<div className="flex items-center flex-wrap gap-3 mt-2">
 								<Button>Sinh lý</Button>
 								<Button>Sinh lý</Button>

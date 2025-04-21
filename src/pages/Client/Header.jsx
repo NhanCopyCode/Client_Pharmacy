@@ -200,25 +200,25 @@ function Header() {
 							<HeaderCart />
 						</div>
 						<div className="col-span-12 flex flex-col md:hidden mt-2 gap-2">
-							<Button
-								subClass={"z-20 w-full"}
-								hoverEffect="hover:bg-primary hover:text-white"
-								rounded="rounded-xl"
-								iconSize="w-[20px] h-[20px]"
-								padding="p-[10px]"
-								leftIcon={
-									<IoIosMenu className="w-full h-full" />
-								}
-								buttonHeight={"h-[44px]"}
-								background="bg-white"
-								color="text-black"
-								fontWeight="font-bold"
-								fontSize="text-[16px]"
-								buttonWidth="w-[20%]"
-								onClick={handleShowCategory}
-							>
-								Danh mục
-							</Button>
+						<Button
+							subClass={"z-20 w-full sm:flex hidden"}
+							hoverEffect="hover:bg-primary hover:text-white"
+							rounded="rounded-xl"
+							iconSize="w-[20px] h-[20px]"
+							padding="p-[10px]"
+							leftIcon={
+								<IoIosMenu className="w-full h-full" />
+							}
+							buttonHeight={"h-[44px]"}
+							background="bg-white"
+							color="text-black"
+							fontWeight="font-bold"
+							fontSize="text-[16px]"
+							buttonWidth="w-[20%]"
+							onClick={handleShowCategory}
+						>
+							Danh mục
+						</Button>
 							<SearchHeader />
 						</div>
 					</div>
