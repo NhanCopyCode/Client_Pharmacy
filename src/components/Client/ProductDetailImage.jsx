@@ -14,9 +14,9 @@ function ProductDetailImage({ images = [] }) {
 	if (!images.length) return null;
 
 	return (
-		<div>
+		<div className="sticky top-3">
 			{/* Main Swiper */}
-			<div className="bg-white rounded-md shadow-md">
+			<div className="bg-white rounded-md shadow-md ">
 				<Swiper
 					slidesPerView={1}
 					spaceBetween={20}
@@ -64,7 +64,7 @@ function ProductDetailImage({ images = [] }) {
 										? "border-primary"
 										: "border-gray-300"
 								} hover:border-primary transition-all`}
-								onClick={() => mainSwiper?.slideTo(index)} 
+								onClick={() => mainSwiper?.slideTo(index)}
 							>
 								<img
 									className="w-full h-full object-cover"

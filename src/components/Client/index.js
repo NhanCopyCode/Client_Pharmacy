@@ -43,3 +43,6 @@ export { default as SortContainer } from "./SortContainer";
 export { default as SortItem } from "./SortItem";
 export { default as Pagination } from "./Pagination";
 export { default as ProductDetailImage } from "./ProductDetailImage";
+export { default as SidebarProductItem } from "./SidebarProductItem";
+export { default as SidebarProductContainer } from "./SidebarProductContainer";
+export { default as ProductSwiper } from "./ProductSwiper";
