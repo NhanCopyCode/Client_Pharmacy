@@ -42,3 +42,4 @@ export { default as FilterItem } from "./FilterItem";
 export { default as SortContainer } from "./SortContainer";
 export { default as SortItem } from "./SortItem";
 export { default as Pagination } from "./Pagination";
+export { default as ProductDetailImage } from "./ProductDetailImage";
