@@ -6,8 +6,7 @@ import { Provider } from "react-redux";
 import { store } from "./app/store.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { path } from "./utils/constants.js";
-import { Homepage, Home, DetailCategoryPage } from "./pages/Client";
-import DetailProduct from "./pages/Client/DetailProduct.jsx";
+import { Homepage, Home, DetailCategoryPage, CartDetail, DetailProduct, LoginPage } from "./pages/Client";
 
 createRoot(document.getElementById("root")).render(
 	<StrictMode>
@@ -24,6 +23,8 @@ createRoot(document.getElementById("root")).render(
 							path="san-pham/:id"
 							element={<DetailProduct />}
 						/>
+						<Route path="gio-hang" element={<CartDetail />} />
+						<Route path="dang-nhap" element={<LoginPage />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>

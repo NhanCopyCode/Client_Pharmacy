@@ -46,3 +46,4 @@ export { default as ProductDetailImage } from "./ProductDetailImage";
 export { default as SidebarProductItem } from "./SidebarProductItem";
 export { default as SidebarProductContainer } from "./SidebarProductContainer";
 export { default as ProductSwiper } from "./ProductSwiper";
+export { default as CartInfo } from "./CartInfo";

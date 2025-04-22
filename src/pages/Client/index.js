@@ -4,3 +4,6 @@ export { default as Footer } from "./Footer";
 export { default as Header } from "./Header";
 export { default as BannerTopHeader } from "./BannerTopHeader";
 export { default as DetailCategoryPage } from "./DetailCategoryPage";
+export { default as DetailProduct } from "./DetailProduct";
+export { default as CartDetail } from "./CartDetail";
+export { default as LoginPage } from "./LoginPage";

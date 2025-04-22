@@ -1,5 +1,5 @@
 @import "tailwindcss";
-
+@source "../node_modules/flowbite-datepicker";
 @font-face {
     font-family: 'quicksand';
     src: url('./assets/fonts/Quicksand-Regular.ttf');
@@ -16,6 +16,7 @@
     --breakpoint-md: 960px;
     --breakpoint-sm: 720px;
     --color-redColor: red;
+    --color-lightRed: #e14b33;
     --color-darkRed: #bd110f;
     --color-blue: #1b74e7;
     --color-gray: rgb(122, 125, 141);

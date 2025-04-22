@@ -154,7 +154,7 @@ function Footer() {
 				</div>
 			</Container>
 
-			<div className="h-[45px] bg-darkBlue text-center py-[10px]">
+			<div className="min-h-[45px] bg-darkBlue text-center py-[10px]">
 				<p className="text-[16px] text-white">
 					Bản quyền thuộc về{" "}
 					<span className="font-bold">ThanhNhangg</span>. Cung cấp bởi

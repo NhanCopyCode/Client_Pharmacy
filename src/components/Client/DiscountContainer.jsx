@@ -33,8 +33,11 @@ function DiscountContainer() {
 						slidesPerView: 2,
 					},
 					1024: {
-						slidesPerView: 4,
+						slidesPerView: 3,
 					},
+					1200: {
+						slidesPerView: 4
+					}
 				}}
 			>
 				<SwiperSlide className="w-full">
