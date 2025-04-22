@@ -64,7 +64,7 @@ function HeaderCart() {
 					</div>
 				)}
 			>
-				<div className="flex items-center justify-center gap-1 bg-primary rounded-xl h-[50px] p-[10px] text-white hover:text-darkBlue hover:bg-white transition-all duration-150 ease-linear cursor-pointer">
+				<Link to="/gio-hang" className="flex items-center justify-center gap-1 bg-primary rounded-xl h-[50px] p-[10px] text-white hover:text-darkBlue hover:bg-white transition-all duration-150 ease-linear cursor-pointer">
 					<span className=" text-sm font-medium hidden md:inline-block">
 						Giỏ hàng
 					</span>
@@ -74,7 +74,7 @@ function HeaderCart() {
 							3
 						</span>
 					</div>
-				</div>
+				</Link>
 			</Tippy>
 		</div>
 	);

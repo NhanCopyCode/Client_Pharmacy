@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 function Button({
+	to,
 	subClass,
 	fontSize = "font-[14px]",
 	fontWeight = "font-medium",
@@ -24,9 +26,11 @@ function Button({
 }) {
 	const className = `${subClass} ${fontSize} ${fontWeight} ${buttonSize} ${color} ${border} ${background} ${rounded} ${hoverEffect} ${cursor} ${padding} ${buttonWidth} ${buttonHeight} flex items-center justify-center gap-1 transition-all duration-150 ease-linear`;
 	const classIcon = `${iconSize} flex items-center justify-center`;
+	const Element = to ? Link : "div";
 
 	return (
-		<div
+		<Element
+			to={to}
 			onClick={onClick}
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
@@ -35,11 +39,12 @@ function Button({
 			{leftIcon && <div className={classIcon}>{leftIcon}</div>}
 			{children}
 			{rightIcon && <div className={classIcon}>{rightIcon}</div>}
-		</div>
+		</Element>
 	);
 }
 
 Button.propTypes = {
+	to: PropTypes.string,
 	subClass: PropTypes.string,
 	fontSize: PropTypes.string,
 	fontWeight: PropTypes.string,
