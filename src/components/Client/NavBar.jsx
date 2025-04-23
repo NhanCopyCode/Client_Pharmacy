@@ -8,7 +8,7 @@ function NavBar() {
 	const [isShowCategory, setShowCategory] = useState(false);
 	const [isShowPost, setShowPost] = useState(false);
 	return (
-		<div className="hidden md:flex items-center gap-1 relative">
+		<div className="hidden md:flex items-center gap-1 relative mt-4">
 			<Button
 				background="bg-transparent"
 				rounded="rounded-xl"

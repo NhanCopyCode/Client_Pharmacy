@@ -63,8 +63,8 @@ function Header() {
 	return (
 		<>
 			<div className=" bg-linear-to-bl from-lightBlue to-darkBlue font-bold text-white ">
-				<div className="xxl:w-7xl xl:w-6xl md:w-4xl sm:w-3xl w-xl max-w-[100%] m-auto relative min-h-[155px]">
-					<div className="flex items-center justify-between h-[41px] py-[5px]">
+				<div className="xxl:w-7xl xl:w-6xl md:w-4xl sm:w-3xl w-xl max-w-[100%] m-auto relative min-h-[155px] pb-[5px]">
+					<div className="flex items-center justify-between min-h-[41px] py-[5px]">
 						<div className="text-sm w-[50%] z-0">
 							<Swiper
 								modules={[EffectFade, Autoplay]}

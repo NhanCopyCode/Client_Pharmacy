@@ -1,8 +1,9 @@
-import { Container, Filter, FilterItem, Pagination, ProductCard, SortContainer } from "../../components/Client";
+import { CategoryList, Container, Filter, FilterItem, Pagination, ProductCard, SortContainer } from "../../components/Client";
 
 function DetailCategoryPage() {
     return (
 		<Container>
+			<CategoryList />
 			<div className="grid grid-cols-12 gap-8">
 				<div className="md:col-span-3 col-span-12">
 					<Filter />

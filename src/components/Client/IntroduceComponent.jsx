@@ -1,6 +1,6 @@
 function IntroduceComponent() {
 	return (
-		<div className="mt-8 grid grid-cols-12 gap-6">
+		<div className="mt-12 grid grid-cols-12 gap-6">
 			<div className="xl:col-span-5 col-span-12">
 				<img
 					className="w-full object-cover"

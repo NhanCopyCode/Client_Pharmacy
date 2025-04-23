@@ -4,7 +4,7 @@ import { IoIosInformationCircleOutline } from "react-icons/io";
 import { LiaTimesSolid } from "react-icons/lia";
 import { customStylesModal } from "../../utils/constants";
 import Modal from "react-modal";
-
+Modal.setAppElement("#root");
 function DiscountItem() {
 	const [modalIsOpen, setIsOpen] = useState(false);
 

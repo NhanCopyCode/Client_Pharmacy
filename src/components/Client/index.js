@@ -52,3 +52,5 @@ export { default as NewsPageSidebarItemCategory } from "./NewsPageSidebarItemCat
 export { default as NewsPageSidebarItemNewPost } from "./NewsPageSidebarItemNewPost";
 export { default as ScrollToTop } from "./ScrollToTop";
 export { default as ContactButton } from "./ContactButton";
+export { default as CategoryList } from "./CategoryList";
+export { default as CategoryItem } from "./CategoryItem";
