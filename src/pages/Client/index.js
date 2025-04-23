@@ -7,3 +7,4 @@ export { default as DetailCategoryPage } from "./DetailCategoryPage";
 export { default as DetailProduct } from "./DetailProduct";
 export { default as CartDetail } from "./CartDetail";
 export { default as LoginPage } from "./LoginPage";
+export { default as NewsPage } from "./NewsPage";

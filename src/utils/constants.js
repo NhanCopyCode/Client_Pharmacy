@@ -1,6 +1,12 @@
 export const path = {
-    HOME: '/*'
+    HOME: '/*',
+	DANG_NHAP: 'dang-nhap',
+	TIN_TUC: 'tin-tuc',
+	CHI_TIET_SAN_PHAM: 'san-pham/:id',
+	GIO_HANG: 'gio-hang',
 }
+
+
 export const customStylesModal = {
 	overlay: {
 		backgroundColor: "rgba(0, 0, 0, 0.3)", // làm mờ nền

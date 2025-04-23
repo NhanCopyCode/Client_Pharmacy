@@ -19,6 +19,7 @@ import { Link } from "react-router-dom";
 import { SearchHeader } from "../../components/Client";
 import { IoIosMenu } from "react-icons/io";
 import { FaAngleRight } from "react-icons/fa6";
+import { path } from "../../utils/constants";
 
 function Header() {
 	const [isShowCategory, setShowCategory] = useState(false);
@@ -97,7 +98,7 @@ function Header() {
 						<div className="hidden flex-wrap items-center divide-x divide-white/40 gap-y-2 md:flex">
 							<div className="px-2">
 								<Button
-									to={"/dang-nhap"}
+									to={"/" + path.DANG_NHAP}
 									background="bg-none"
 									fontWeight="font-bold"
 									fontSize="text-sm"
@@ -109,7 +110,7 @@ function Header() {
 							</div>
 							<div className="px-2">
 								<Button
-									to={"/dang-nhap"}
+									to={"/" + path.DANG_NHAP}
 									background="bg-none"
 									fontWeight="font-bold"
 									fontSize="text-sm"

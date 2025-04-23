@@ -30,7 +30,7 @@ function Button({
 
 	return (
 		<Element
-			to={to}
+			{...(to ? { to } : {})}
 			onClick={onClick}
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}

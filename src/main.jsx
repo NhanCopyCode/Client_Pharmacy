@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import { store } from "./app/store.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { path } from "./utils/constants.js";
-import { Homepage, Home, DetailCategoryPage, CartDetail, DetailProduct, LoginPage } from "./pages/Client";
+import { Homepage, Home, DetailCategoryPage, CartDetail, DetailProduct, LoginPage, NewsPage } from "./pages/Client";
 
 createRoot(document.getElementById("root")).render(
 	<StrictMode>
@@ -20,11 +20,12 @@ createRoot(document.getElementById("root")).render(
 							element={<DetailCategoryPage />}
 						/>
 						<Route
-							path="san-pham/:id"
+							path={path.CHI_TIET_SAN_PHAM}
 							element={<DetailProduct />}
 						/>
-						<Route path="gio-hang" element={<CartDetail />} />
-						<Route path="dang-nhap" element={<LoginPage />} />
+						<Route path={path.GIO_HANG} element={<CartDetail />} />
+						<Route path={path.DANG_NHAP} element={<LoginPage />} />
+						<Route path={path.TIN_TUC} element={<NewsPage />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>
