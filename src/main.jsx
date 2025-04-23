@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import { store } from "./app/store.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { path } from "./utils/constants.js";
-import { Homepage, Home, DetailCategoryPage, CartDetail, DetailProduct, LoginPage, NewsPage } from "./pages/Client";
+import { Homepage, Home, DetailCategoryPage, CartDetail, DetailProduct, LoginPage, NewsPage, DetailNews } from "./pages/Client";
 
 createRoot(document.getElementById("root")).render(
 	<StrictMode>
@@ -26,6 +26,7 @@ createRoot(document.getElementById("root")).render(
 						<Route path={path.GIO_HANG} element={<CartDetail />} />
 						<Route path={path.DANG_NHAP} element={<LoginPage />} />
 						<Route path={path.TIN_TUC} element={<NewsPage />} />
+						<Route path={path.CHI_TIET_TIN_TUC} element={<DetailNews />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>

@@ -3,6 +3,7 @@ export const path = {
 	DANG_NHAP: 'dang-nhap',
 	TIN_TUC: 'tin-tuc',
 	CHI_TIET_SAN_PHAM: 'san-pham/:id',
+	CHI_TIET_TIN_TUC: 'tin-tuc/:id',
 	GIO_HANG: 'gio-hang',
 }
 

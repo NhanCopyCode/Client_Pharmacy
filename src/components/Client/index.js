@@ -50,3 +50,5 @@ export { default as CartInfo } from "./CartInfo";
 export { default as NewsPageItem } from "./NewsPageItem";
 export { default as NewsPageSidebarItemCategory } from "./NewsPageSidebarItemCategory";
 export { default as NewsPageSidebarItemNewPost } from "./NewsPageSidebarItemNewPost";
+export { default as ScrollToTop } from "./ScrollToTop";
+export { default as ContactButton } from "./ContactButton";
