@@ -9,3 +9,4 @@ export { default as CartDetail } from "./CartDetail";
 export { default as LoginPage } from "./LoginPage";
 export { default as NewsPage } from "./NewsPage";
 export { default as DetailNews } from "./DetailNews";
+export { default as AdminPage } from "./AdminPage";

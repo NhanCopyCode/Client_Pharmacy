@@ -1,25 +1,38 @@
-export const path = {
-    HOME: '/*',
-	DANG_NHAP: 'dang-nhap',
-	TIN_TUC: 'tin-tuc',
-	CHI_TIET_SAN_PHAM: 'san-pham/:id',
-	CHI_TIET_TIN_TUC: 'tin-tuc/:id',
-	GIO_HANG: 'gio-hang',
-}
+import { IoHomeOutline } from "react-icons/io5";
+import { MdSettingsSystemDaydream } from "react-icons/md";
+import { LiaProductHunt } from "react-icons/lia";
 
+export const path = {
+	HOME: "/*",
+	ADMIN: "admin",
+	DANG_NHAP: "dang-nhap",
+	TIN_TUC: "tin-tuc",
+	CHI_TIET_SAN_PHAM: "san-pham/:id",
+	CHI_TIET_TIN_TUC: "tin-tuc/:id",
+	GIO_HANG: "gio-hang",
+};
+
+export const adminPath = {
+	DANH_SACH_SAN_PHAM: "products",
+	THEM_MOI_SAN_PHAM: "products/create",
+	DANH_SACH_CATEGORY: "categories",
+	THEM_MOI_CATEGORY: "categories/create",
+	DANH_SACH_KHUYEN_MAI: "promotions",
+	THEM_MOI_KHUYEN_MAI: "promotions/create",
+};
 
 export const customStylesModal = {
 	overlay: {
-		backgroundColor: "rgba(0, 0, 0, 0.3)", // làm mờ nền
-		zIndex: 1000, // đảm bảo modal nằm trên
+		backgroundColor: "rgba(0, 0, 0, 0.3)",
+		zIndex: 1000,
 	},
 	content: {
 		top: "50%",
 		left: "50%",
 		right: "auto",
 		bottom: "auto",
-        padding: "0",
-		width: "434px", // hoặc 50%, v.v.
+		padding: "0",
+		width: "434px",
 		maxHeight: "90vh",
 		borderRadius: "4px",
 		border: "none",
@@ -28,3 +41,39 @@ export const customStylesModal = {
 		transform: "translate(-50%, -50%)",
 	},
 };
+
+export const menuAdmin = [
+	{
+		icon: IoHomeOutline,
+		title: "Trang chủ",
+		path: "/admin",
+	},
+	{
+		icon: MdSettingsSystemDaydream,
+		title: "Hệ thống",
+		children: [
+			{
+				title: "Cài đặt",
+				path: "/admin/setting",
+			},
+			{
+				title: "Vai trò",
+				path: "/role",
+			},
+			{
+				title: "Tài khoản",
+				path: "/account",
+			},
+		],
+	},
+	{
+		icon: LiaProductHunt,
+		title: "Danh mục",
+		path: "/admin/categories",
+	},
+	{
+		icon: LiaProductHunt,
+		title: "Sản phẩm",
+		path: "/admin/products",
+	},
+];

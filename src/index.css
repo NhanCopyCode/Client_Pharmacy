@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @source "../node_modules/flowbite-datepicker";
+
 @font-face {
     font-family: 'quicksand';
     src: url('./assets/fonts/Quicksand-Regular.ttf');
@@ -57,4 +58,14 @@
 
 .progress_bar_fill {
     animation: progress_bar_fill 2s linear infinite;
+}
+
+.sun-editor-editable {
+    font-size: 18px !important;
+    color: black !important;
+}
+
+.sun-editor {
+    position: relative;
+    z-index: 0;
 }
