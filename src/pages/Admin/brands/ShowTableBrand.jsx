@@ -1,27 +1,27 @@
 import Select from "react-select";
 import { useState } from "react";
 
-import { Button } from "../../components/Client";
+import { Button } from "../../../components/Client";
 import { IoMdAddCircle } from "react-icons/io";
 import { IoIosSearch } from "react-icons/io";
-import { TableList, TitleHeader } from "../../components/Admin";
-import { adminPath } from "../../utils/constants";
+import { TableList, TitleHeader } from "../../../components/Admin";
+import { adminPath } from "../../../utils/constants";
 
 const options = [
 	{ value: "chocolate", label: "Chocolate" },
 	{ value: "strawberry", label: "Strawberry" },
 	{ value: "vanilla", label: "Vanilla" },
 ];
-function ShowTable() {
+function ShowTableBrand() {
 	const [selectedOption, setSelectedOption] = useState(null);
-	
+
 	return (
 		<>
 			<TitleHeader
 				title={"Thêm mới"}
 				buttonIcon={<IoMdAddCircle />}
 				titleButton={"Thêm mới"}
-				to={adminPath.THEM_MOI_SAN_PHAM}
+				to={adminPath.BRANDS_CREATE}
 			/>
 			<div className="flex items-center justify-end w-full p-3 gap-2">
 				<Select
@@ -62,4 +62,4 @@ function ShowTable() {
 	);
 }
 
-export default ShowTable;
+export default ShowTableBrand;

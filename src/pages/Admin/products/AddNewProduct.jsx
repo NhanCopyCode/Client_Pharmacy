@@ -1,20 +1,20 @@
 import Select from "react-select";
 import { useState } from "react";
 import ImageUploading from "react-images-uploading";
-import { Editor } from "../../components/Admin";
+import { Editor } from "../../../components/Admin";
 
-import { TitleHeader } from "../../components/Admin";
-import { Button } from "../../components/Client";
+import { TitleHeader } from "../../../components/Admin";
+import { Button } from "../../../components/Client";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { adminPath } from "../../utils/constants";
-import { readMoneyVND } from "../../utils/moneyUtils";
+import { adminPath } from "../../../utils/constants";
+import { readMoneyVND } from "../../../utils/moneyUtils";
 
 const options = [
 	{ value: "chocolate", label: "Chocolate" },
 	{ value: "strawberry", label: "Strawberry" },
 	{ value: "vanilla", label: "Vanilla" },
 ];
-function AddNew() {
+function AddNewCategory() {
 	const [price, setPrice] = useState("");
 	const [selectedOption, setSelectedOption] = useState(null);
 	const [images, setImages] = useState([]);
@@ -41,7 +41,7 @@ function AddNew() {
 					<tbody>
 						<tr className="grid grid-cols-12 gap-2">
 							<td className="col-span-3 p-[10px]">
-								Tên sản phẩm
+								Tên sản phẩm 
 							</td>
 							<td className="col-span-9 p-[10px]">
 								<input
@@ -55,21 +55,21 @@ function AddNew() {
 							<td className="col-span-3 p-[10px]">
 								Giá sản phẩm
 							</td>
-							<div className="flex flex-col col-span-9">
-								<td className=" p-[10px] w-full">
+							<td className="flex flex-col col-span-9">
+								<div className=" p-[10px] w-full">
 									<input
 										type="number"
 										className="border border-gray-300 w-full rounded-sm py-[5px] px-[10px] text-sm outline-0"
 										value={price}
 										onChange={handleSetPrice}
 									/>
-								</td>
+								</div>
 								{price && (
 									<span className="text-success">
 										{readMoneyVND(price)}
 									</span>
 								)}
-							</div>
+							</td>
 						</tr>
 						<tr className="grid grid-cols-12 gap-2">
 							<td className="col-span-3 p-[10px]">
@@ -228,4 +228,4 @@ function AddNew() {
 	);
 }
 
-export default AddNew;
+export default AddNewCategory;

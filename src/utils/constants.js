@@ -1,3 +1,5 @@
+
+
 import { IoHomeOutline } from "react-icons/io5";
 import { MdSettingsSystemDaydream } from "react-icons/md";
 import { LiaProductHunt } from "react-icons/lia";
@@ -11,16 +13,7 @@ export const path = {
 	CHI_TIET_TIN_TUC: "tin-tuc/:id",
 	GIO_HANG: "gio-hang",
 };
-
-export const adminPath = {
-	DANH_SACH_SAN_PHAM: "products",
-	THEM_MOI_SAN_PHAM: "products/create",
-	DANH_SACH_CATEGORY: "categories",
-	THEM_MOI_CATEGORY: "categories/create",
-	DANH_SACH_KHUYEN_MAI: "promotions",
-	THEM_MOI_KHUYEN_MAI: "promotions/create",
-};
-
+  
 export const customStylesModal = {
 	overlay: {
 		backgroundColor: "rgba(0, 0, 0, 0.3)",
@@ -54,15 +47,15 @@ export const menuAdmin = [
 		children: [
 			{
 				title: "Cài đặt",
-				path: "/admin/setting",
+				path: "/admin/settings",
 			},
 			{
 				title: "Vai trò",
-				path: "/role",
+				path: "/admin/roles",
 			},
 			{
 				title: "Tài khoản",
-				path: "/account",
+				path: "/admin/accounts",
 			},
 		],
 	},
@@ -73,7 +66,31 @@ export const menuAdmin = [
 	},
 	{
 		icon: LiaProductHunt,
+		title: "Hãng",
+		path: "/admin/brands",
+	},
+	{
+		icon: LiaProductHunt,
 		title: "Sản phẩm",
 		path: "/admin/products",
 	},
+	{
+		icon: LiaProductHunt,
+		title: "Quảng cáo",
+		path: "/admin/promotions",
+	},
 ];
+
+
+export const adminPath = {
+	SETTINGS: "settings",
+	SETTING_CREATE: "settings/create",
+	PRODUCTS: "products",
+	PRODUCTS_CREATE: "products/create",
+	BRANDS: "brands",
+	BRANDS_CREATE: "brands/create",
+	CATEGORIES: "categories",
+	CATEGORIES_CREATE: "categories/create",
+	PROMOTIONS: "promotions",
+	PROMOTIONS_CREATE: "promotions/create",
+};

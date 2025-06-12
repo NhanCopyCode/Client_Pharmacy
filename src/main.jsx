@@ -18,7 +18,31 @@ import {
 	DetailNews,
 	AdminPage,
 } from "./pages/Client";
-import { AddNew, ShowTable } from "./pages/Admin";
+import {
+	AddNewBrand,
+	AddNewCategory,
+	AddNewProduct,
+	AddNewPromotion,
+	AddNewSetting,
+	ShowTableBrand,
+	ShowTableCategory,
+	ShowTableProduct,
+	ShowTablePromotion,
+	ShowTableSetting,
+} from "./pages/Admin/index.js";
+
+const adminRoutes = [
+	{ path: adminPath.SETTINGS, element: <ShowTableSetting /> },
+	{ path: adminPath.SETTING_CREATE, element: <AddNewSetting /> },
+	{ path: adminPath.PRODUCTS, element: <ShowTableProduct /> },
+	{ path: adminPath.PRODUCTS_CREATE, element: <AddNewProduct /> },
+	{ path: adminPath.BRANDS, element: <ShowTableBrand /> },
+	{ path: adminPath.BRANDS_CREATE, element: <AddNewBrand /> },
+	{ path: adminPath.CATEGORIES, element: <ShowTableCategory /> },
+	{ path: adminPath.CATEGORIES_CREATE, element: <AddNewCategory /> },
+	{ path: adminPath.PROMOTIONS, element: <ShowTablePromotion /> },
+	{ path: adminPath.PROMOTIONS_CREATE, element: <AddNewPromotion /> },
+];
 
 createRoot(document.getElementById("root")).render(
 	<StrictMode>
@@ -45,14 +69,9 @@ createRoot(document.getElementById("root")).render(
 						/>
 					</Route>
 					<Route path={path.ADMIN} element={<AdminPage />}>
-						<Route
-							path={adminPath.DANH_SACH_SAN_PHAM}
-							element={<ShowTable />}
-						/>
-						<Route
-							path={adminPath.THEM_MOI_SAN_PHAM}
-							element={<AddNew />}
-						/>
+						{adminRoutes.map(({ path, element }) => (
+							<Route key={path} path={path} element={element} />
+						))}
 					</Route>
 				</Routes>
 			</BrowserRouter>

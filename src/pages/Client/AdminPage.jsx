@@ -8,7 +8,6 @@ import { Outlet } from "react-router-dom";
 function AdminPage() {
 	const [isOpenSidebar, setIsOpenSidebar] = useState(true);
 
-	console.log('menuadmin: ', menuAdmin);
 	return (
 		<div className="flex h-screen">
 			{/* Sidebar */}
