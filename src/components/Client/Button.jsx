@@ -34,7 +34,7 @@ function Button({
 			onClick={onClick}
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
-			className={className}
+			className={`group ${className}`}
 		>
 			{leftIcon && <div className={classIcon}>{leftIcon}</div>}
 			{children}

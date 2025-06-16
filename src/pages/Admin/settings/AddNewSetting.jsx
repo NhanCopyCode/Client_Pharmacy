@@ -31,7 +31,7 @@ function AddNewSetting() {
 	return (
 		<>
 			<TitleHeader
-				to={adminPath.DANH_SACH_SAN_PHAM}
+				to={adminPath.SETTINGS}
 				title={"Thêm mới"}
 				buttonIcon={<FaArrowLeftLong />}
 				titleButton={"Danh sách"}

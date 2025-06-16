@@ -1,12 +1,13 @@
 import Select from "react-select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Button } from "../../../components/Client";
 import { IoMdAddCircle } from "react-icons/io";
 import { IoIosSearch } from "react-icons/io";
 import { TableList, TitleHeader } from "../../../components/Admin";
 import { adminPath } from "../../../utils/constants";
-
+import { TABLE_HEADS } from "../../../utils/modelConstant";
+import { getAllBrands } from "../../../services/BrandService";
 const options = [
 	{ value: "chocolate", label: "Chocolate" },
 	{ value: "strawberry", label: "Strawberry" },
@@ -14,6 +15,23 @@ const options = [
 ];
 function ShowTableBrand() {
 	const [selectedOption, setSelectedOption] = useState(null);
+	const [brands, setBrands] = useState([]);
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		const fetchBrands = async ()  => {
+			try {
+				const response =await getAllBrands();
+				setBrands(response.data.data);
+			} catch (error) {
+				console.log("Error: ",  error);
+			} finally  {
+				setLoading(false);
+			}
+		}
+
+		fetchBrands();
+	}, [])
 
 	return (
 		<>
@@ -56,7 +74,15 @@ function ShowTableBrand() {
 			</div>
 
 			<div className="p-3">
-				<TableList />
+				{loading ? (
+					<p>Loading...</p>
+				) : (
+					<TableList
+						tableHead={[...TABLE_HEADS.Brands, "Lựa chọn"]}
+						tableBody={brands}
+						model={'brands'}
+					/>
+				)}
 			</div>
 		</>
 	);

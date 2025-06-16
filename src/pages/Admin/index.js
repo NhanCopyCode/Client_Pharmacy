@@ -9,4 +9,6 @@ export { default as AddNewBrand } from "./brands/AddNewBrand";
 
 export { default as ShowTableSetting } from "./settings/ShowTableSetting";
 export { default as AddNewSetting } from "./settings/AddNewSetting";
+export { default as AdminLoginPage } from "./Auth/LoginPage";
+
 

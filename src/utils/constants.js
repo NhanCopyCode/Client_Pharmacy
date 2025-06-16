@@ -1,5 +1,3 @@
-
-
 import { IoHomeOutline } from "react-icons/io5";
 import { MdSettingsSystemDaydream } from "react-icons/md";
 import { LiaProductHunt } from "react-icons/lia";
@@ -7,13 +5,21 @@ import { LiaProductHunt } from "react-icons/lia";
 export const path = {
 	HOME: "/*",
 	ADMIN: "admin",
+	ADMIN_LOGIN: "admin/login",
 	DANG_NHAP: "dang-nhap",
 	TIN_TUC: "tin-tuc",
 	CHI_TIET_SAN_PHAM: "san-pham/:id",
 	CHI_TIET_TIN_TUC: "tin-tuc/:id",
 	GIO_HANG: "gio-hang",
 };
-  
+
+// src/utils/roles.js
+
+export const ROLES = {
+	ADMIN: 1,
+	CLIENT: 2,
+};
+
 export const customStylesModal = {
 	overlay: {
 		backgroundColor: "rgba(0, 0, 0, 0.3)",
@@ -81,16 +87,17 @@ export const menuAdmin = [
 	},
 ];
 
-
 export const adminPath = {
+	PREFIX: "/admin",
+
+	LOGIN: "login",
 	SETTINGS: "settings",
-	SETTING_CREATE: "settings/create",
 	PRODUCTS: "products",
-	PRODUCTS_CREATE: "products/create",
 	BRANDS: "brands",
-	BRANDS_CREATE: "brands/create",
 	CATEGORIES: "categories",
-	CATEGORIES_CREATE: "categories/create",
 	PROMOTIONS: "promotions",
-	PROMOTIONS_CREATE: "promotions/create",
+
+	create: (model) => `/admin/${model}/create`,
+	edit: (model, id) => `/admin/${model}/${id}/edit`,
+	detail: (model, id) => `/admin/${model}/${id}`,
 };

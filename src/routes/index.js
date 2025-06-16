@@ -1,0 +1,1 @@
+export { default as RenderAdminRoutes } from './RenderAdminRoutes';

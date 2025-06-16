@@ -1,5 +1,4 @@
 import Select from "react-select";
-import { useState } from "react";
 import ImageUploading from "react-images-uploading";
 import { Editor } from "../../../components/Admin";
 
@@ -15,7 +14,7 @@ function AddNewBrand() {
 	return (
 		<>
 			<TitleHeader
-				to={adminPath.DANH_SACH_SAN_PHAM}
+				to={adminPath.BRANDS}
 				title={"Thêm mới"}
 				buttonIcon={<FaArrowLeftLong />}
 				titleButton={"Danh sách"}

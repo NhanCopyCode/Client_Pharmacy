@@ -1,7 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import App from "./App.jsx";
 import { Provider } from "react-redux";
 import { store } from "./app/store.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -24,12 +23,16 @@ import {
 	AddNewProduct,
 	AddNewPromotion,
 	AddNewSetting,
+	AdminLoginPage,
 	ShowTableBrand,
 	ShowTableCategory,
 	ShowTableProduct,
 	ShowTablePromotion,
 	ShowTableSetting,
 } from "./pages/Admin/index.js";
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
+import PublicRoute from "./components/PublicRoute.jsx";
 
 const adminRoutes = [
 	{ path: adminPath.SETTINGS, element: <ShowTableSetting /> },
@@ -47,34 +50,59 @@ const adminRoutes = [
 createRoot(document.getElementById("root")).render(
 	<StrictMode>
 		<Provider store={store}>
-			<BrowserRouter>
-				<Routes>
-					<Route path={path.HOME} element={<Homepage />}>
-						<Route path="*" element={<Home />} />
+			<AuthProvider>
+				<BrowserRouter>
+					<Routes>
+						<Route path={path.HOME} element={<Homepage />}>
+							<Route path="*" element={<Home />} />
+							<Route
+								path="khuyen-mai-hot"
+								element={<DetailCategoryPage />}
+							/>
+							<Route
+								path={path.CHI_TIET_SAN_PHAM}
+								element={<DetailProduct />}
+							/>
+							<Route
+								path={path.GIO_HANG}
+								element={<CartDetail />}
+							/>
+							<Route
+								path={path.DANG_NHAP}
+								element={<LoginPage />}
+							/>
+							<Route path={path.TIN_TUC} element={<NewsPage />} />
+							<Route
+								path={path.CHI_TIET_TIN_TUC}
+								element={<DetailNews />}
+							/>
+						</Route>
+
 						<Route
-							path="khuyen-mai-hot"
-							element={<DetailCategoryPage />}
+							path={path.ADMIN_LOGIN}
+							element={<AdminLoginPage />}
 						/>
+
 						<Route
-							path={path.CHI_TIET_SAN_PHAM}
-							element={<DetailProduct />}
-						/>
-						<Route path={path.GIO_HANG} element={<CartDetail />} />
-						<Route path={path.GIO_HANG} element={<CartDetail />} />
-						<Route path={path.DANG_NHAP} element={<LoginPage />} />
-						<Route path={path.TIN_TUC} element={<NewsPage />} />
-						<Route
-							path={path.CHI_TIET_TIN_TUC}
-							element={<DetailNews />}
-						/>
-					</Route>
-					<Route path={path.ADMIN} element={<AdminPage />}>
-						{adminRoutes.map(({ path, element }) => (
-							<Route key={path} path={path} element={element} />
-						))}
-					</Route>
-				</Routes>
-			</BrowserRouter>
+							path={path.ADMIN}
+							element={
+								<ProtectedRoute role="admin">
+									<AdminPage />
+								</ProtectedRoute>
+							}
+						>
+							<Route index element={<ShowTableBrand />} />
+							{adminRoutes.map(({ path, element }) => (
+								<Route
+									key={path}
+									path={path}
+									element={element}
+								/>
+							))}
+						</Route>
+					</Routes>
+				</BrowserRouter>
+			</AuthProvider>
 		</Provider>
 	</StrictMode>
 );

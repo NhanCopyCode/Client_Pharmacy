@@ -6,13 +6,14 @@ import { IoMdAddCircle } from "react-icons/io";
 import { IoIosSearch } from "react-icons/io";
 import { TableList, TitleHeader } from "../../../components/Admin";
 import { adminPath } from "../../../utils/constants";
+import { TABLE_HEADS } from "../../../utils/modelConstant";
 
 const options = [
 	{ value: "chocolate", label: "Chocolate" },
 	{ value: "strawberry", label: "Strawberry" },
 	{ value: "vanilla", label: "Vanilla" },
 ];
-function ShowTable() {
+function ShowTableProduct() {
 	const [selectedOption, setSelectedOption] = useState(null);
 
 	return (
@@ -56,10 +57,10 @@ function ShowTable() {
 			</div>
 
 			<div className="p-3">
-				<TableList />
+				<TableList tableHead={[...TABLE_HEADS.Products, 'Lựa chọn']} />
 			</div>
 		</>
 	);
 }
 
-export default ShowTable;
+export default ShowTableProduct;
