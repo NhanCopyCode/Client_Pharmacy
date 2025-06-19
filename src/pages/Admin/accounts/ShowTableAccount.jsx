@@ -5,45 +5,41 @@ import { Button } from "../../../components/Client";
 import { IoMdAddCircle } from "react-icons/io";
 import { IoIosSearch } from "react-icons/io";
 import { TableList, TitleHeader } from "../../../components/Admin";
+import { adminPath } from "../../../utils/constants";
 import { TABLE_HEADS } from "../../../utils/modelConstant";
 import { getAllBrands } from "../../../services/BrandService";
-import { adminPath } from "../../../utils/constants";
-
-
-
 const options = [
 	{ value: "chocolate", label: "Chocolate" },
 	{ value: "strawberry", label: "Strawberry" },
 	{ value: "vanilla", label: "Vanilla" },
 ];
-function ShowTableBrand({ model }) {
+function ShowTableAccount() {
 	const [selectedOption, setSelectedOption] = useState(null);
 	const [brands, setBrands] = useState([]);
 	const [loading, setLoading] = useState(true);
 
-
 	useEffect(() => {
-		const fetchBrands = async () => {
+		const fetchBrands = async ()  => {
 			try {
-				const response = await getAllBrands();
+				const response =await getAllBrands();
 				setBrands(response.data.data);
 			} catch (error) {
-				console.log("Error: ", error);
-			} finally {
+				console.log("Error: ",  error);
+			} finally  {
 				setLoading(false);
 			}
-		};
+		}
 
 		fetchBrands();
-	}, []);
-	console.log("admin path: ", adminPath.create(model));
+	}, [])
+
 	return (
 		<>
 			<TitleHeader
 				title={"Thêm mới"}
 				buttonIcon={<IoMdAddCircle />}
 				titleButton={"Thêm mới"}
-				to={adminPath.create(model)}
+				to={adminPath.BRANDS_CREATE}
 			/>
 			<div className="flex items-center justify-end w-full p-3 gap-2">
 				<Select
@@ -84,7 +80,7 @@ function ShowTableBrand({ model }) {
 					<TableList
 						tableHead={[...TABLE_HEADS.Brands, "Lựa chọn"]}
 						tableBody={brands}
-						model={"brands"}
+						model={'users'}
 					/>
 				)}
 			</div>
@@ -92,4 +88,4 @@ function ShowTableBrand({ model }) {
 	);
 }
 
-export default ShowTableBrand;
+export default ShowTableAccount;

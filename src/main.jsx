@@ -1,4 +1,4 @@
-import { StrictMode } from "react";
+import React, { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { Provider } from "react-redux";
@@ -29,24 +29,41 @@ import {
 	ShowTableProduct,
 	ShowTablePromotion,
 	ShowTableSetting,
+	DetailBrand,
 } from "./pages/Admin/index.js";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
-import PublicRoute from "./components/PublicRoute.jsx";
+import RenderWithProps from "./utils/RenderWithProps.jsx";
 
-const adminRoutes = [
-	{ path: adminPath.SETTINGS, element: <ShowTableSetting /> },
-	{ path: adminPath.SETTING_CREATE, element: <AddNewSetting /> },
-	{ path: adminPath.PRODUCTS, element: <ShowTableProduct /> },
-	{ path: adminPath.PRODUCTS_CREATE, element: <AddNewProduct /> },
-	{ path: adminPath.BRANDS, element: <ShowTableBrand /> },
-	{ path: adminPath.BRANDS_CREATE, element: <AddNewBrand /> },
-	{ path: adminPath.CATEGORIES, element: <ShowTableCategory /> },
-	{ path: adminPath.CATEGORIES_CREATE, element: <AddNewCategory /> },
-	{ path: adminPath.PROMOTIONS, element: <ShowTablePromotion /> },
-	{ path: adminPath.PROMOTIONS_CREATE, element: <AddNewPromotion /> },
+export const adminModels = [
+	{
+		model: "brands",
+		list: ShowTableBrand,
+		create: AddNewBrand,
+		detail: DetailBrand,
+	},
+	{
+		model: "settings",
+		list: ShowTableSetting,
+		create: AddNewSetting,
+	},
+	{
+		model: "products",
+		list: ShowTableProduct,
+		create: AddNewProduct,
+	},
+	{
+		model: "categories",
+		list: ShowTableCategory,
+		create: AddNewCategory,
+	},
+	{
+		model: "promotions",
+		list: ShowTablePromotion,
+		create: AddNewPromotion,
+	},
 ];
-
+const DefaultAdminIndex = adminModels[0].list;
 createRoot(document.getElementById("root")).render(
 	<StrictMode>
 		<Provider store={store}>
@@ -91,14 +108,52 @@ createRoot(document.getElementById("root")).render(
 								</ProtectedRoute>
 							}
 						>
-							<Route index element={<ShowTableBrand />} />
-							{adminRoutes.map(({ path, element }) => (
-								<Route
-									key={path}
-									path={path}
-									element={element}
-								/>
-							))}
+							<Route
+								index
+								element={<DefaultAdminIndex model="brands" />}
+							/>
+
+							{adminModels.map(
+								({
+									model,
+									list: ListComponent,
+									create: CreateComponent,
+									detail: DetailComponent,
+								}) => (
+									<React.Fragment key={model}>
+										<Route
+											path={model}
+											element={
+												<RenderWithProps
+													component={ListComponent}
+													model={model}
+												/>
+											}
+										/>
+										<Route
+											path={adminPath.detail(
+												model,
+												":id"
+											)}
+											element={
+												<RenderWithProps
+													component={DetailComponent}
+													model={model}
+												/>
+											}
+										/>
+										<Route
+											path={adminPath.create(model)}
+											element={
+												<RenderWithProps
+													component={CreateComponent}
+													model={model}
+												/>
+											}
+										/>
+									</React.Fragment>
+								)
+							)}
 						</Route>
 					</Routes>
 				</BrowserRouter>

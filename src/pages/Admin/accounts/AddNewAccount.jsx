@@ -1,19 +1,18 @@
-import Select from "react-select";
-import ImageUploading from "react-images-uploading";
 import { Editor } from "../../../components/Admin";
 
 import { TitleHeader } from "../../../components/Admin";
 import { Button } from "../../../components/Client";
 import { FaArrowLeftLong } from "react-icons/fa6";
-
-import { ImageUpload } from "../../../components/Admin";
 import { adminPath } from "../../../utils/constants";
 
-function AddNewBrand({ model }) {
+import { ImageUpload } from "../../../components/Admin";
+
+function AddNewAccount() {
+
 	return (
 		<>
 			<TitleHeader
-				to={adminPath.list(model)}
+				to={adminPath.BRANDS}
 				title={"Thêm mới"}
 				buttonIcon={<FaArrowLeftLong />}
 				titleButton={"Danh sách"}
@@ -78,4 +77,4 @@ function AddNewBrand({ model }) {
 	);
 }
 
-export default AddNewBrand;
+export default AddNewAccount;

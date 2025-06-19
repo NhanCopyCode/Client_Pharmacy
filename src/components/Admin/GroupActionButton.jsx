@@ -23,7 +23,7 @@ function GroupActionButton({ id, model }) {
 				background="bg-success"
 				subClass="whitespace-nowrap"
 				hoverEffect="hover:bg-darkSuccess"
-				to={adminPath.edit(model, id)}
+				to={ adminPath.edit(model, id)}
 			>
 				Cập nhật
 			</Button>
@@ -34,7 +34,7 @@ function GroupActionButton({ id, model }) {
 				border="border border-gray"
 				background="bg-transparent"
 				hoverEffect="hover:bg-gray"
-				to={adminPath.detail(model, id)}
+				to={ adminPath.detail(model, id)}
 			></Button>
 		</div>
 	);

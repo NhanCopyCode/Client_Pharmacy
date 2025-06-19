@@ -88,7 +88,7 @@ export const menuAdmin = [
 ];
 
 export const adminPath = {
-	PREFIX: "/admin",
+	PREFIX: "admin", 
 
 	LOGIN: "login",
 	SETTINGS: "settings",
@@ -97,6 +97,7 @@ export const adminPath = {
 	CATEGORIES: "categories",
 	PROMOTIONS: "promotions",
 
+	list: (model) => `/admin/${model}`,
 	create: (model) => `/admin/${model}/create`,
 	edit: (model, id) => `/admin/${model}/${id}/edit`,
 	detail: (model, id) => `/admin/${model}/${id}`,
