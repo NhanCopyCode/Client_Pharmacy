@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import GroupActionButton from "./GroupActionButton";
 
-function TableList({ columns, tableBody, model }) {
+function TableList({ columns, tableBody, model, onDeleteSuccess }) {
 	return (
 		<table className="border-collapse border border-gray-300 w-full text-sm">
 			<thead>
@@ -31,7 +31,11 @@ function TableList({ columns, tableBody, model }) {
 							</td>
 						))}
 						<td className="border border-gray-300 p-2">
-							<GroupActionButton id={item.id} model={model} />
+							<GroupActionButton
+								id={item.id}
+								model={model}
+								onDeleteSuccess={onDeleteSuccess}
+							/>
 						</td>
 					</tr>
 				))}
@@ -77,12 +81,13 @@ TableList.propTypes = {
 		PropTypes.shape({
 			key: PropTypes.string.isRequired,
 			label: PropTypes.string.isRequired,
-			type: PropTypes.string, 
+			type: PropTypes.string,
 			style: PropTypes.string,
 		})
 	).isRequired,
 	tableBody: PropTypes.array.isRequired,
 	model: PropTypes.string.isRequired,
+	onDeleteSuccess: PropTypes.func,
 };
 
 export default TableList;

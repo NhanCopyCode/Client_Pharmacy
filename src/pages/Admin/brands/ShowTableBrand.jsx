@@ -19,19 +19,19 @@ function ShowTableBrand({ model }) {
 	const [selectedOption, setSelectedOption] = useState(null);
 	const [brands, setBrands] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const fetchBrands = async () => {
+		try {
+			const response = await brandService.getAll();
+			setBrands(response.data.data);
+		} catch (error) {
+			console.log("Error: ", error);
+		} finally {
+			setLoading(false);
+		}
+	};
 
 	useEffect(() => {
-		const fetchBrands = async () => {
-			try {
-				const response = await brandService.getAll();
-				setBrands(response.data.data);
-			} catch (error) {
-				console.log("Error: ", error);
-			} finally {
-				setLoading(false);
-			}
-		};
-
+		
 		fetchBrands();
 	}, []);
 	console.log("admin path: ", adminPath.create(model));
@@ -81,9 +81,10 @@ function ShowTableBrand({ model }) {
 				) : (
 					<TableList
 						columns={TABLE_COLUMNS.brands}
-						// tableHead={[...TABLE_HEADS.Brands, "Lựa chọn"]}
 						tableBody={brands}
 						model={"brands"}
+						onDeleteSuccess={fetchBrands}
+
 					/>
 				)}
 			</div>
