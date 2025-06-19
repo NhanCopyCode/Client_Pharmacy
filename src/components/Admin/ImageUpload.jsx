@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ImageUploading from "react-images-uploading";
 import { Button } from "../Client";
 
-function ImageUploadBrand() {
+function 	ImageUploadBrand() {
 	const [images, setImages] = useState([]);
 	const maxNumber = 5;
 	const minNumber = 1;

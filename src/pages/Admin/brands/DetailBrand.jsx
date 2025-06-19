@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { TitleHeader } from "../../../components/Admin";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { adminPath } from "../../../utils/constants";
-import { getBrandById } from "../../../services/BrandService";
+import brandService from "../../../services/BrandService";
 import { useEffect, useState } from "react";
 
 function DetailBrand({ model }) {
@@ -12,7 +12,7 @@ function DetailBrand({ model }) {
 	useEffect(() => {
 		const fetchBrand = async () => {
 			try {
-				const response = await getBrandById(id);
+				const response = await brandService.getById(id);
 				setBrand(response.data.data);
 			} catch (error) {
 				console.error("Error fetching brand details: ", error);

@@ -1,23 +1,5 @@
-import axiosInstance from "./api/axiosInstance";
+import { createApiService } from "./api/apiService";
 
-const ENDPOINT = "brands"; 
+const brandService = createApiService('brands');
 
-export const getAllBrands = () => {
-	return axiosInstance.get(ENDPOINT);
-};
-
-export const getBrandById = (id) => {
-	return axiosInstance.get(`${ENDPOINT}/${id}`);
-};
-
-export const createBrand = (data) => {
-	return axiosInstance.post(ENDPOINT, data);
-};
-
-export const updateBrand = (id, data) => {
-	return axiosInstance.put(`${ENDPOINT}/${id}`, data);
-};
-
-export const deleteBrand = (id) => {
-	return axiosInstance.delete(`${ENDPOINT}/${id}`);
-};
+export default brandService;

@@ -6,7 +6,7 @@ import { IoMdAddCircle } from "react-icons/io";
 import { IoIosSearch } from "react-icons/io";
 import { TableList, TitleHeader } from "../../../components/Admin";
 import { TABLE_HEADS } from "../../../utils/modelConstant";
-import { getAllBrands } from "../../../services/BrandService";
+import brandService from "../../../services/BrandService";
 import { adminPath } from "../../../utils/constants";
 
 
@@ -25,7 +25,7 @@ function ShowTableBrand({ model }) {
 	useEffect(() => {
 		const fetchBrands = async () => {
 			try {
-				const response = await getAllBrands();
+				const response = await brandService.getAll();
 				setBrands(response.data.data);
 			} catch (error) {
 				console.log("Error: ", error);

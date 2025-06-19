@@ -7,7 +7,7 @@ import { IoIosSearch } from "react-icons/io";
 import { TableList, TitleHeader } from "../../../components/Admin";
 import { adminPath } from "../../../utils/constants";
 import { TABLE_HEADS } from "../../../utils/modelConstant";
-import { getAllBrands } from "../../../services/BrandService";
+import brandService from "../../../services/BrandService";
 const options = [
 	{ value: "chocolate", label: "Chocolate" },
 	{ value: "strawberry", label: "Strawberry" },
@@ -21,7 +21,7 @@ function ShowTableAccount() {
 	useEffect(() => {
 		const fetchBrands = async ()  => {
 			try {
-				const response =await getAllBrands();
+				const response =await brandService.getAll();
 				setBrands(response.data.data);
 			} catch (error) {
 				console.log("Error: ",  error);
