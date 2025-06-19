@@ -1,41 +1,36 @@
-import PropTypes from 'prop-types';
-import GroupActionButton from './GroupActionButton';
+import PropTypes from "prop-types";
+import GroupActionButton from "./GroupActionButton";
 
-function TableList({ tableHead, tableBody, model }) {
+function TableList({ columns, tableBody, model }) {
 	return (
-		<table className="border-collapse border border-gray-300 p-[10px] w-full">
+		<table className="border-collapse border border-gray-300 w-full text-sm">
 			<thead>
 				<tr>
-					{tableHead.map((item) => (
+					{columns.map((col) => (
 						<th
-							key={item}
-							className="border border-gray-300 p-[10px]"
+							key={col.key}
+							className="border border-gray-300 p-2"
 						>
-							{item}
+							{col.label}
 						</th>
 					))}
+					<th className="border border-gray-300 p-2">Hành động</th>
 				</tr>
 			</thead>
-			<tbody className="text-sm">
-				{tableBody.map((item, index) => (
-					<tr key={index} className="hover:bg-gray-200">
-						<td className="border border-gray-300 p-[10px]">
-							{item.id}
-						</td>
-						<td className="border border-gray-300 p-[10px]">
-							{item.name}
-						</td>
-						<td className="border border-gray-300 p-[10px]">
-							{item.description}
-						</td>
-						<td className="border border-gray-300 p-[10px]">
-							<img
-								src={item.logo}
-								alt={item.name}
-								className="w-10 h-10 object-cover"
-							/>
-						</td>
-						<td className="border border-gray-300 p-[10px]">
+			<tbody>
+				{tableBody.map((item, rowIndex) => (
+					<tr key={rowIndex} className="hover:bg-gray-100">
+						{columns.map((col) => (
+							<td
+								key={col.key}
+								className={`border border-gray-300 p-2 ${
+									col.style || ""
+								}`}
+							>
+								{renderCell(item[col.key], col.type)}
+							</td>
+						))}
+						<td className="border border-gray-300 p-2">
 							<GroupActionButton id={item.id} model={model} />
 						</td>
 					</tr>
@@ -45,13 +40,49 @@ function TableList({ tableHead, tableBody, model }) {
 	);
 }
 
+function renderCell(value, type) {
+	if (type === "image") {
+		return value ? (
+			<img
+				src={value}
+				alt=""
+				className="w-full object-cover rounded"
+			/>
+		) : (
+			<span className="text-gray-400 italic">Không có ảnh</span>
+		);
+	}
+
+	if (type === "currency") {
+		return value != null ? `${Number(value).toLocaleString()}₫` : "";
+	}
+
+	if (type === "boolean") {
+		return value ? (
+			<span className="text-green-600 font-semibold">✔</span>
+		) : (
+			<span className="text-red-600 font-semibold">✖</span>
+		);
+	}
+
+	if (type === "date") {
+		return value ? new Date(value).toLocaleDateString("vi-VN") : "";
+	}
+
+	return value != null ? value : "";
+}
+
 TableList.propTypes = {
-	tableHead: PropTypes.array,
-	tableBody: PropTypes.array,
-	model: PropTypes.string.isRequired, 
+	columns: PropTypes.arrayOf(
+		PropTypes.shape({
+			key: PropTypes.string.isRequired,
+			label: PropTypes.string.isRequired,
+			type: PropTypes.string, 
+			style: PropTypes.string,
+		})
+	).isRequired,
+	tableBody: PropTypes.array.isRequired,
+	model: PropTypes.string.isRequired,
 };
-
-
-
 
 export default TableList;

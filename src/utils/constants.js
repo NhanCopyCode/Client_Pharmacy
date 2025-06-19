@@ -102,3 +102,103 @@ export const adminPath = {
 	edit: (model, id) => `/admin/${model}/${id}/edit`,
 	detail: (model, id) => `/admin/${model}/${id}`,
 };
+
+export const TABLE_COLUMNS = {
+	brands: [
+		{ key: "id", label: "ID" },
+		{ key: "name", label: "Tên hãng" },
+		{ key: "description", label: "Mô tả" },
+		{
+			key: "logo",
+			label: "Logo",
+			type: "image",
+			style: "w-20 h-20 rounded-full object-cover",
+		},
+	],
+
+	products: [
+		{ key: "id", label: "ID" },
+		{ key: "title", label: "Tên sản phẩm" },
+		{ key: "description", label: "Mô tả" },
+		{ key: "inventory", label: "Kho" },
+		{
+			key: "price",
+			label: "Giá",
+			type: "currency",
+			style: "text-red-600 font-bold",
+		},
+		{
+			key: "isDeleted",
+			label: "Đã xóa",
+			type: "boolean",
+			style: "text-xs",
+		},
+	],
+
+	categories: [
+		{ key: "id", label: "ID" },
+		{ key: "name", label: "Tên danh mục" },
+		{
+			key: "image",
+			label: "Hình ảnh",
+			type: "image",
+			style: "w-10 h-10 object-cover",
+		},
+		{ key: "parentId", label: "Danh mục cha" },
+	],
+
+	users: [
+		{ key: "id", label: "ID" },
+		{ key: "surname", label: "Họ" },
+		{ key: "name", label: "Tên" },
+		{ key: "email", label: "Email", style: "text-blue-600" },
+		{ key: "phoneNumber", label: "SĐT" },
+		{ key: "address", label: "Địa chỉ" },
+	],
+
+	posts: [
+		{ key: "id", label: "ID" },
+		{ key: "title", label: "Tiêu đề" },
+		{ key: "description", label: "Nội dung" },
+		{ key: "createdAt", label: "Ngày tạo", type: "date" },
+		{ key: "isDeleted", label: "Đã xóa", type: "boolean" },
+	],
+
+	discounts: [
+		{ key: "id", label: "ID" },
+		{ key: "name", label: "Tên khuyến mãi" },
+		{ key: "description", label: "Mô tả" },
+		{
+			key: "image",
+			label: "Ảnh",
+			type: "image",
+			style: "w-12 h-12 object-contain",
+		},
+		{
+			key: "discountPercent",
+			label: "% giảm",
+			style: "text-green-600 font-bold",
+		},
+		{ key: "start_date", label: "Bắt đầu", type: "date" },
+		{ key: "end_date", label: "Kết thúc", type: "date" },
+	],
+
+	orders: [
+		{ key: "id", label: "ID" },
+		{ key: "userId", label: "Người dùng" },
+		{ key: "totalPrice", label: "Tổng tiền", type: "currency" },
+		{ key: "status", label: "Trạng thái", type: "boolean" },
+		{ key: "createdAt", label: "Ngày tạo", type: "date" },
+	],
+
+	payments: [
+		{ key: "id", label: "ID" },
+		{ key: "orderId", label: "Mã đơn hàng" },
+		{ key: "payment_gateway", label: "Cổng thanh toán" },
+		{ key: "transaction_code", label: "Mã giao dịch" },
+		{ key: "amount", label: "Số tiền", type: "currency" },
+		{ key: "payment_time", label: "Thời gian", type: "date" },
+		{ key: "vnp_response_code", label: "Mã phản hồi VNP" },
+		{ key: "bank_code", label: "Ngân hàng" },
+	],
+};

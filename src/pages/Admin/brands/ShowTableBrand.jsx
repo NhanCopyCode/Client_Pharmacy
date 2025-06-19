@@ -8,8 +8,7 @@ import { TableList, TitleHeader } from "../../../components/Admin";
 import { TABLE_HEADS } from "../../../utils/modelConstant";
 import brandService from "../../../services/BrandService";
 import { adminPath } from "../../../utils/constants";
-
-
+import { TABLE_COLUMNS } from "../../../utils/constants";
 
 const options = [
 	{ value: "chocolate", label: "Chocolate" },
@@ -20,7 +19,6 @@ function ShowTableBrand({ model }) {
 	const [selectedOption, setSelectedOption] = useState(null);
 	const [brands, setBrands] = useState([]);
 	const [loading, setLoading] = useState(true);
-
 
 	useEffect(() => {
 		const fetchBrands = async () => {
@@ -82,7 +80,8 @@ function ShowTableBrand({ model }) {
 					<p>Loading...</p>
 				) : (
 					<TableList
-						tableHead={[...TABLE_HEADS.Brands, "Lựa chọn"]}
+						columns={TABLE_COLUMNS.brands}
+						// tableHead={[...TABLE_HEADS.Brands, "Lựa chọn"]}
 						tableBody={brands}
 						model={"brands"}
 					/>
