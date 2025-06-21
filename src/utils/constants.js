@@ -88,7 +88,7 @@ export const menuAdmin = [
 ];
 
 export const adminPath = {
-	PREFIX: "admin", 
+	PREFIX: "admin",
 
 	LOGIN: "login",
 	SETTINGS: "settings",
@@ -107,13 +107,14 @@ export const TABLE_COLUMNS = {
 	brands: [
 		{ key: "id", label: "ID" },
 		{ key: "name", label: "Tên hãng" },
-		{ key: "description", label: "Mô tả" },
 		{
-			key: "logo",
-			label: "Logo",
-			type: "image",
-			style: "w-20 h-20 rounded-full object-cover",
+			key: "description",
+			label: "Mô tả",
+			type: "html",
+			style: "max-w-[300px]",
 		},
+		{ key: "logo", label: "Logo", type: "image", style: "w-[80px]" },
+		{ key: "approved", label: "Duyệt", type: "boolean" },
 	],
 
 	products: [

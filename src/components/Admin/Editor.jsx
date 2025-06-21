@@ -1,24 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
 
-const Editor = ({ placeholder }) => {
-	const [content, setContent] = useState("");
+function SunEditorWithUpload({ placeholder, onChange, initialContent = "" }) {
+	const editorRef = useRef(null);
+	const [content, setContent] = useState(initialContent);
+
+	useEffect(() => {
+		setContent(initialContent || "");
+	}, [initialContent]);
 
 	return (
-		<>
-			<SunEditor
-				placeholder={placeholder}
-				setContents={content}
-				onChange={setContent}
-				setOptions={{
-					buttonList: [
-						["bold", "italic", "image", "link", "codeView", "fontColor", "formatBlock"],
+		<SunEditor
+			ref={editorRef}
+			placeholder={placeholder}
+			setContents={content}
+			onChange={(value) => {
+				setContent(value);
+				onChange?.(value);
+			}}
+			setOptions={{
+				height: 250,
+				buttonList: [
+					[
+						"bold",
+						"italic",
+						"underline",
+						"link",
+						"image",
+						"codeView",
+						"fontColor",
+						"formatBlock",
 					],
-				}}
-			/>
-		</>
+				],
+				imageUploadUrl: "http://127.0.0.1:8000/api/editor-upload", 
+				imageUploadHeader: {
+					Authorization: `Bearer ${localStorage.getItem("token")}`,
+				},
+				imageUploadSizeLimit: 10 * 1024 * 1024, 
+			}}
+		/>
 	);
-};
+}
 
-export default Editor;
+export default SunEditorWithUpload;

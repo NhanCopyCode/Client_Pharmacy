@@ -34,7 +34,6 @@ function ShowTableBrand({ model }) {
 		
 		fetchBrands();
 	}, []);
-	console.log("admin path: ", adminPath.create(model));
 	return (
 		<>
 			<TitleHeader

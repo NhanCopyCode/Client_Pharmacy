@@ -14,6 +14,7 @@ export { default as AddNewPromotion } from "./promotions/AddNewPromotion";
 export { default as ShowTableBrand } from "./brands/ShowTableBrand";
 export { default as AddNewBrand } from "./brands/AddNewBrand";
 export { default as DetailBrand } from "./brands/DetailBrand";
+export { default as BrandForm } from "./brands/BrandForm";
 
 //Settings
 export { default as ShowTableSetting } from "./settings/ShowTableSetting";

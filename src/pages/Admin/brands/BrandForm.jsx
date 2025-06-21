@@ -1,0 +1,123 @@
+import { useState, useEffect } from "react";
+import ImageUploadBrand from "../../../components/Admin/ImageUpload";
+import Editor from "../../../components/Admin/Editor";
+import { Button } from "../../../components/Client";
+import { adminPath } from "../../../utils/constants";
+import { FaArrowLeftLong } from "react-icons/fa6";
+import { TitleHeader } from "../../../components/Admin";
+import { useNavigate } from "react-router-dom";
+
+function BrandForm({ model, initialData = {}, mode = "create", onSubmit }) {
+	const [name, setName] = useState("");
+	const [approved, setApproved] = useState(false);
+	const [images, setImages] = useState([]);
+	const [description, setDescription] = useState("");
+	const [initialized, setInitialized] = useState(false);
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (initialData && !initialized) {
+			setName(initialData.name || "");
+			setApproved(Boolean(initialData.approved));
+			setDescription(initialData.description || "");
+			if (initialData.logo) {
+				setImages([{ data_url: initialData.logo }]);
+			}
+			setInitialized(true);
+		}
+	}, [initialData, initialized]);
+
+	const handleSubmit = async () => {
+		const formData = new FormData();
+		formData.append("name", name);
+		formData.append("approved", approved ? 1 : 0);
+		formData.append("description", description);
+		if (images?.[0]?.file) {
+            console.log('have image', images[0].file);
+			formData.append("logo", images[0].file);
+		}
+		await onSubmit(formData);
+		navigate(adminPath.list(model));
+	};
+
+	return (
+		<>
+			<TitleHeader
+				to={adminPath.list(model)}
+				title={mode === "edit" ? "Cập nhật" : "Thêm mới"}
+				buttonIcon={<FaArrowLeftLong />}
+				titleButton={"Danh sách"}
+			/>
+			<div className="p-3">
+				<table className="table-auto w-full">
+					<tbody>
+						<tr className="grid grid-cols-12 gap-2">
+							<td className="col-span-3 p-[10px]">Tên hãng</td>
+							<td className="col-span-9 p-[10px]">
+								<input
+									type="text"
+									value={name}
+									onChange={(e) => setName(e.target.value)}
+									className="border border-gray-300 w-full rounded-sm py-[5px] px-[10px] text-sm outline-0"
+								/>
+							</td>
+						</tr>
+						<tr className="grid grid-cols-12 gap-2">
+							<td className="col-span-3 p-[10px]">
+								Hình ảnh hãng
+							</td>
+							<td className="col-span-9 p-[10px]">
+								<ImageUploadBrand
+									images={images}
+									setImages={setImages}
+								/>
+							</td>
+						</tr>
+						<tr className="grid grid-cols-12 gap-2">
+							<td className="col-span-3 p-[10px]">Mô tả hãng</td>
+							<td className="col-span-9 p-[10px]">
+								<Editor
+									placeholder="Nhập mô tả hãng"
+									onChange={setDescription}
+									initialContent={description}
+								/>
+							</td>
+						</tr>
+						<tr className="grid grid-cols-12 gap-2">
+							<td className="col-span-3 p-[10px]">Duyệt</td>
+							<td className="col-span-9 p-[10px]">
+								<input
+									type="checkbox"
+									checked={approved}
+									onChange={(e) =>
+										setApproved(e.target.checked)
+									}
+									className="w-5 h-5 accent-blue-600"
+								/>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div className="flex items-center justify-end gap-2 mt-4">
+					<Button
+						background="bg-gray"
+						color="text-white"
+						hoverEffect="hover:bg-gray/90"
+						to={adminPath.list(model)}
+					>
+						Đóng
+					</Button>
+					<Button
+						background="bg-darkBlue"
+						hoverEffect="hover:bg-primary"
+						onClick={handleSubmit}
+					>
+						{mode === "edit" ? "Cập nhật" : "Lưu"}
+					</Button>
+				</div>
+			</div>
+		</>
+	);
+}
+
+export default BrandForm;

@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import ImageUploading from "react-images-uploading";
 import { Button } from "../Client";
 
-function 	ImageUploadBrand() {
-	const [images, setImages] = useState([]);
+function ImageUploadBrand({ images, setImages }) {
 	const maxNumber = 5;
 	const minNumber = 1;
 
@@ -37,7 +36,6 @@ function 	ImageUploadBrand() {
 					>
 						Chọn ảnh
 					</button>
-					
 
 					<div className="grid grid-cols-12 gap-2 mt-4">
 						{imageList.map((image, index) => (
@@ -52,14 +50,14 @@ function 	ImageUploadBrand() {
 										background="bg-success"
 										onClick={() => onImageUpdate(index)}
 									>
-										Update
+										Sửa
 									</Button>
 									<Button
 										background="bg-redColor"
 										hoverEffect="hover:bg-darkRed"
 										onClick={() => onImageRemove(index)}
 									>
-										Remove
+										Xóa
 									</Button>
 								</div>
 							</div>
