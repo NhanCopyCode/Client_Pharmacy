@@ -8,8 +8,10 @@ function SunEditorWithUpload({ placeholder, onChange, initialContent = "" }) {
 
 	useEffect(() => {
 		setContent(initialContent || "");
+		if (editorRef.current) {
+			editorRef.current.setContents(initialContent || "");
+		}
 	}, [initialContent]);
-
 	return (
 		<SunEditor
 			ref={editorRef}

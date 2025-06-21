@@ -10,3 +10,4 @@ function AddNewBrand({ model }) {
 }
 
 export default AddNewBrand;
+                                            

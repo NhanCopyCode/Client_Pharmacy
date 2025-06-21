@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import ImageUploadBrand from "../../../components/Admin/ImageUpload";
-import Editor from "../../../components/Admin/Editor";
+import TiptapEditor from "../../../components/Admin/TiptapEditor";
 import { Button } from "../../../components/Client";
 import { adminPath } from "../../../utils/constants";
 import { FaArrowLeftLong } from "react-icons/fa6";
@@ -33,7 +33,6 @@ function BrandForm({ model, initialData = {}, mode = "create", onSubmit }) {
 		formData.append("approved", approved ? 1 : 0);
 		formData.append("description", description);
 		if (images?.[0]?.file) {
-            console.log('have image', images[0].file);
 			formData.append("logo", images[0].file);
 		}
 		await onSubmit(formData);
@@ -76,10 +75,10 @@ function BrandForm({ model, initialData = {}, mode = "create", onSubmit }) {
 						<tr className="grid grid-cols-12 gap-2">
 							<td className="col-span-3 p-[10px]">Mô tả hãng</td>
 							<td className="col-span-9 p-[10px]">
-								<Editor
+								<TiptapEditor
 									placeholder="Nhập mô tả hãng"
-									onChange={setDescription}
 									initialContent={description}
+									onChange={setDescription}
 								/>
 							</td>
 						</tr>
