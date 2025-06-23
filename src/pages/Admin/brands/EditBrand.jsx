@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import brandService from "../../../services/BrandService";
 import BrandForm from "./BrandForm";
 import { adminPath } from "../../../utils/constants";
+import Swal from "sweetalert2";
 
 function EditBrand({ model }) {
 	const { id } = useParams();
@@ -17,7 +18,10 @@ function EditBrand({ model }) {
 				const response = await brandService.getById(id);
 				setInitialData(response.data.data);
 			} catch (error) {
-				console.error("Không thể tải dữ liệu hãng:", error);
+				if (error) {
+					setErrors(error.response?.data?.errors || {});
+					console.log("Lỗi khi lấy dữ liệu: ", error);
+				}
 			} finally {
 				setLoading(false);
 			}
@@ -29,11 +33,23 @@ function EditBrand({ model }) {
 	const handleSubmit = async (formData) => {
 		try {
 			await brandService.update(id, formData);
+			await Swal.fire({
+				icon: "success",
+				title: "Thành công!",
+				text: "Cập nhật thành công.",
+				showConfirmButton: true,
+			});
 			navigate(adminPath.list(model));
 		} catch (error) {
 			console.error("Lỗi khi cập nhật hãng:", error);
 			setErrors(error.response?.data?.errors || {});
-			alert("Cập nhật hãng thất bại!");	
+			if (error.response?.data?.errors) {
+				Swal.fire({
+					icon: "error",
+					title: "Lỗi!",
+					text: "Đã xảy ra lỗi không xác định. Vui lòng thử lại.",
+				});
+			}
 		}
 	};
 
