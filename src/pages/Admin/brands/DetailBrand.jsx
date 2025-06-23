@@ -39,17 +39,16 @@ function DetailBrand({ model }) {
 
 				<div className="col-span-3">Tên:</div>
 				<div className="col-span-9">{name}</div>
-
+				
+				<div className="col-span-3">Logo:</div>
+				<div className="col-span-9">
+					<img src={logo} alt={name} />
+				</div>
 				<div className="col-span-3">Chi tiết:</div>
 				<div
 					className="col-span-9 prose max-w-none"
 					dangerouslySetInnerHTML={{ __html: description }}
 				></div>
-
-				<div className="col-span-3">Logo:</div>
-				<div className="col-span-9">
-					<img src={logo} alt={name} />
-				</div>
 			</div>
 		</>
 	);

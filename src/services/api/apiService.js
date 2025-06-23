@@ -12,8 +12,13 @@ export const createApiService = (resource) => {
 
 		create: (data) => axios.post(`/${resource}`, data),
 
-		update: (id, data) => axios.put(`/${resource}/${id}`, data),
-
+		update: (id, data) => {
+			if (data instanceof FormData) {
+				data.append("_method", "PUT");
+				return axios.post(`/${resource}/${id}`, data);
+			}
+			return axios.put(`/${resource}/${id}`, data);
+		},
 		deleteById: (id) => axios.delete(`/${resource}/${id}`),
 
 		// // Optional: extra flexibility for PATCH

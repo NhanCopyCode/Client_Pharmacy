@@ -30,6 +30,7 @@ import {
 	ShowTablePromotion,
 	ShowTableSetting,
 	DetailBrand,
+	EditBrand
 } from "./pages/Admin/index.js";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -41,6 +42,7 @@ export const adminModels = [
 		list: ShowTableBrand,
 		create: AddNewBrand,
 		detail: DetailBrand,
+		update: EditBrand
 	},
 	{
 		model: "settings",
@@ -119,6 +121,7 @@ createRoot(document.getElementById("root")).render(
 									list: ListComponent,
 									create: CreateComponent,
 									detail: DetailComponent,
+									update: UpdateComponent,
 								}) => (
 									<React.Fragment key={model}>
 										<Route
@@ -147,6 +150,16 @@ createRoot(document.getElementById("root")).render(
 											element={
 												<RenderWithProps
 													component={CreateComponent}
+													model={model}
+												/>
+											}
+										/>
+
+										<Route
+											path={adminPath.edit(model, ":id")}
+											element={
+												<RenderWithProps
+													component={UpdateComponent}
 													model={model}
 												/>
 											}

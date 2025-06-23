@@ -15,6 +15,7 @@ export { default as ShowTableBrand } from "./brands/ShowTableBrand";
 export { default as AddNewBrand } from "./brands/AddNewBrand";
 export { default as DetailBrand } from "./brands/DetailBrand";
 export { default as BrandForm } from "./brands/BrandForm";
+export { default as EditBrand } from "./brands/EditBrand";
 
 //Settings
 export { default as ShowTableSetting } from "./settings/ShowTableSetting";

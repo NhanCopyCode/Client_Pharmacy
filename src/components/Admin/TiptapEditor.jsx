@@ -18,11 +18,12 @@ function TiptapEditor({ placeholder, onChange, initialContent = "" }) {
 
 	// Only set content once
 	useEffect(() => {
-		if (editor && initialContent) {
-			editor.commands.setContent(initialContent);
+		if (editor && initialContent !== editor.getHTML()) {
+			editor.commands.setContent(initialContent || "");
 		}
-	}, [editor]);
+	}, [initialContent, editor]);
 
+	if (!editor) return null;
 	return (
 		<div>
 			<TipTapToolbar editor={editor} />

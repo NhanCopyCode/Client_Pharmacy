@@ -14,6 +14,7 @@ function EditBrand({ model }) {
 		const fetchData = async () => {
 			try {
 				const response = await brandService.getById(id);
+				console.log("data edit brand: ", response.data.data);
 				setInitialData(response.data.data);
 			} catch (error) {
 				console.error("Không thể tải dữ liệu hãng:", error);
