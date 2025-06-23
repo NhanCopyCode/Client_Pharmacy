@@ -9,12 +9,12 @@ function EditBrand({ model }) {
 	const navigate = useNavigate();
 	const [initialData, setInitialData] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const [errors, setErrors] = useState({});
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
 				const response = await brandService.getById(id);
-				console.log("data edit brand: ", response.data.data);
 				setInitialData(response.data.data);
 			} catch (error) {
 				console.error("Không thể tải dữ liệu hãng:", error);
@@ -29,11 +29,11 @@ function EditBrand({ model }) {
 	const handleSubmit = async (formData) => {
 		try {
 			await brandService.update(id, formData);
-			console.log("Cập nhật hãng thành công");
 			navigate(adminPath.list(model));
 		} catch (error) {
 			console.error("Lỗi khi cập nhật hãng:", error);
-			alert("Cập nhật hãng thất bại!");
+			setErrors(error.response?.data?.errors || {});
+			alert("Cập nhật hãng thất bại!");	
 		}
 	};
 
@@ -45,6 +45,7 @@ function EditBrand({ model }) {
 			mode="edit"
 			initialData={initialData}
 			onSubmit={handleSubmit}
+			errors={errors}
 		/>
 	);
 }

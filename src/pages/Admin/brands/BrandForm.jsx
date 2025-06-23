@@ -7,13 +7,18 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { TitleHeader } from "../../../components/Admin";
 import { useNavigate } from "react-router-dom";
 
-function BrandForm({ model, initialData = {}, mode = "create", onSubmit }) {
+function BrandForm({
+	model,
+	initialData = {},
+	mode = "create",
+	errors = {},
+	onSubmit,
+}) {
 	const [name, setName] = useState("");
 	const [approved, setApproved] = useState(false);
 	const [images, setImages] = useState([]);
 	const [description, setDescription] = useState("");
 	const [initialized, setInitialized] = useState(false);
-	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (initialData && !initialized) {
@@ -36,7 +41,6 @@ function BrandForm({ model, initialData = {}, mode = "create", onSubmit }) {
 			formData.append("logo", images[0].file);
 		}
 		await onSubmit(formData);
-		navigate(adminPath.list(model));
 	};
 
 	return (
@@ -59,6 +63,9 @@ function BrandForm({ model, initialData = {}, mode = "create", onSubmit }) {
 									onChange={(e) => setName(e.target.value)}
 									className="border border-gray-300 w-full rounded-sm py-[5px] px-[10px] text-sm outline-0"
 								/>
+								<span className="text-redColor">
+									{errors.name}
+								</span>
 							</td>
 						</tr>
 						<tr className="grid grid-cols-12 gap-2">
@@ -70,6 +77,9 @@ function BrandForm({ model, initialData = {}, mode = "create", onSubmit }) {
 									images={images}
 									setImages={setImages}
 								/>
+								<span className="text-redColor">
+									{errors.logo}
+								</span>
 							</td>
 						</tr>
 						<tr className="grid grid-cols-12 gap-2">
@@ -80,6 +90,9 @@ function BrandForm({ model, initialData = {}, mode = "create", onSubmit }) {
 									initialContent={description}
 									onChange={setDescription}
 								/>
+								<span className="text-redColor">
+									{errors.description}
+								</span>
 							</td>
 						</tr>
 						<tr className="grid grid-cols-12 gap-2">
@@ -93,6 +106,9 @@ function BrandForm({ model, initialData = {}, mode = "create", onSubmit }) {
 									}
 									className="w-5 h-5 accent-blue-600"
 								/>
+								<span className="text-redColor">
+									{errors.approved}
+								</span>
 							</td>
 						</tr>
 					</tbody>
