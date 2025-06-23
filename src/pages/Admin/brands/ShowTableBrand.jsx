@@ -19,12 +19,17 @@ function ShowTableBrand({ model }) {
 	const [selectedOption, setSelectedOption] = useState(null);
 	const [brands, setBrands] = useState([]);
 	const [loading, setLoading] = useState(true);
-	const fetchBrands = async () => {
+	const [searchInput, setSearchInput] = useState(""); 
+
+
+	const fetchBrands = async (params = {}) => {
+		setLoading(true);
+		console.log('param search: ', params);
 		try {
-			const response = await brandService.getAll();
+			const response = await brandService.getAll(params);
 			setBrands(response.data.data);
 		} catch (error) {
-			console.log("Error: ", error);
+			console.error("Error: ", error);
 		} finally {
 			setLoading(false);
 		}
@@ -34,6 +39,11 @@ function ShowTableBrand({ model }) {
 		
 		fetchBrands();
 	}, []);
+
+	const handleSearch = () => {
+		fetchBrands({ search: searchInput });
+	};
+
 	return (
 		<>
 			<TitleHeader
@@ -60,6 +70,13 @@ function ShowTableBrand({ model }) {
 				<input
 					className="h-[38px] px-3 outline-0 border border-gray-200 rounded-md text-sm w-[180px]"
 					placeholder="Tìm kiếm..."
+					value={searchInput}
+					onChange={(e) => setSearchInput(e.target.value)}
+					onKeyDown={(e) => {
+						if (e.key === "Enter") {
+							handleSearch();
+						}
+					}}
 				/>
 				<Button
 					leftIcon={<IoIosSearch />}
@@ -69,6 +86,7 @@ function ShowTableBrand({ model }) {
 					rounded="rounded-md"
 					hoverEffect="hover:bg-gray-200"
 					fontWeight="font-bold"
+					onClick={handleSearch}
 				>
 					Tìm
 				</Button>
@@ -83,7 +101,6 @@ function ShowTableBrand({ model }) {
 						tableBody={brands}
 						model={"brands"}
 						onDeleteSuccess={fetchBrands}
-
 					/>
 				)}
 			</div>
