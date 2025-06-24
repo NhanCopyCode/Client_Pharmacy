@@ -8,6 +8,7 @@ import { TableList, TitleHeader } from "../../../components/Admin";
 import brandService from "../../../services/BrandService";
 import { adminPath } from "../../../utils/constants";
 import { TABLE_COLUMNS } from "../../../utils/constants";
+import Pagination from "../../../components/Pagination";
 
 const options = [
 	{ value: "chocolate", label: "Chocolate" },
@@ -18,14 +19,16 @@ function ShowTableBrand({ model }) {
 	const [selectedOption, setSelectedOption] = useState(null);
 	const [brands, setBrands] = useState([]);
 	const [loading, setLoading] = useState(true);
-	const [searchInput, setSearchInput] = useState(""); 
-
+	const [searchInput, setSearchInput] = useState("");
+	const [meta, setMeta] = useState([]);
 
 	const fetchBrands = async (params = {}) => {
 		setLoading(true);
 		try {
 			const response = await brandService.getAll(params);
+			console.log("response meta: ", response.data);
 			setBrands(response.data.data);
+			setMeta(response.data.meta);
 		} catch (error) {
 			console.error("Error: ", error);
 		} finally {
@@ -34,12 +37,15 @@ function ShowTableBrand({ model }) {
 	};
 
 	useEffect(() => {
-		
 		fetchBrands();
 	}, []);
 
 	const handleSearch = () => {
 		fetchBrands({ search: searchInput });
+	};
+
+	const handlePageChange = (page) => {
+		fetchBrands({ search: searchInput, page });
 	};
 
 	return (
@@ -94,12 +100,18 @@ function ShowTableBrand({ model }) {
 				{loading ? (
 					<p>Loading...</p>
 				) : (
-					<TableList
-						columns={TABLE_COLUMNS.brands}
-						tableBody={brands}
-						model={"brands"}
-						onDeleteSuccess={fetchBrands}
-					/>
+					<>
+						<TableList
+							columns={TABLE_COLUMNS.brands}
+							tableBody={brands}
+							model={"brands"}
+							onDeleteSuccess={fetchBrands}
+						/>
+						<Pagination
+							meta={meta}
+							onPageChange={handlePageChange}
+						/>
+					</>
 				)}
 			</div>
 		</>
