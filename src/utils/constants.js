@@ -105,6 +105,7 @@ export const adminPath = {
 
 export const TABLE_COLUMNS = {
 	brands: [
+		{ key: "", label: "", type: "checkbox", style: "text-center" },
 		{ key: "id", label: "ID" },
 		{ key: "name", label: "Tên hãng" },
 		{ key: "logo", label: "Logo", type: "image", style: "w-[80px]" },
@@ -118,6 +119,7 @@ export const TABLE_COLUMNS = {
 	],
 
 	products: [
+		{ key: "", label: "", type: "checkbox", style: "text-center" },
 		{ key: "id", label: "ID" },
 		{ key: "title", label: "Tên sản phẩm" },
 		{ key: "description", label: "Mô tả" },
@@ -137,6 +139,7 @@ export const TABLE_COLUMNS = {
 	],
 
 	categories: [
+		{ key: "", label: "", type: "checkbox", style: "text-center" },
 		{ key: "id", label: "ID" },
 		{ key: "name", label: "Tên danh mục" },
 		{
@@ -149,6 +152,7 @@ export const TABLE_COLUMNS = {
 	],
 
 	users: [
+		{ key: "", label: "", type: "checkbox", style: "text-center" },
 		{ key: "id", label: "ID" },
 		{ key: "surname", label: "Họ" },
 		{ key: "name", label: "Tên" },
@@ -158,6 +162,7 @@ export const TABLE_COLUMNS = {
 	],
 
 	posts: [
+		{ key: "", label: "", type: "checkbox", style: "text-center" },
 		{ key: "id", label: "ID" },
 		{ key: "title", label: "Tiêu đề" },
 		{ key: "description", label: "Nội dung" },
@@ -166,6 +171,7 @@ export const TABLE_COLUMNS = {
 	],
 
 	discounts: [
+		{ key: "", label: "", type: "checkbox", style: "text-center" },
 		{ key: "id", label: "ID" },
 		{ key: "name", label: "Tên khuyến mãi" },
 		{ key: "description", label: "Mô tả" },
@@ -185,6 +191,7 @@ export const TABLE_COLUMNS = {
 	],
 
 	orders: [
+		{ key: "", label: "", type: "checkbox", style: "text-center" },
 		{ key: "id", label: "ID" },
 		{ key: "userId", label: "Người dùng" },
 		{ key: "totalPrice", label: "Tổng tiền", type: "currency" },
@@ -193,6 +200,7 @@ export const TABLE_COLUMNS = {
 	],
 
 	payments: [
+		{ key: "", label: "", type: "checkbox", style: "text-center" },
 		{ key: "id", label: "ID" },
 		{ key: "orderId", label: "Mã đơn hàng" },
 		{ key: "payment_gateway", label: "Cổng thanh toán" },

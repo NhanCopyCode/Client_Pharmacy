@@ -16,7 +16,7 @@ function AddNewBrand({ model }) {
 				title: "Thành công!",
 				text: "Hãng đã được thêm mới thành công.",
 				showConfirmButton: true,
-			});
+		});
 			navigate(adminPath.list(model));
 		} catch (error) {
 			setErrors(error.response?.data?.errors || {});

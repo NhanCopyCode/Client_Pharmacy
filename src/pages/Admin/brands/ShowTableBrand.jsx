@@ -5,7 +5,6 @@ import { Button } from "../../../components/Client";
 import { IoMdAddCircle } from "react-icons/io";
 import { IoIosSearch } from "react-icons/io";
 import { TableList, TitleHeader } from "../../../components/Admin";
-import { TABLE_HEADS } from "../../../utils/modelConstant";
 import brandService from "../../../services/BrandService";
 import { adminPath } from "../../../utils/constants";
 import { TABLE_COLUMNS } from "../../../utils/constants";
@@ -24,7 +23,6 @@ function ShowTableBrand({ model }) {
 
 	const fetchBrands = async (params = {}) => {
 		setLoading(true);
-		console.log('param search: ', params);
 		try {
 			const response = await brandService.getAll(params);
 			setBrands(response.data.data);

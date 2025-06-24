@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 function Button({
 	to,
 	subClass,
+	disabled ,
 	fontSize = "font-[14px]",
 	fontWeight = "font-medium",
 	color = "text-white",
@@ -24,7 +25,9 @@ function Button({
 	onMouseEnter = () => {},
 	onMouseLeave = () => {},
 }) {
-	const className = `${subClass} ${fontSize} ${fontWeight} ${buttonSize} ${color} ${border} ${background} ${rounded} ${hoverEffect} ${cursor} ${padding} ${buttonWidth} ${buttonHeight} flex items-center justify-center gap-1 transition-all duration-150 ease-linear`;
+	const className = `${subClass} ${fontSize} ${fontWeight} ${buttonSize} ${color} ${border} ${background} ${rounded} ${hoverEffect} ${cursor} ${padding} ${buttonWidth} ${buttonHeight} flex items-center justify-center gap-1 transition-all duration-150 ease-linear ${
+		disabled ? "opacity-50 cursor-not-allowed pointer-events-none" : ""
+	}`;
 	const classIcon = `${iconSize} flex items-center justify-center`;
 	const Element = to ? Link : "div";
 
@@ -46,6 +49,7 @@ function Button({
 Button.propTypes = {
 	to: PropTypes.string,
 	subClass: PropTypes.string,
+	disabled: PropTypes.bool,
 	fontSize: PropTypes.string,
 	fontWeight: PropTypes.string,
 	color: PropTypes.string,
