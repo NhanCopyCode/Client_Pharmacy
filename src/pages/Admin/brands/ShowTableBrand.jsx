@@ -26,7 +26,6 @@ function ShowTableBrand({ model }) {
 		setLoading(true);
 		try {
 			const response = await brandService.getAll(params);
-			console.log("response meta: ", response.data);
 			setBrands(response.data.data);
 			setMeta(response.data.meta);
 		} catch (error) {

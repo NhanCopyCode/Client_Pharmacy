@@ -17,28 +17,28 @@ function Pagination({ meta, onPageChange }) {
 					<button
 						key={index}
 						className={`
-		h-[36px] min-w-[36px] px-3 
-		border border-gray-300 rounded-md
-		transition-all duration-150 ease-in-out
-		flex items-center justify-center
-		${
-			link.active
-				? "bg-blue-600 text-white font-semibold"
-				: "bg-white text-gray-800"
-		}
-		${
-			!isDisabled
-				? "hover:bg-blue-100 hover:text-blue-700"
-				: "opacity-40 cursor-not-allowed"
-		}
-	`}
+							h-[36px] min-w-[36px] px-3 
+							border border-gray-300 rounded-md
+							transition-all duration-150 ease-in-out
+							flex items-center justify-center
+							${
+								link.active
+									? "bg-blue-600 text-white font-semibold"
+									: "bg-white text-gray-800"
+							}
+							${
+								!isDisabled
+									? "hover:bg-blue-100 hover:text-blue-700"
+									: "opacity-40 cursor-not-allowed"
+							}
+						`}
 						onClick={() => {
 							if (link.url) {
 								const page = new URL(link.url).searchParams.get(
 									"page"
 								);
 								onPageChange(page);
-								window.scrollTo({ top: 0, behavior: "smooth" }); // Optional
+								window.scrollTo({ top: 0, behavior: "smooth" }); 
 							}
 						}}
 						disabled={isDisabled}

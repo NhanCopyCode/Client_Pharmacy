@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import ImageUploadBrand from "../../../components/Admin/ImageUpload";
 import TiptapEditor from "../../../components/Admin/TiptapEditor";
-import { Button } from "../../../components/Client";
+import { Button, ModalGenerateText } from "../../../components/Client";
 import { adminPath } from "../../../utils/constants";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { TitleHeader } from "../../../components/Admin";
-import { useNavigate } from "react-router-dom";
 
 function BrandForm({
 	model,
@@ -83,7 +82,10 @@ function BrandForm({
 							</td>
 						</tr>
 						<tr className="grid grid-cols-12 gap-2">
-							<td className="col-span-3 p-[10px]">Mô tả hãng</td>
+							<td className="col-span-3 p-[10px]">
+								<span>Mô tả hãng</span>
+								<ModalGenerateText  name={name} description={description} />
+							</td>
 							<td className="col-span-9 p-[10px]">
 								<TiptapEditor
 									placeholder="Nhập mô tả hãng"
