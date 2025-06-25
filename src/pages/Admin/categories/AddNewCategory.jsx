@@ -31,7 +31,7 @@ function AddNewCategory() {
 	return (
 		<>
 			<TitleHeader
-				to={adminPath.DANH_SACH_SAN_PHAM}
+				to={adminPath.list("categories")}
 				title={"Thêm mới"}
 				buttonIcon={<FaArrowLeftLong />}
 				titleButton={"Danh sách"}

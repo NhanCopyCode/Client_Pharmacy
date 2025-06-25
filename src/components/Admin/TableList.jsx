@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 import GroupActionButton from "./GroupActionButton";
 import { Button } from "../Client";
-import brandService from "../../services/BrandService";
 import { useState } from "react";
 import Swal from "sweetalert2";
 
-function TableList({ columns, tableBody, model, onDeleteSuccess }) {
+function TableList({ columns, tableBody, model, onDeleteSuccess, service }) {
+	console.log('service ', service);
 	const [ids, setIds] = useState([]);
 	const handleDelete = async () => {
 		if (ids.length === 0) return;
@@ -24,7 +24,7 @@ function TableList({ columns, tableBody, model, onDeleteSuccess }) {
 		if (!result.isConfirmed) return;
 
 		try {
-			await Promise.all(ids.map((id) => brandService.deleteById(id)));
+			await Promise.all(ids.map((id) => service.deleteById(id)));
 
 			Swal.fire({
 				icon: "success",
@@ -64,7 +64,7 @@ function TableList({ columns, tableBody, model, onDeleteSuccess }) {
 					</tr>
 				</thead>
 				<tbody>
-					{tableBody.map((item, rowIndex) => (
+					{tableBody?.map((item, rowIndex) => (
 						<tr key={rowIndex} className="hover:bg-gray-100">
 							{columns.map((col) => (
 								<td

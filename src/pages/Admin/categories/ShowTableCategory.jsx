@@ -1,19 +1,49 @@
 import Select from "react-select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Button } from "../../../components/Client";
 import { IoMdAddCircle } from "react-icons/io";
 import { IoIosSearch } from "react-icons/io";
 import { TableList, TitleHeader } from "../../../components/Admin";
-import { adminPath } from "../../../utils/constants";
+import { adminPath, TABLE_COLUMNS } from "../../../utils/constants";
+import { Pagination } from "../../../components";
+import categoryService from "../../../services/CategoryService";
 
-const options = [
-	{ value: "chocolate", label: "Chocolate" },
-	{ value: "strawberry", label: "Strawberry" },
-	{ value: "vanilla", label: "Vanilla" },
-];
+
+
 function ShowTableCategory() {
-	const [selectedOption, setSelectedOption] = useState(null);
+	const [listParents, setListParents] = useState([]);
+	const [categories, setCategories] = useState([]);
+	const [loading, setLoading] = useState(true);
+	const [searchInput, setSearchInput] = useState("");
+	const [meta, setMeta] = useState([]);
+
+	const fetchCategories = async (params = {}) => {
+		setLoading(true);
+		try {
+			const response = await categoryService.getAll(params);
+			console.log('response : ', response);
+			setListParents(response.data.parents);
+			setCategories(response.data.data);
+			setMeta(response.data.meta);
+		} catch (error) {
+			console.error("Error: ", error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		fetchCategories();
+	}, []);
+
+	const handleSearch = () => {
+		fetchCategories({ search: searchInput });
+	};
+
+	const handlePageChange = (page) => {
+		fetchCategories({ search: searchInput, page });
+	};
 
 	return (
 		<>
@@ -21,26 +51,33 @@ function ShowTableCategory() {
 				title={"Thêm mới"}
 				buttonIcon={<IoMdAddCircle />}
 				titleButton={"Thêm mới"}
-				to={adminPath.THEM_MOI_SAN_PHAM}
+				to={adminPath.create("categories")}
 			/>
 			<div className="flex items-center justify-end w-full p-3 gap-2">
 				<Select
 					className=" text-sm"
-					placeholder="Chọn loại bộ đề"
-					defaultValue={selectedOption}
-					onChange={setSelectedOption}
-					options={options}
+					placeholder="Chọn loại danh mục"
+					// defaultValue={selectedOption}
+					onChange={setListParents}
+					options={listParents}
 				/>
-				<Select
+				{/* <Select
 					className=" text-sm"
-					placeholder="Chọn loại bộ đề"
+					placeholder="Chọn loại danh mục"
 					defaultValue={selectedOption}
 					onChange={setSelectedOption}
 					options={options}
-				/>
+				/> */}
 				<input
 					className="h-[38px] px-3 outline-0 border border-gray-200 rounded-md text-sm w-[180px]"
 					placeholder="Tìm kiếm..."
+					value={searchInput}
+					onChange={(e) => setSearchInput(e.target.value)}
+					onKeyDown={(e) => {
+						if (e.key === "Enter") {
+							handleSearch();
+						}
+					}}
 				/>
 				<Button
 					leftIcon={<IoIosSearch />}
@@ -50,13 +87,30 @@ function ShowTableCategory() {
 					rounded="rounded-md"
 					hoverEffect="hover:bg-gray-200"
 					fontWeight="font-bold"
+					onClick={handleSearch}
 				>
 					Tìm
 				</Button>
 			</div>
 
 			<div className="p-3">
-				<TableList />
+				{loading ? (
+					<p>Loading...</p>
+				) : (
+					<>
+						<TableList
+							columns={TABLE_COLUMNS.categories}
+							tableBody={categories}
+							model={"categories"}
+							onDeleteSuccess={fetchCategories}
+							service={categoryService}
+						/>
+						<Pagination
+							meta={meta}
+							onPageChange={handlePageChange}
+						/>
+					</>
+				)}
 			</div>
 		</>
 	);

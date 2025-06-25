@@ -105,6 +105,7 @@ function ShowTableBrand({ model }) {
 							tableBody={brands}
 							model={"brands"}
 							onDeleteSuccess={fetchBrands}
+							service={brandService}
 						/>
 						<Pagination
 							meta={meta}
