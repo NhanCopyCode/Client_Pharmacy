@@ -7,7 +7,7 @@ function Pagination({ meta, onPageChange }) {
 
 	return (
 		<div className="flex justify-center items-center gap-2 mt-8 flex-wrap text-sm select-none">
-			{meta.links.map((link, index) => {
+			{meta?.links?.map((link, index) => {
 				const label = link.label.replace(/&laquo;|&raquo;/g, "").trim();
 				const isPrev = link.label.includes("&laquo;");
 				const isNext = link.label.includes("&raquo;");

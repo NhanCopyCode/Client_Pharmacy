@@ -3,8 +3,6 @@ import GroupActionButton from "./GroupActionButton";
 import { Button } from "../Client";
 import brandService from "../../services/BrandService";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { adminPath } from "../../utils/constants";
 import Swal from "sweetalert2";
 
 function TableList({ columns, tableBody, model, onDeleteSuccess }) {
