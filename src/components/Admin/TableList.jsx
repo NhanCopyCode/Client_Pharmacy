@@ -5,7 +5,6 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 
 function TableList({ columns, tableBody, model, onDeleteSuccess, service }) {
-	console.log('service ', service);
 	const [ids, setIds] = useState([]);
 	const handleDelete = async () => {
 		if (ids.length === 0) return;

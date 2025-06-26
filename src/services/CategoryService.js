@@ -1,12 +1,15 @@
 import { createApiService } from "./api/apiService";
 import axios from "./api/axiosInstance";
 
-const productService = { ...createApiService("categories") ,
+const categoryService = { ...createApiService("categories") ,
     generateDescription: (objData) => {
         const {name, description} = objData;
         const keyword = 'thể loại thuốc';
         return axios.post("/ai/generate-description", { name, description, keyword });
-    }
+    },
+    getListParents: () => {
+        return axios.get('/categories/parents');
+    },
 };
 
-export default productService;
+export default categoryService;

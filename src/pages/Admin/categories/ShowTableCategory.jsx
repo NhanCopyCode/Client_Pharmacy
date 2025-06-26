@@ -22,7 +22,6 @@ function ShowTableCategory() {
 		setLoading(true);
 		try {
 			const response = await categoryService.getAll(params);
-			console.log('response : ', response);
 			setListParents(response.data.parents);
 			setCategories(response.data.data);
 			setMeta(response.data.meta);

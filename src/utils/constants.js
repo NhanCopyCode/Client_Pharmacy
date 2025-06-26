@@ -146,7 +146,7 @@ export const TABLE_COLUMNS = {
 			key: "image",
 			label: "Hình ảnh",
 			type: "image",
-			style: "w-10 h-10 object-cover",
+			style: "w-50 object-cover",
 		},
 		{ key: "parentId", label: "Danh mục cha" },
 	],
