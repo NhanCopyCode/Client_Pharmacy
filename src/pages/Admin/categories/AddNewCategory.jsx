@@ -10,11 +10,7 @@ import { adminPath } from "../../../utils/constants";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
-const options = [
-	{ value: "chocolate", label: "Chocolate" },
-	{ value: "strawberry", label: "Strawberry" },
-	{ value: "vanilla", label: "Vanilla" },
-];
+
 function AddNewCategory({ model}) {
 	const [errors, setErrors] = useState({});
 	const navigate = useNavigate();

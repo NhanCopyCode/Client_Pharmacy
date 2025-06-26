@@ -148,7 +148,7 @@ export const TABLE_COLUMNS = {
 			type: "image",
 			style: "w-50 object-cover",
 		},
-		{ key: "parentId", label: "Danh mục cha" },
+		{ key: "parentName", label: "Danh mục cha", type: "parent" },
 	],
 
 	users: [

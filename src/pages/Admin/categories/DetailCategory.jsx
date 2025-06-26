@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { TitleHeader } from "../../../components/Admin";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { adminPath } from "../../../utils/constants";
-import brandService from "../../../services/BrandService";
 import { useEffect, useState } from "react";
 import categoryService from "../../../services/CategoryService";
 

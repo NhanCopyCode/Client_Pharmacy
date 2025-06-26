@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import GroupActionButton from "./GroupActionButton";
 import { Button } from "../Client";
-import { useState } from "react";
+import React, { useState } from "react";
 import Swal from "sweetalert2";
 
 function TableList({ columns, tableBody, model, onDeleteSuccess, service }) {
@@ -63,7 +63,7 @@ function TableList({ columns, tableBody, model, onDeleteSuccess, service }) {
 					</tr>
 				</thead>
 				<tbody>
-					{tableBody?.map((item, rowIndex) => (
+					{/* {tableBody?.map((item, rowIndex) => (
 						<tr key={rowIndex} className="hover:bg-gray-100">
 							{columns.map((col) => (
 								<td
@@ -89,6 +89,69 @@ function TableList({ columns, tableBody, model, onDeleteSuccess, service }) {
 								/>
 							</td>
 						</tr>
+					))} */}
+					{tableBody?.map((parent) => (
+						<React.Fragment key={`parent-${parent.id}`}>
+							<tr className="bg-gray-50 hover:bg-gray-100">
+								{columns.map((col) => (
+									<td
+										key={col.key}
+										className={`border border-gray-300 p-2 text-center ${
+											col.style || ""
+										}  ${parent?.children ? "font-bold" : ""}`}
+									>
+										{renderCell(
+											parent[col.key],
+											col.type,
+											parent.id,
+											setIds,
+											ids
+										)}
+									</td>
+								))}
+								<td className="border border-gray-300 p-2">
+									<GroupActionButton
+										id={parent.id}
+										model={model}
+										onDeleteSuccess={onDeleteSuccess}
+									/>
+								</td>
+							</tr>
+
+							{/* Children rows */}
+							{parent?.children?.map((child) => (
+								<tr
+									key={`child-${child.id}`}
+									className="hover:bg-gray-50 text-gray-700"
+								>
+									{columns.map((col) => (
+										<td
+											key={col.key}
+											className={`border border-gray-200 p-2 ${
+												col.style || ""
+											}`}
+										>
+											<div className="text-center">
+												{renderCell(
+													child[col.key],
+													col.type,
+													child.id,
+													setIds,
+													ids
+												)}
+											</div>
+										</td>
+									))}
+									<td className="border border-gray-200 p-2">
+										<GroupActionButton
+											id={child.id}
+											model={model}
+											onDeleteSuccess={onDeleteSuccess}
+										/>
+									</td>
+								</tr>
+							))}
+						</React.Fragment>
 					))}
 				</tbody>
 			</table>
@@ -158,6 +221,18 @@ function renderCell(value, type, id, setIdsFunction, ids) {
 				}}
 			/>
 		);
+	}
+
+	if (type === "parent") {
+		return value ? (
+			value
+		) : (
+			<p className="italic text-gray">Không có danh mục cha</p>
+		);
+	}
+
+	if (type === "children") {
+		return;
 	}
 
 	return value != null ? value : "";

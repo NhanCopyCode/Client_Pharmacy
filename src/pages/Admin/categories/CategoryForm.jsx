@@ -49,8 +49,8 @@ function CategoryForm({
 			setName(initialData.name || "");
 			setSelectedOption(initialData.parentId);
 			setApproved(Boolean(initialData.approved));
-			if (initialData.logo) {
-				setImages([{ data_url: initialData.logo }]);
+			if (initialData.image) {
+				setImages([{ data_url: initialData.image }]);
 			}
 			setInitialized(true);
 		}
