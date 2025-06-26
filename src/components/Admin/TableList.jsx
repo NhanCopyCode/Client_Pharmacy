@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 function TableList({ columns, tableBody, model, onDeleteSuccess, service }) {
 	const [ids, setIds] = useState([]);
 	const handleDelete = async () => {
+		console.log('Ids', ids);
 		if (ids.length === 0) return;
 
 		const result = await Swal.fire({
@@ -184,7 +185,7 @@ function renderCell(value, type, id, setIdsFunction, ids) {
 	}
 
 	if (type === "boolean") {
-		return value ? (
+		return value == 1 ? (
 			<span className="text-green-600 font-semibold">Đã duyệt</span>
 		) : (
 			<span className="text-red-600 font-semibold">Chưa duyệt</span>

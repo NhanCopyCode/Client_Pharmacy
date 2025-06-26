@@ -149,6 +149,7 @@ export const TABLE_COLUMNS = {
 			style: "w-50 object-cover",
 		},
 		{ key: "parentName", label: "Danh mục cha", type: "parent" },
+		{ key: "approved", label: "Duyệt", type: "boolean" },
 	],
 
 	users: [
