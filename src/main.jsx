@@ -30,7 +30,8 @@ import {
 	ShowTablePromotion,
 	ShowTableSetting,
 	DetailBrand,
-	EditBrand
+	EditBrand,
+	DetailCategory
 } from "./pages/Admin/index.js";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -60,6 +61,8 @@ export const adminModels = [
 		model: "categories",
 		list: ShowTableCategory,
 		create: AddNewCategory,
+		detail: DetailCategory,
+		
 	},
 	{
 		model: "promotions",

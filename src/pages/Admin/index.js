@@ -5,6 +5,7 @@ export { default as AddNewProduct } from "./products/AddNewProduct";
 //Categories
 export { default as ShowTableCategory } from "./categories/ShowTableCategory";
 export { default as AddNewCategory } from "./categories/AddNewCategory";
+export { default as DetailCategory } from "./categories/DetailCategory";
 
 //Promotions
 export { default as ShowTablePromotion } from "./promotions/ShowTablePromotion";
