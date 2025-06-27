@@ -22,11 +22,6 @@ function CategoryForm({
 	const [selectedOption, setSelectedOption] = useState(null);
 	const [images, setImages] = useState([]);
 
-
-	const onChange = (imageList) => {
-		setImages(imageList);
-	};
-
 	useEffect(() => {
 		const fetchListParents = async () => {
 			try {
@@ -36,7 +31,9 @@ function CategoryForm({
 					...response.data,
 				];
 				setListParents(options);
-				setSelectedOption(options[0]);
+				if (mode === "create") {
+					setSelectedOption(options[0]);
+				}
 			} catch (error) {
 				console.log("error: ", error);
 			}
@@ -44,17 +41,30 @@ function CategoryForm({
 
 		fetchListParents();
 	}, []);
+	console.log("listParents out effect: ", listParents);
+
 	useEffect(() => {
-		if (initialData && !initialized) {
+		if (initialData && listParents.length > 0 && !initialized) {
+			console.log("initialData: ", initialData);
+			console.log("listParents: ", listParents);
+
 			setName(initialData.name || "");
-			setSelectedOption(initialData.parentId);
+
+			const matchedOption = listParents.find(
+				(opt) => opt.value === initialData.parentId
+			);
+			setSelectedOption(
+				matchedOption || { value: 0, label: "Không có danh mục cha" }
+			);
 			setApproved(Boolean(initialData.approved));
+
 			if (initialData.image) {
 				setImages([{ data_url: initialData.image }]);
 			}
+
 			setInitialized(true);
 		}
-	}, [initialData, initialized]);
+	}, [initialData, initialized, listParents]);
 
 	const handleSubmit = async () => {
 		const formData = new FormData();
@@ -85,6 +95,7 @@ function CategoryForm({
 							<td className="col-span-9 p-[10px]">
 								<input
 									type="text"
+									placeholder="Nhập tên danh mục"
 									value={name}
 									onChange={(e) => setName(e.target.value)}
 									className="border border-gray-300 w-full rounded-sm py-[5px] px-[10px] text-sm outline-0"
@@ -106,7 +117,7 @@ function CategoryForm({
 									id="category"
 									className=" text-sm"
 									placeholder="Chọn danh mục cha"
-									defaultValue={selectedOption}
+									value={selectedOption}
 									onChange={setSelectedOption}
 									options={listParents}
 									isSearchable={true}

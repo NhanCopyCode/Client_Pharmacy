@@ -4,9 +4,8 @@ import { Link } from "react-router-dom";
 import { FaRegEye } from "react-icons/fa";
 import { adminPath } from "../../utils/constants";
 import Swal from "sweetalert2";
-import brandService from "../../services/BrandService";
 
-function GroupActionButton({ id, model, onDeleteSuccess }) {
+function GroupActionButton({ id, model, onDeleteSuccess, service }) {
 	const handleDelete = async () => {
 		const result = await Swal.fire({
 			title: "Bạn có chắc chắn muốn xóa?",
@@ -21,10 +20,8 @@ function GroupActionButton({ id, model, onDeleteSuccess }) {
 
 		if (result.isConfirmed) {
 			try {
-				if (model === "brands") {
-					await brandService.deleteById(id);
-					if(onDeleteSuccess) onDeleteSuccess();
-				}
+				await service.deleteById(id);
+				if (onDeleteSuccess) onDeleteSuccess();
 
 				Swal.fire("Đã xóa!", "Dữ liệu đã được xóa.", "success");
 			} catch (error) {

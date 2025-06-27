@@ -22,7 +22,7 @@ function DetailCategory({ model }) {
 		fetchCategory();
 	}, [id]);
 
-	const { name, parentId, image } = category || {};
+	const { name, parentName, image } = category || {};
 
 	return (
 		<>
@@ -41,7 +41,7 @@ function DetailCategory({ model }) {
 				<div className="col-span-9">{name}</div>
 
 				<div className="col-span-3">Danh mục cha:</div>
-				<div className="col-span-9">{parentId}</div>
+				<div className="col-span-9">{parentName ? parentName : <p className="italic text-gray">Không có danh mục cha</p>}</div>
 
 				<div className="col-span-3">Hình ảnh:</div>
 				<div className="col-span-9">

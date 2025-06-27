@@ -7,7 +7,6 @@ import Swal from "sweetalert2";
 function TableList({ columns, tableBody, model, onDeleteSuccess, service }) {
 	const [ids, setIds] = useState([]);
 	const handleDelete = async () => {
-		console.log('Ids', ids);
 		if (ids.length === 0) return;
 
 		const result = await Swal.fire({
@@ -99,7 +98,9 @@ function TableList({ columns, tableBody, model, onDeleteSuccess, service }) {
 										key={col.key}
 										className={`border border-gray-300 p-2 text-center ${
 											col.style || ""
-										}  ${parent?.children ? "font-bold" : ""}`}
+										}  ${
+											parent?.children ? "font-bold" : ""
+										}`}
 									>
 										{renderCell(
 											parent[col.key],
@@ -115,6 +116,7 @@ function TableList({ columns, tableBody, model, onDeleteSuccess, service }) {
 										id={parent.id}
 										model={model}
 										onDeleteSuccess={onDeleteSuccess}
+										service={service}
 									/>
 								</td>
 							</tr>
@@ -148,6 +150,7 @@ function TableList({ columns, tableBody, model, onDeleteSuccess, service }) {
 											id={child.id}
 											model={model}
 											onDeleteSuccess={onDeleteSuccess}
+											service={service}
 										/>
 									</td>
 								</tr>
