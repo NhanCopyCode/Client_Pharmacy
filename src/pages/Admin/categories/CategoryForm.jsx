@@ -41,13 +41,9 @@ function CategoryForm({
 
 		fetchListParents();
 	}, []);
-	console.log("listParents out effect: ", listParents);
 
 	useEffect(() => {
 		if (initialData && listParents.length > 0 && !initialized) {
-			console.log("initialData: ", initialData);
-			console.log("listParents: ", listParents);
-
 			setName(initialData.name || "");
 
 			const matchedOption = listParents.find(
