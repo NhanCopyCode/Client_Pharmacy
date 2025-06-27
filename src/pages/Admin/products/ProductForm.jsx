@@ -6,9 +6,10 @@ import { adminPath } from "../../../utils/constants";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { TitleHeader } from "../../../components/Admin";
 import Select from "react-select";
-import categoryService from "../../../services/CategoryService";
+import productService from "../../../services/ProductServie";
+import { readMoneyVND } from "../../../utils/moneyUtils";
 
-function CategoryForm({
+function ProductForm({
 	model,
 	initialData = {},
 	mode = "create",
@@ -16,6 +17,8 @@ function CategoryForm({
 	onSubmit,
 }) {
 	const [name, setName] = useState("");
+	const [price, setPrice] = useState("");
+	const [description, setDescription] = useState("");
 	const [approved, setApproved] = useState(false);
 	const [initialized, setInitialized] = useState(false);
 	const [listParents, setListParents] = useState([]);
@@ -25,7 +28,7 @@ function CategoryForm({
 	useEffect(() => {
 		const fetchListParents = async () => {
 			try {
-				const response = await categoryService.getListParents();
+				const response = await productService.getListParents();
 				const options = [
 					{ value: 0, label: "Không có danh mục cha" },
 					...response.data,
@@ -76,7 +79,7 @@ function CategoryForm({
 	return (
 		<>
 			<TitleHeader
-				to={adminPath.list("categories")}
+				to={adminPath.DANH_SACH_SAN_PHAM}
 				title={"Thêm mới"}
 				buttonIcon={<FaArrowLeftLong />}
 				titleButton={"Danh sách"}
@@ -86,60 +89,90 @@ function CategoryForm({
 					<tbody>
 						<tr className="grid grid-cols-12 gap-2">
 							<td className="col-span-3 p-[10px]">
-								Tên danh mục
+								Tên sản phẩm
 							</td>
 							<td className="col-span-9 p-[10px]">
 								<input
 									type="text"
-									placeholder="Nhập tên danh mục"
-									value={name}
-									onChange={(e) => setName(e.target.value)}
 									className="border border-gray-300 w-full rounded-sm py-[5px] px-[10px] text-sm outline-0"
 								/>
-								<span className="text-redColor">
-									{errors.name}
-								</span>
 							</td>
 						</tr>
 
 						<tr className="grid grid-cols-12 gap-2">
 							<td className="col-span-3 p-[10px]">
-								<label htmlFor="category">
-									Chọn danh mục cha
-								</label>
+								Giá sản phẩm
+							</td>
+							<td className="flex flex-col col-span-9">
+								<div className=" p-[10px] w-full">
+									<input
+										type="number"
+										className="border border-gray-300 w-full rounded-sm py-[5px] px-[10px] text-sm outline-0"
+										value={price}
+										onChange={(e) =>
+											setPrice(e.target.value)
+										}
+									/>
+								</div>
+								{price && (
+									<span className="text-success">
+										{readMoneyVND(price)}
+									</span>
+								)}
+							</td>
+						</tr>
+						<tr className="grid grid-cols-12 gap-2">
+							<td className="col-span-3 p-[10px]">
+								<label htmlFor="category">Chọn danh mục</label>
 							</td>
 							<td className="col-span-9 p-[10px]">
-								<Select
+								{/* <Select
 									id="category"
 									className=" text-sm"
-									placeholder="Chọn danh mục cha"
-									value={selectedOption}
+									placeholder="Chọn danh mục"
+									defaultValue={selectedOption}
 									onChange={setSelectedOption}
-									options={listParents}
-									isSearchable={true}
-									isClearable={true}
+									options={options}
+								/> */}
+							</td>
+						</tr>
+						<tr className="grid grid-cols-12 gap-2">
+							<td className="col-span-3 p-[10px]">
+								<span>Mô tả sản phẩm</span>
+								<ModalGenerateText
+									service={productService}
+									name={name}
+									description={description}
 								/>
-
+							</td>
+							<td className="col-span-9 p-[10px]">
+								<TiptapEditor
+									placeholder="Nhập mô tả hãng"
+									initialContent={description}
+									onChange={setDescription}
+								/>
 								<span className="text-redColor">
-									{errors.parentId}
+									{errors.description}
 								</span>
 							</td>
 						</tr>
 						<tr className="grid grid-cols-12 gap-2">
 							<td className="col-span-3 p-[10px]">
-								Hình ảnh hãng
+								Hình ảnh sản phẩm
 							</td>
 							<td className="col-span-9 p-[10px]">
 								<ImageUploadBrand
 									images={images}
 									setImages={setImages}
+									isUploadMultiple={true}
 								/>
+
 								<span className="text-redColor">
 									{errors.image}
 								</span>
 							</td>
 						</tr>
-						
+
 						<tr className="grid grid-cols-12 gap-2">
 							<td className="col-span-3 p-[10px]">
 								<label htmlFor="test">Duyệt</label>
@@ -183,4 +216,4 @@ function CategoryForm({
 	);
 }
 
-export default CategoryForm;
+export default ProductForm;

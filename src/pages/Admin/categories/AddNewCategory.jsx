@@ -1,10 +1,5 @@
 import { useState } from "react";
-import ImageUploading from "react-images-uploading";
-import { Editor } from "../../../components/Admin";
 import categoryService from "../../../services/CategoryService";
-import { TitleHeader } from "../../../components/Admin";
-import { Button } from "../../../components/Client";
-import { FaArrowLeftLong } from "react-icons/fa6";
 import CategoryForm from "./CategoryForm";
 import { adminPath } from "../../../utils/constants";
 import Swal from "sweetalert2";

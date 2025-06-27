@@ -2,7 +2,7 @@ import React from "react";
 import ImageUploading from "react-images-uploading";
 import { Button } from "../Client";
 
-function ImageUploadBrand({ images, setImages }) {
+function ImageUploadBrand({ images, setImages, isUploadMultiple = false }) {
 	const maxNumber = 5;
 	const minNumber = 1;
 
@@ -12,7 +12,7 @@ function ImageUploadBrand({ images, setImages }) {
 
 	return (
 		<ImageUploading
-			multiple={false}
+			multiple={isUploadMultiple}
 			value={images}
 			onChange={onChange}
 			maxNumber={maxNumber}

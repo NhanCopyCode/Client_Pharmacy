@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import brandService from "../../../services/BrandService";
 import ImageUploadBrand from "../../../components/Admin/ImageUpload";
 import TiptapEditor from "../../../components/Admin/TiptapEditor";
 import { Button, ModalGenerateText } from "../../../components/Client";
@@ -84,7 +85,7 @@ function BrandForm({
 						<tr className="grid grid-cols-12 gap-2">
 							<td className="col-span-3 p-[10px]">
 								<span>Mô tả hãng</span>
-								<ModalGenerateText  name={name} description={description} />
+								<ModalGenerateText service={brandService}  name={name} description={description} />
 							</td>
 							<td className="col-span-9 p-[10px]">
 								<TiptapEditor

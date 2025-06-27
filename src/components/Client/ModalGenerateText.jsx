@@ -2,7 +2,6 @@ import { useState } from "react";
 import Modal from "react-modal";
 import { customStylesModal } from "../../utils/constants";
 import ReactMarkdown from "react-markdown";
-import brandService from "../../services/BrandService";
 import {  toast } from "react-toastify";
 
 import { GiSevenPointedStar } from "react-icons/gi";
@@ -11,15 +10,19 @@ import { FaTimes } from "react-icons/fa";
 import Button from "./Button";
 
 Modal.setAppElement("#root");
-function ModalGenerateText({ name, description }) {
+function ModalGenerateText({ service, ...fields }) {
 	const [modalIsOpen, setIsOpen] = useState(false);
 	const [descriptionGenerated, setDescriptionGenerated] = useState("");
 
+	const hasRequiredFields = Object.values(fields).every(val => val && val !== "");
 	async function openModal() {
-        if(!name || !description) {
-            toast.error("Vui lòng nhập đầy đủ thông tin để AI có thể tạo mô tả.");
-            return;
-        }
+
+        if (!hasRequiredFields) {
+			toast.error(
+				"Vui lòng nhập đầy đủ thông tin để AI có thể tạo mô tả."
+			);
+			return;
+		}
         if (descriptionGenerated) {
             setIsOpen(true);
             return;
@@ -34,10 +37,7 @@ function ModalGenerateText({ name, description }) {
 
 	const handleGenerateDescription = async () => {
         setDescriptionGenerated("Đang tạo mô tả...")
-		const response = await brandService.generateDescription(
-			name,
-			description
-		);
+		const response = await service.generateDescription(fields);
 
 		setDescriptionGenerated(response.data.description);
 	};

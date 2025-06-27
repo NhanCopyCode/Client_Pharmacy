@@ -9,23 +9,21 @@ import { adminPath, TABLE_COLUMNS } from "../../../utils/constants";
 import { Pagination } from "../../../components";
 import productService from "../../../services/ProductServie";
 
-const options = [
-	{ value: "chocolate", label: "Chocolate" },
-	{ value: "strawberry", label: "Strawberry" },
-	{ value: "vanilla", label: "Vanilla" },
-];
 function ShowTableProduct() {
-	const [selectedOption, setSelectedOption] = useState(null);
-	const [brands, setBrands] = useState([]);
+	const [listParents, setListParents] = useState([]);
+	const [products, setProducts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [searchInput, setSearchInput] = useState("");
 	const [meta, setMeta] = useState([]);
+	const [selectedOption, setSelectedOption] = useState([]);
 
 	const fetchProducts = async (params = {}) => {
 		setLoading(true);
 		try {
 			const response = await productService.getAll(params);
-			setBrands(response.data.data);
+			setProducts(response.data.data);
+
+			// Pagination dont edit this
 			setMeta(response.data.meta);
 		} catch (error) {
 			console.error("Error: ", error);
@@ -39,11 +37,26 @@ function ShowTableProduct() {
 	}, []);
 
 	const handleSearch = () => {
-		fetchProducts({ search: searchInput });
+		fetchProducts({
+			search: searchInput,
+			parentId: selectedOption?.value || null,
+		});
 	};
 
 	const handlePageChange = (page) => {
-		fetchProducts({ search: searchInput, page });
+		fetchProducts({
+			search: searchInput,
+			parentId: selectedOption?.value || null,
+			page,
+		});
+	};
+
+	const handleParentSelect = (option) => {
+		setSelectedOption(option);
+		fetchProducts({
+			search: searchInput,
+			parentId: option?.value || null,
+		});
 	};
 
 	return (
@@ -52,25 +65,30 @@ function ShowTableProduct() {
 				title={"Thêm mới"}
 				buttonIcon={<IoMdAddCircle />}
 				titleButton={"Thêm mới"}
-				to={adminPath.PRODUCTS_CREATE}
+				to={adminPath.create("products")}
 			/>
 			<div className="flex items-center justify-end w-full p-3 gap-2">
 				<Select
 					className=" text-sm"
-					placeholder="Chọn loại bộ đề"
-					defaultValue={selectedOption}
-					onChange={setSelectedOption}
-					options={options}
+					placeholder="Chọn loại danh mục"
+					value={selectedOption}
+					onChange={handleParentSelect}
+					options={[
+						{ value: null, label: "Tất cả danh mục cha" },
+						...listParents,
+					]}
+					isClearable
 				/>
-				<Select
+				{/* <Select
 					className=" text-sm"
-					placeholder="Chọn loại bộ đề"
+					placeholder="Chọn loại danh mục"
 					defaultValue={selectedOption}
 					onChange={setSelectedOption}
 					options={options}
-				/>
+				/> */}
 				<input
-					className="h-[38px] px-3 outline-0 border border-gray-200 rounded-md text-sm w-[180px]"
+					className="h-[38px] px-3 outline-0 border 
+					border-gray-200 rounded-md text-sm w-[180px]"
 					placeholder="Tìm kiếm..."
 					value={searchInput}
 					onChange={(e) => setSearchInput(e.target.value)}
@@ -101,9 +119,10 @@ function ShowTableProduct() {
 					<>
 						<TableList
 							columns={TABLE_COLUMNS.products}
-							tableBody={brands}
-							model={"brands"}
+							tableBody={products}
+							model={"products"}
 							onDeleteSuccess={fetchProducts}
+							service={productService}
 						/>
 						<Pagination
 							meta={meta}
