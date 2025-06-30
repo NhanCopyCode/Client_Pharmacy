@@ -122,7 +122,12 @@ export const TABLE_COLUMNS = {
 		{ key: "", label: "", type: "checkbox", style: "text-center" },
 		{ key: "id", label: "ID" },
 		{ key: "title", label: "Tên sản phẩm" },
-		{ key: "description", label: "Mô tả" },
+		{
+			key: "description",
+			label: "Mô tả",
+			type: "html",
+			style: "max-w-[300px]",
+		},
 		{ key: "inventory", label: "Kho" },
 		{
 			key: "price",

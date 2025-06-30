@@ -2,20 +2,35 @@ import { useState } from "react";
 import { adminPath } from "../../../utils/constants";
 import ProductForm from "./ProductForm";
 import { useNavigate } from "react-router-dom";
-import productService from "../../../services/ProductServie";
+import productService from "../../../services/ProductService";
+import productImageService from "../../../services/ProductImageService";
 import Swal from "sweetalert2";
 
 
-function AddNewCategory({ model }) {
+function AddNewProduct({ model }) {
 	const [errors, setErrors] = useState({});
 	const navigate = useNavigate();
-	const handleSubmit = async (formData) => {
+	const handleSubmit = async ({ formData, images }) => {
 		try {
-			await productService.create(formData);
+			const response = await productService.create(formData);
+			const productId = response?.data?.data?.id;
+
+			if (images.length > 0 && productId) {
+				const imageFormData = new FormData();
+				imageFormData.append("productId", productId);
+				images.forEach((image) => {
+					if (image?.file) {
+						imageFormData.append("images[]", image.file);
+					}
+				});
+				console.log("insert image in this code: ", images);
+				await productImageService.create(imageFormData);
+			}
+
 			await Swal.fire({
 				icon: "success",
 				title: "Thành công!",
-				text: "Danh mục đã được thêm mới thành công.",
+				text: "Sản phẩm đã được thêm mới.",
 				showConfirmButton: true,
 			});
 			navigate(adminPath.list(model));
@@ -30,9 +45,14 @@ function AddNewCategory({ model }) {
 			}
 		}
 	};
+	
 	return (
-		<ProductForm model={model} errors={errors} onSubmit={handleSubmit} />
+		<ProductForm
+			model={model}
+			errors={errors}
+			onSubmit={handleSubmit}
+		/>
 	);
 }
 
-export default AddNewCategory;
+export default AddNewProduct;

@@ -10,6 +10,9 @@ const categoryService = { ...createApiService("categories") ,
     getListParents: () => {
         return axios.get('/categories/parents');
     },
+    getListChild: () => {
+        return axios.get('/categories/child');
+    }
    
 };
 

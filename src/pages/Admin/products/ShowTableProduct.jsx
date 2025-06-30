@@ -7,7 +7,7 @@ import { IoIosSearch } from "react-icons/io";
 import { TableList, TitleHeader } from "../../../components/Admin";
 import { adminPath, TABLE_COLUMNS } from "../../../utils/constants";
 import { Pagination } from "../../../components";
-import productService from "../../../services/ProductServie";
+import productService from "../../../services/ProductService";
 
 function ShowTableProduct() {
 	const [listParents, setListParents] = useState([]);
@@ -23,7 +23,7 @@ function ShowTableProduct() {
 			const response = await productService.getAll(params);
 			setProducts(response.data.data);
 
-			// Pagination dont edit this
+			//This code for Pagination dont edit this
 			setMeta(response.data.meta);
 		} catch (error) {
 			console.error("Error: ", error);

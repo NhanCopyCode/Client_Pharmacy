@@ -6,8 +6,10 @@ import { adminPath } from "../../../utils/constants";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { TitleHeader } from "../../../components/Admin";
 import Select from "react-select";
-import productService from "../../../services/ProductServie";
 import { readMoneyVND } from "../../../utils/moneyUtils";
+import productService from "../../../services/ProductService";
+import brandService from "../../../services/BrandService";
+import categoryService from "../../../services/CategoryService";
 
 function ProductForm({
 	model,
@@ -15,27 +17,30 @@ function ProductForm({
 	mode = "create",
 	errors = {},
 	onSubmit,
+	onImagesSubmit,
 }) {
-	const [name, setName] = useState("");
+	const [title, setTitle] = useState("");
 	const [price, setPrice] = useState("");
+	const [inventory, setInventory] = useState("");
 	const [description, setDescription] = useState("");
 	const [approved, setApproved] = useState(false);
 	const [initialized, setInitialized] = useState(false);
-	const [listParents, setListParents] = useState([]);
-	const [selectedOption, setSelectedOption] = useState(null);
+	const [listBrands, setListBrands] = useState([]);
+	const [listCategories, setListCategories] = useState([]);
+	const [selectedBrandOption, setSelectedBrandOption] = useState(null);
+	const [selectedCategoryOption, setSelectedCategoryOption] = useState(null);
 	const [images, setImages] = useState([]);
 
 	useEffect(() => {
 		const fetchListParents = async () => {
 			try {
-				const response = await productService.getListParents();
-				const options = [
-					{ value: 0, label: "Không có danh mục cha" },
-					...response.data,
-				];
-				setListParents(options);
+				const listBrands = await brandService.getSelectBrands();
+				const listCategories = await categoryService.getListChild();
+				setListBrands(listBrands.data);
+				setListCategories(listCategories.data);
 				if (mode === "create") {
-					setSelectedOption(options[0]);
+					setSelectedBrandOption(null);
+					setSelectedCategoryOption(null);
 				}
 			} catch (error) {
 				console.log("error: ", error);
@@ -46,15 +51,25 @@ function ProductForm({
 	}, []);
 
 	useEffect(() => {
-		if (initialData && listParents.length > 0 && !initialized) {
-			setName(initialData.name || "");
+		if (
+			initialData &&
+			listBrands.length > 0 &&
+			listCategories.length > 0 &&
+			!initialized
+		) {
+			setTitle(initialData.name || "");
+			setPrice(initialData.price || "");
+			setInventory(initialData.inventory || "");
+			setDescription(initialData.description || "");
 
-			const matchedOption = listParents.find(
-				(opt) => opt.value === initialData.parentId
+			const matchedBrandOption = listBrands.find(
+				(opt) => opt.value === initialData.brandId
 			);
-			setSelectedOption(
-				matchedOption || { value: 0, label: "Không có danh mục cha" }
+			setSelectedBrandOption(matchedBrandOption);
+			const matchedCategoryOption = listCategories.find(
+				(opt) => opt.value === initialData.brandId
 			);
+			setSelectedCategoryOption(matchedCategoryOption);
 			setApproved(Boolean(initialData.approved));
 
 			if (initialData.image) {
@@ -63,17 +78,24 @@ function ProductForm({
 
 			setInitialized(true);
 		}
-	}, [initialData, initialized, listParents]);
+	}, [initialData, initialized, listBrands, listCategories]);
 
 	const handleSubmit = async () => {
 		const formData = new FormData();
-		formData.append("name", name);
-		formData.append("parentId", selectedOption?.value || 0);
+		formData.append("title", title);
+		formData.append("price", price);
+		formData.append("inventory", inventory);
+		formData.append("description", description);
+		formData.append("brandId", selectedBrandOption?.value || 0);
+		formData.append("categoryId", selectedCategoryOption?.value || 0);
 		formData.append("approved", approved ? 1 : 0);
-		if (images?.[0]?.file) {
-			formData.append("image", images[0].file);
-		}
-		await onSubmit(formData);
+		// images.forEach((image) => {
+		// 	if (image?.file) {
+		// 		formData.append("images[]", image.file); // Use same name for array upload
+		// 	}
+		// });
+
+		await onSubmit({ formData, images });
 	};
 
 	return (
@@ -95,10 +117,30 @@ function ProductForm({
 								<input
 									type="text"
 									className="border border-gray-300 w-full rounded-sm py-[5px] px-[10px] text-sm outline-0"
+									value={title}
+									onChange={(e) => setTitle(e.target.value)}
 								/>
+								<span className="text-redColor">
+									{errors.title}
+								</span>
 							</td>
 						</tr>
+						<tr className="grid grid-cols-12 gap-2">
+							<td className="col-span-3 p-[10px]">
+								Hình ảnh sản phẩm
+							</td>
+							<td className="col-span-9 p-[10px]">
+								<ImageUploadBrand
+									images={images}
+									setImages={setImages}
+									isUploadMultiple={true}
+								/>
 
+								<span className="text-redColor">
+									{errors.image}
+								</span>
+							</td>
+						</tr>
 						<tr className="grid grid-cols-12 gap-2">
 							<td className="col-span-3 p-[10px]">
 								Giá sản phẩm
@@ -121,19 +163,57 @@ function ProductForm({
 								)}
 							</td>
 						</tr>
+
+						<tr className="grid grid-cols-12 gap-2">
+							<td className="col-span-3 p-[10px]">
+								Số hàng trong kho
+							</td>
+							<td className="flex flex-col col-span-9">
+								<div className=" p-[10px] w-full">
+									<input
+										type="number"
+										className="border border-gray-300 w-full rounded-sm py-[5px] px-[10px] text-sm outline-0"
+										value={inventory}
+										onChange={(e) =>
+											setInventory(e.target.value)
+										}
+									/>
+								</div>
+								
+							</td>
+						</tr>
+						<tr className="grid grid-cols-12 gap-2">
+							<td className="col-span-3 p-[10px]">
+								<label htmlFor="category">Chọn hãng</label>
+							</td>
+							<td className="col-span-9 p-[10px]">
+								<Select
+									id="category"
+									className=" text-sm"
+									placeholder="Chọn hãng"
+									value={selectedBrandOption}
+									onChange={setSelectedBrandOption}
+									options={listBrands}
+									isSearchable={true}
+									isClearable={true}
+								/>
+							</td>
+						</tr>
 						<tr className="grid grid-cols-12 gap-2">
 							<td className="col-span-3 p-[10px]">
 								<label htmlFor="category">Chọn danh mục</label>
 							</td>
 							<td className="col-span-9 p-[10px]">
-								{/* <Select
+								<Select
 									id="category"
 									className=" text-sm"
 									placeholder="Chọn danh mục"
-									defaultValue={selectedOption}
-									onChange={setSelectedOption}
-									options={options}
-								/> */}
+									value={selectedCategoryOption}
+									onChange={setSelectedCategoryOption}
+									options={listCategories}
+									isSearchable={true}
+									isClearable={true}
+								/>
 							</td>
 						</tr>
 						<tr className="grid grid-cols-12 gap-2">
@@ -141,8 +221,9 @@ function ProductForm({
 								<span>Mô tả sản phẩm</span>
 								<ModalGenerateText
 									service={productService}
-									name={name}
+									name={title}
 									description={description}
+									price={price}
 								/>
 							</td>
 							<td className="col-span-9 p-[10px]">
@@ -153,22 +234,6 @@ function ProductForm({
 								/>
 								<span className="text-redColor">
 									{errors.description}
-								</span>
-							</td>
-						</tr>
-						<tr className="grid grid-cols-12 gap-2">
-							<td className="col-span-3 p-[10px]">
-								Hình ảnh sản phẩm
-							</td>
-							<td className="col-span-9 p-[10px]">
-								<ImageUploadBrand
-									images={images}
-									setImages={setImages}
-									isUploadMultiple={true}
-								/>
-
-								<span className="text-redColor">
-									{errors.image}
 								</span>
 							</td>
 						</tr>

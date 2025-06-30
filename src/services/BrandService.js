@@ -6,7 +6,10 @@ const brandService = { ...createApiService("brands") ,
         const {name, description} = objData;
         const keyword = 'hãng';
         return axios.post("/ai/generate-description", { name, description, keyword });
-    }
+    },
+    getSelectBrands: () => {
+        return axios.get("/brands/selectBrands");
+    },
 };
 
 export default brandService;
