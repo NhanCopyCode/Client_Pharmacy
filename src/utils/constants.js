@@ -122,6 +122,8 @@ export const TABLE_COLUMNS = {
 		{ key: "", label: "", type: "checkbox", style: "text-center" },
 		{ key: "id", label: "ID" },
 		{ key: "title", label: "Tên sản phẩm" },
+		{ key: "brandName", label: "Tên hãng" },
+		{ key: "categoryName", label: "Tên danh mục" },
 		{
 			key: "description",
 			label: "Mô tả",

@@ -12,6 +12,9 @@ const categoryService = { ...createApiService("categories") ,
     },
     getListChild: () => {
         return axios.get('/categories/child');
+    },
+    getListChildNotDeleted: () => {
+        return axios.get('/categories/childNotDeleted')
     }
    
 };

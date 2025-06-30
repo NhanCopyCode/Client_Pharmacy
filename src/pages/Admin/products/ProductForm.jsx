@@ -34,7 +34,7 @@ function ProductForm({
 	useEffect(() => {
 		const fetchListParents = async () => {
 			try {
-				const listBrands = await brandService.getSelectBrands();
+				const listBrands = await brandService.getSelectBrandsNotDeleted();
 				const listCategories = await categoryService.getListChild();
 				setListBrands(listBrands.data);
 				setListCategories(listCategories.data);
@@ -101,7 +101,7 @@ function ProductForm({
 	return (
 		<>
 			<TitleHeader
-				to={adminPath.DANH_SACH_SAN_PHAM}
+				to={adminPath.list('products')}
 				title={"Thêm mới"}
 				buttonIcon={<FaArrowLeftLong />}
 				titleButton={"Danh sách"}

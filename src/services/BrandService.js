@@ -10,6 +10,9 @@ const brandService = { ...createApiService("brands") ,
     getSelectBrands: () => {
         return axios.get("/brands/selectBrands");
     },
+    getSelectBrandsNotDeleted: () => {
+        return axios.get("/brands/selectBrandsNotDeleted");
+    }
 };
 
 export default brandService;
