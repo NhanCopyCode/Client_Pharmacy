@@ -18,7 +18,6 @@ function ShowTableProduct() {
 	const [loading, setLoading] = useState(true);
 	const [searchInput, setSearchInput] = useState("");
 	const [meta, setMeta] = useState([]);
-	const [selectedOption, setSelectedOption] = useState([]);
 
 
 	const [selectedBrand, setSelectedBrand] = useState(null);
@@ -74,7 +73,6 @@ function ShowTableProduct() {
 	const handlePageChange = (page) => {
 		fetchProducts({
 			search: searchInput,
-			parentId: selectedOption?.value || null,
 			page,
 		});
 	};
@@ -97,13 +95,7 @@ function ShowTableProduct() {
 		});
 	};
 
-	const handleParentSelect = (option) => {
-		setSelectedOption(option);
-		fetchProducts({
-			search: searchInput,
-			parentId: option?.value || null,
-		});
-	};
+	
 
 	return (
 		<>

@@ -17,7 +17,6 @@ function ProductForm({
 	mode = "create",
 	errors = {},
 	onSubmit,
-	onImagesSubmit,
 }) {
 	const [title, setTitle] = useState("");
 	const [price, setPrice] = useState("");
@@ -89,11 +88,6 @@ function ProductForm({
 		formData.append("brandId", selectedBrandOption?.value || 0);
 		formData.append("categoryId", selectedCategoryOption?.value || 0);
 		formData.append("approved", approved ? 1 : 0);
-		// images.forEach((image) => {
-		// 	if (image?.file) {
-		// 		formData.append("images[]", image.file); // Use same name for array upload
-		// 	}
-		// });
 
 		await onSubmit({ formData, images });
 	};
