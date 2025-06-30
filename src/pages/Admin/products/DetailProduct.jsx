@@ -4,11 +4,9 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { adminPath } from "../../../utils/constants";
 import { useEffect, useState } from "react";
 import productService from "../../../services/ProductService";
-import productImageService from "../../../services/ProductImageService";
 
 function DetailProduct({ model }) {
 	const [product, setProduct] = useState(null);
-	const [productImages, setProductImages] = useState([]);
 	const { id } = useParams();
 
 	useEffect(() => {
@@ -17,8 +15,7 @@ function DetailProduct({ model }) {
 				const response = await productService.getById(id);
 				setProduct(response.data.data);
 
-				const responseImages = await productImageService.getImagesByProductId(id);
-				setProductImages(responseImages.data);
+				
 			} catch (error) {
 				console.error("Error fetching product details: ", error);
 			}
@@ -27,7 +24,7 @@ function DetailProduct({ model }) {
 		fetchProduct();
 	}, [id]);
 
-	const { title, description, inventory, price, categoryName, brandName } =
+	const { title, description, inventory, price, categoryName, brandName, images } =
 		product || {};
 
 	return (
@@ -59,7 +56,16 @@ function DetailProduct({ model }) {
 				<div className="col-span-9">{price}</div>
 
 				<div className="col-span-3">Hình ảnh:</div>
-				<div className="col-span-9"></div>
+				<div className="col-span-9 flex gap-2 flex-wrap">
+					{images?.map((image, index) => (
+						<img
+							src={image.image}
+							key={index}
+							alt={`product image ${index}`}
+							className="w-28 h-28 object-cover rounded border-gray-100 shadow-sm border"
+						/>
+					))}
+				</div>
 
 				<div className="col-span-3">Mô tả:</div>
 				<div

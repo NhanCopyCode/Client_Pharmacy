@@ -3,7 +3,7 @@ export { default as ShowTableProduct } from "./products/ShowTableProduct";
 export { default as AddNewProduct } from "./products/AddNewProduct";
 export { default as DetailProduct } from "./products/DetailProduct";
 export { default as ProductForm } from "./products/ProductForm";
-// export { default as EditProduct } from "./products/EditProduct";
+export { default as EditProduct } from "./products/EditProduct";
 
 //Categories
 export { default as ShowTableCategory } from "./categories/ShowTableCategory";

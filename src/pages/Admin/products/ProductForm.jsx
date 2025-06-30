@@ -56,7 +56,7 @@ function ProductForm({
 			listCategories.length > 0 &&
 			!initialized
 		) {
-			setTitle(initialData.name || "");
+			setTitle(initialData.title || "");
 			setPrice(initialData.price || "");
 			setInventory(initialData.inventory || "");
 			setDescription(initialData.description || "");
@@ -65,15 +65,20 @@ function ProductForm({
 				(opt) => opt.value === initialData.brandId
 			);
 			setSelectedBrandOption(matchedBrandOption);
+
 			const matchedCategoryOption = listCategories.find(
-				(opt) => opt.value === initialData.brandId
+				(opt) => opt.value === initialData.categoryId
 			);
 			setSelectedCategoryOption(matchedCategoryOption);
 			setApproved(Boolean(initialData.approved));
 
-			if (initialData.image) {
-				setImages([{ data_url: initialData.image }]);
+			if (Array.isArray(initialData.images)) {
+				const formattedImages = initialData.images.map((url) => ({
+					data_url: url.image,
+				}));
+				setImages(formattedImages);
 			}
+			
 
 			setInitialized(true);
 		}
@@ -89,13 +94,18 @@ function ProductForm({
 		formData.append("categoryId", selectedCategoryOption?.value || 0);
 		formData.append("approved", approved ? 1 : 0);
 
+		if (mode === "edit") {
+			formData.append("id", initialData.id);
+		}
+
 		await onSubmit({ formData, images });
 	};
+
 
 	return (
 		<>
 			<TitleHeader
-				to={adminPath.list('products')}
+				to={adminPath.list("products")}
 				title={"Thêm mới"}
 				buttonIcon={<FaArrowLeftLong />}
 				titleButton={"Danh sách"}
@@ -155,6 +165,10 @@ function ProductForm({
 										{readMoneyVND(price)}
 									</span>
 								)}
+
+								<span className="text-redColor">
+									{errors.price}
+								</span>
 							</td>
 						</tr>
 
@@ -173,7 +187,10 @@ function ProductForm({
 										}
 									/>
 								</div>
-								
+
+								<span className="text-redColor">
+									{errors.inventory}
+								</span>
 							</td>
 						</tr>
 						<tr className="grid grid-cols-12 gap-2">
@@ -191,6 +208,9 @@ function ProductForm({
 									isSearchable={true}
 									isClearable={true}
 								/>
+								<span className="text-redColor">
+									{errors.brandId}
+								</span>
 							</td>
 						</tr>
 						<tr className="grid grid-cols-12 gap-2">
@@ -208,6 +228,10 @@ function ProductForm({
 									isSearchable={true}
 									isClearable={true}
 								/>
+
+								<span className="text-redColor">
+									{errors.categoryId}
+								</span>
 							</td>
 						</tr>
 						<tr className="grid grid-cols-12 gap-2">

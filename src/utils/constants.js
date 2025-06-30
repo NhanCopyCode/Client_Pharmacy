@@ -137,12 +137,7 @@ export const TABLE_COLUMNS = {
 			type: "currency",
 			style: "text-red-600 font-bold",
 		},
-		{
-			key: "isDeleted",
-			label: "Đã xóa",
-			type: "boolean",
-			style: "text-xs",
-		},
+		{ key: "approved", label: "Duyệt", type: "boolean" },
 	],
 
 	categories: [

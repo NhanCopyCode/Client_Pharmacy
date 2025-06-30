@@ -33,7 +33,8 @@ import {
 	EditBrand,
 	DetailCategory,
 	EditCategory,
-	DetailProduct  as AdminDetailProduct
+	DetailProduct  as AdminDetailProduct,
+	EditProduct
 } from "./pages/Admin/index.js";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -59,7 +60,7 @@ export const adminModels = [
 		list: ShowTableProduct,
 		create: AddNewProduct,
 		detail: AdminDetailProduct,
-		
+		update: EditProduct
 	},
 	{
 		model: "categories",
