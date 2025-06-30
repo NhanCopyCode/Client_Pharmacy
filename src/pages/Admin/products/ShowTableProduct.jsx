@@ -8,14 +8,21 @@ import { TableList, TitleHeader } from "../../../components/Admin";
 import { adminPath, TABLE_COLUMNS } from "../../../utils/constants";
 import { Pagination } from "../../../components";
 import productService from "../../../services/ProductService";
+import brandService from "../../../services/BrandService";
+import categoryService from "../../../services/CategoryService";
 
 function ShowTableProduct() {
-	const [listParents, setListParents] = useState([]);
+	const [listCategories, setListCategories] = useState([]);
+	const [listBrands, setListBrands] = useState([]);
 	const [products, setProducts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [searchInput, setSearchInput] = useState("");
 	const [meta, setMeta] = useState([]);
 	const [selectedOption, setSelectedOption] = useState([]);
+
+
+	const [selectedBrand, setSelectedBrand] = useState(null);
+	const [selectedCategory, setSelectedCategory] = useState(null);
 
 	const fetchProducts = async (params = {}) => {
 		setLoading(true);
@@ -33,13 +40,34 @@ function ShowTableProduct() {
 	};
 
 	useEffect(() => {
+
+		const fetchListBrandsAndListCategories = async () => {
+			try {
+				const listBrands =
+					await brandService.getSelectBrandsNotDeleted();
+				setListBrands(listBrands.data);
+
+				const listCategories =
+					await categoryService.getListChildNotDeleted();
+				setListCategories(listCategories.data);
+			} catch (error) {
+				console.error("Errors loading brands/categories: ", error);
+			}
+		}
+
+		fetchListBrandsAndListCategories();
+		
+	}, [])
+
+	useEffect(() => {
 		fetchProducts();
 	}, []);
 
 	const handleSearch = () => {
 		fetchProducts({
 			search: searchInput,
-			parentId: selectedOption?.value || null,
+			brandId: selectedBrand?.value || null,
+			categoryId: selectedCategory?.value || null,
 		});
 	};
 
@@ -48,6 +76,24 @@ function ShowTableProduct() {
 			search: searchInput,
 			parentId: selectedOption?.value || null,
 			page,
+		});
+	};
+
+	const handleBrandSelect = (option) => {
+		setSelectedBrand(option);
+		fetchProducts({
+			search: searchInput,
+			brandId: option?.value || null,
+			categoryId: selectedCategory?.value || null,
+		});
+	};
+
+	const handleCategorySelect = (option) => {
+		setSelectedCategory(option);
+		fetchProducts({
+			search: searchInput,
+			brandId: selectedBrand?.value || null,
+			categoryId: option?.value || null,
 		});
 	};
 
@@ -71,21 +117,22 @@ function ShowTableProduct() {
 				<Select
 					className=" text-sm"
 					placeholder="Chọn loại danh mục"
-					value={selectedOption}
-					onChange={handleParentSelect}
-					options={[
-						{ value: null, label: "Tất cả danh mục cha" },
-						...listParents,
-					]}
+					value={selectedCategory}
+					onChange={handleCategorySelect}
+					options={listCategories}
+					isSearchable
 					isClearable
 				/>
-				{/* <Select
+				<Select
 					className=" text-sm"
-					placeholder="Chọn loại danh mục"
-					defaultValue={selectedOption}
-					onChange={setSelectedOption}
-					options={options}
-				/> */}
+					placeholder="Chọn hãng"
+					value={selectedBrand}
+					onChange={handleBrandSelect}
+					options={listBrands}
+					isClearable
+					isSearchable
+				/>
+
 				<input
 					className="h-[38px] px-3 outline-0 border 
 					border-gray-200 rounded-md text-sm w-[180px]"
