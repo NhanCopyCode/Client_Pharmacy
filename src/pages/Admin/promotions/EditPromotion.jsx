@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { adminPath } from "../../../utils/constants";
 import Swal from "sweetalert2";
-import adsService from "../../../services/AdsService";
 import PromotionForm from "./PromotionForm";
+import promotionService from "../../../services/PromotionService";
 
 
 function EditPromotion({ model }) {
@@ -16,7 +16,7 @@ function EditPromotion({ model }) {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const response = await adsService.getById(id);
+				const response = await promotionService.getById(id);
 				setInitialData(response.data.data);
 			} catch (error) {
 				if (error) {
@@ -33,7 +33,7 @@ function EditPromotion({ model }) {
 
 	const handleSubmit = async (formData) => {
 		try {
-			await adsService.update(id, formData);
+			await promotionService.update(id, formData);
 			await Swal.fire({
 				icon: "success",
 				title: "Thành công!",

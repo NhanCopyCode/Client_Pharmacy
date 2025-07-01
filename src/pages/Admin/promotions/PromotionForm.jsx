@@ -1,15 +1,20 @@
 import { useState, useEffect } from "react";
-import ImageUploadBrand from "../../../components/Admin/ImageUpload";
 import TiptapEditor from "../../../components/Admin/TiptapEditor";
 import { Button, ModalGenerateText } from "../../../components/Client";
 import { adminPath } from "../../../utils/constants";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { TitleHeader } from "../../../components/Admin";
 import Select from "react-select";
-import { readMoneyVND } from "../../../utils/moneyUtils";
-import productService from "../../../services/ProductService";
-import brandService from "../../../services/BrandService";
-import categoryService from "../../../services/CategoryService";
+const discountTypeOptions = [
+	{ value: "percent", label: "Giảm %" },
+	{ value: "fixed", label: "Giảm tiền" },
+];
+
+const appliesToOptions = [
+	{ value: "order", label: "Đơn hàng" },
+	{ value: "product", label: "Sản phẩm" },
+	{ value: "category", label: "Danh mục" },
+];
 
 function PromotionForm({
 	model,
@@ -20,21 +25,36 @@ function PromotionForm({
 }) {
 	const [initialized, setInitialized] = useState(false);
 	const [title, setTitle] = useState("");
-	const [images, setImages] = useState([]);
+	const [description, setDescription] = useState("");
+	const [discountType, setDiscountType] = useState(null);
+	const [discountValue, setDiscountValue] = useState("");
+	const [maxDiscountValue, setMaxDiscountValue] = useState("");
+	const [minOrderValue, setMinOrderValue] = useState("");
+	const [appliesTo, setAppliesTo] = useState(null);
+	const [startDate, setStartDate] = useState("");
+	const [endDate, setEndDate] = useState("");
 	const [approved, setApproved] = useState(false);
 
 	useEffect(() => {
 		if (initialData && !initialized) {
 			setTitle(initialData.title || "");
-			
+			setDescription(initialData.description || "");
+			setDiscountType(
+				discountTypeOptions.find(
+					(opt) => opt.value === initialData.discount_type
+				) || null
+			);
+			setDiscountValue(initialData.discount_value || "");
+			setMaxDiscountValue(initialData.max_discount_value || "");
+			setMinOrderValue(initialData.min_order_value || "");
+			setAppliesTo(
+				appliesToOptions.find(
+					(opt) => opt.value === initialData.applies_to
+				) || null
+			);
+			setStartDate(initialData.start_date?.slice(0, 16) || ""); // for datetime-local input
+			setEndDate(initialData.end_date?.slice(0, 16) || "");
 			setApproved(Boolean(initialData.approved));
-
-			if (Array.isArray(initialData.images)) {
-				const formattedImages = initialData.images.map((url) => ({
-					data_url: url.image,
-				}));
-				setImages(formattedImages);
-			}
 
 			setInitialized(true);
 		}
@@ -43,14 +63,20 @@ function PromotionForm({
 	const handleSubmit = async () => {
 		const formData = new FormData();
 		formData.append("title", title);
-		
+		formData.append("description", description);
+		formData.append("discount_type", discountType?.value || "");
+		formData.append("discount_value", discountValue);
+		formData.append("max_discount_value", maxDiscountValue);
+		formData.append("min_order_value", minOrderValue);
+		formData.append("applies_to", appliesTo?.value || "");
 		formData.append("approved", approved ? 1 : 0);
-
+		formData.append("start_date", startDate);
+		formData.append("end_date", endDate);
 		if (mode === "edit") {
 			formData.append("id", initialData.id);
 		}
 
-		await onSubmit({ formData, images });
+		await onSubmit(formData);
 	};
 
 	return (
@@ -64,44 +90,158 @@ function PromotionForm({
 			<div className="p-3">
 				<table className="table-auto w-full">
 					<tbody>
+						{/* Title */}
 						<tr className="grid grid-cols-12 gap-2">
-							<td className="col-span-3 p-[10px]">
-								Tiêu đề quảng cáo
-							</td>
-							<td className="col-span-9 p-[10px]">
+							<td className="col-span-3 p-2">Tên khuyến mãi</td>
+							<td className="col-span-9 p-2">
 								<input
 									type="text"
-									className="border border-gray-300 w-full rounded-sm py-[5px] px-[10px] text-sm outline-0"
 									value={title}
 									onChange={(e) => setTitle(e.target.value)}
+									className="w-full border border-gray-300 rounded px-2 py-1 text-sm"
 								/>
 								<span className="text-redColor">
 									{errors.title}
 								</span>
 							</td>
 						</tr>
-						<tr className="grid grid-cols-12 gap-2">
-							<td className="col-span-3 p-[10px]">
-								Hình ảnh sản phẩm
-							</td>
-							<td className="col-span-9 p-[10px]">
-								<ImageUploadBrand
-									images={images}
-									setImages={setImages}
-									isUploadMultiple={false}
-								/>
 
+						{/* Description */}
+						<tr className="grid grid-cols-12 gap-2">
+							<td className="col-span-3 p-2">Mô tả</td>
+							<td className="col-span-9 p-2">
+								<TiptapEditor
+									placeholder="Nhập mô khuyến mãi"
+									initialContent={description}
+									onChange={setDescription}
+								/>
 								<span className="text-redColor">
-									{errors.image}
+									{errors.description}
 								</span>
 							</td>
 						</tr>
-					
+
+						{/* Discount type */}
 						<tr className="grid grid-cols-12 gap-2">
-							<td className="col-span-3 p-[10px]">
-								<label htmlFor="test">Duyệt</label>
+							<td className="col-span-3 p-2">Loại giảm</td>
+							<td className="col-span-9 p-2">
+								<Select
+									options={discountTypeOptions}
+									value={discountType}
+									onChange={setDiscountType}
+								/>
+								<span className="text-redColor">
+									{errors.discount_type}
+								</span>
 							</td>
-							<td className="col-span-9 p-[10px]">
+						</tr>
+
+						{/* Discount value */}
+						<tr className="grid grid-cols-12 gap-2">
+							<td className="col-span-3 p-2">Giá trị giảm</td>
+							<td className="col-span-9 p-2">
+								<input
+									type="number"
+									value={discountValue}
+									onChange={(e) =>
+										setDiscountValue(e.target.value)
+									}
+									className="w-full border border-gray-300 rounded px-2 py-1 text-sm"
+								/>
+								<span className="text-redColor">
+									{errors.discount_value}
+								</span>
+							</td>
+						</tr>
+
+						{/* Max discount value */}
+						<tr className="grid grid-cols-12 gap-2">
+							<td className="col-span-3 p-2">Giảm tối đa</td>
+							<td className="col-span-9 p-2">
+								<input
+									type="number"
+									value={maxDiscountValue}
+									onChange={(e) =>
+										setMaxDiscountValue(e.target.value)
+									}
+									className="w-full border border-gray-300 rounded px-2 py-1 text-sm"
+								/>
+								<span className="text-redColor">
+									{errors.max_discount_value}
+								</span>
+							</td>
+						</tr>
+
+						{/* Min order value */}
+						<tr className="grid grid-cols-12 gap-2">
+							<td className="col-span-3 p-2">
+								Giá trị tối thiểu
+							</td>
+							<td className="col-span-9 p-2">
+								<input
+									type="number"
+									value={minOrderValue}
+									onChange={(e) =>
+										setMinOrderValue(e.target.value)
+									}
+									className="w-full border border-gray-300 rounded px-2 py-1 text-sm"
+								/>
+								<span className="text-redColor">
+									{errors.min_order_value}
+								</span>
+							</td>
+						</tr>
+
+						{/* Applies to */}
+						<tr className="grid grid-cols-12 gap-2">
+							<td className="col-span-3 p-2">Áp dụng cho</td>
+							<td className="col-span-9 p-2">
+								<Select
+									options={appliesToOptions}
+									value={appliesTo}
+									onChange={setAppliesTo}
+								/>
+								<span className="text-redColor">
+									{errors.applies_to}
+								</span>
+							</td>
+						</tr>
+						<tr className="grid grid-cols-12 gap-2">
+							<td className="col-span-3 p-2">Ngày bắt đầu</td>
+							<td className="col-span-9 p-2">
+								<input
+									type="datetime-local"
+									value={startDate}
+									onChange={(e) =>
+										setStartDate(e.target.value)
+									}
+									className="w-full border rounded px-2 py-1 text-sm"
+								/>
+								<span className="text-redColor">
+									{errors.start_date}
+								</span>
+							</td>
+						</tr>
+
+						{/* End Date */}
+						<tr className="grid grid-cols-12 gap-2">
+							<td className="col-span-3 p-2">Ngày kết thúc</td>
+							<td className="col-span-9 p-2">
+								<input
+									type="datetime-local"
+									value={endDate}
+									onChange={(e) => setEndDate(e.target.value)}
+									className="w-full border rounded px-2 py-1 text-sm"
+								/>
+								<span className="text-redColor">
+									{errors.end_date}
+								</span>
+							</td>
+						</tr>
+						{/* Approval */}
+						<tr className="grid grid-cols-12 gap-2">
+							<td className="col-span-3 p-2">Duyệt</td>
+							<td className="col-span-9 p-2">
 								<input
 									type="checkbox"
 									checked={approved}
@@ -110,7 +250,6 @@ function PromotionForm({
 									}
 									className="w-5 h-5 accent-blue-600"
 								/>
-
 								<span className="text-redColor">
 									{errors.approved}
 								</span>

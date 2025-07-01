@@ -10,16 +10,17 @@ import promotionService from "../../../services/PromotionService";
 
 
 function ShowTablePromotion() {
-	const [ads, setAds] = useState([]);
+	const [promotions, setPromotions] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [searchInput, setSearchInput] = useState("");
 	const [meta, setMeta] = useState([]);
 
-	const fetchAds = async (params = {}) => {
+	const fetchPromotion = async (params = {}) => {
 		setLoading(true);
 		try {
 			const response = await promotionService.getAll(params);
-			setAds(response.data.data);
+			
+			setPromotions(response.data.data);
 
 			setMeta(response.data.meta);
 		} catch (error) {
@@ -29,17 +30,17 @@ function ShowTablePromotion() {
 		}
 	};
 	useEffect(() => {
-		fetchAds();
+		fetchPromotion();
 	}, []);
 
 	const handleSearch = () => {
-		fetchAds({
+		fetchPromotion({
 			search: searchInput,
 		});
 	};
 
 	const handlePageChange = (page) => {
-		fetchAds({
+		fetchPromotion({
 			search: searchInput,
 			page,
 		});
@@ -51,7 +52,7 @@ function ShowTablePromotion() {
 				title={"Thêm mới"}
 				buttonIcon={<IoMdAddCircle />}
 				titleButton={"Thêm mới"}
-				to={adminPath.create("ads")}
+				to={adminPath.create("promotions")}
 			/>
 			<div className="flex items-center justify-end w-full p-3 gap-2">
 				<input
@@ -87,9 +88,9 @@ function ShowTablePromotion() {
 					<>
 						<TableList
 							columns={TABLE_COLUMNS.promotions}
-							tableBody={ads}
+							tableBody={promotions}
 							model={"promotions"}
-							onDeleteSuccess={fetchAds}
+							onDeleteSuccess={fetchPromotion}
 							service={promotionService}
 						/>
 						<Pagination

@@ -2,31 +2,18 @@ import { useState } from "react";
 import { adminPath } from "../../../utils/constants";
 import PromotionForm from "./PromotionForm";
 import { useNavigate } from "react-router-dom";
-import productService from "../../../services/ProductService";
-import productImageService from "../../../services/ProductImageService";
 import Swal from "sweetalert2";
+import promotionService from "../../../services/PromotionService";
 
 
 function AddNewPromotion({ model }) {
 	const [errors, setErrors] = useState({});
 	const navigate = useNavigate();
-	const handleSubmit = async ({ formData, images }) => {
+	const handleSubmit = async (formData) => {
 		try {
-			const response = await productService.create(formData);
-			const productId = response?.data?.data?.id;
+			await promotionService.create(formData);
 
-			if (images.length > 0 && productId) {
-				const imageFormData = new FormData();
-				imageFormData.append("productId", productId);
-				images.forEach((image) => {
-					if (image?.file) {
-						imageFormData.append("images[]", image.file);
-					}
-				});
-				console.log("insert image in this code: ", images);
-				await productImageService.create(imageFormData);
-			}
-
+			
 			await Swal.fire({
 				icon: "success",
 				title: "Thành công!",
