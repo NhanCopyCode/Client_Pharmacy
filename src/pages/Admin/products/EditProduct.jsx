@@ -17,7 +17,6 @@ function EditProduct({ model }) {
 		const fetchData = async () => {
 			try {
 				const response = await productService.getById(id);
-				console.log(response.data);
 				setInitialData(response.data.data);
 			} catch (error) {
 				if (error) {

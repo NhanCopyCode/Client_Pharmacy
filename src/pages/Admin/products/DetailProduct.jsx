@@ -35,7 +35,8 @@ function DetailProduct({ model }) {
 		brandName,
 		images,
 	} = product || {};
-	const imageSlides = images?.length > 0 &&  images.map((img) => ({ src: img.image }));
+	const imageSlides =
+		images?.length > 0 && images.map((img) => ({ src: img.image }));
 	return (
 		<>
 			<TitleHeader
@@ -66,20 +67,24 @@ function DetailProduct({ model }) {
 
 				<div className="col-span-3">Hình ảnh:</div>
 				<div className="col-span-9 flex gap-2 flex-wrap">
-					{images &&
-						images.length > 0 &&
+					{images && images.length > 0 ? (
 						images.map((image, index) => (
 							<img
 								src={image.image}
 								key={index}
 								alt={`product image ${index}`}
-								className="w-28 h-28 object-cover rounded border shadow cursor-pointer"
+								className="w-28 h-28 object-cover rounded border border-gray-100 shadow cursor-pointer"
 								onClick={() => {
 									setCurrentIndex(index);
 									setIsOpen(true);
 								}}
 							/>
-						))}
+						))
+					) : (
+						<p className="text-gray-500 italic">
+							Sản phẩm chưa có hình ảnh
+						</p>
+					)}
 				</div>
 
 				<div className="col-span-3">Mô tả:</div>

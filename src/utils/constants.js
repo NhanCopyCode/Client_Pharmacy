@@ -213,4 +213,16 @@ export const TABLE_COLUMNS = {
 		{ key: "vnp_response_code", label: "Mã phản hồi VNP" },
 		{ key: "bank_code", label: "Ngân hàng" },
 	],
+
+	ads: [
+		{ key: "", label: "", type: "checkbox", style: "text-center" },
+		{ key: "id", label: "ID" },
+		{ key: "title", label: "Tiêu đề" },
+		{
+			key: "image",
+			label: "Ảnh",
+			type: "image",
+			style: "w-12 h-12 object-contain",
+		},
+	],
 };
