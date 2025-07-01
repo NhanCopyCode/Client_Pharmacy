@@ -4,9 +4,13 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { adminPath } from "../../../utils/constants";
 import { useEffect, useState } from "react";
 import productService from "../../../services/ProductService";
+import Lightbox from "react-awesome-lightbox";
+import "react-awesome-lightbox/build/style.css";
 
 function DetailProduct({ model }) {
 	const [product, setProduct] = useState(null);
+	const [isOpen, setIsOpen] = useState(false);
+	const [currentIndex, setCurrentIndex] = useState(0);
 	const { id } = useParams();
 
 	useEffect(() => {
@@ -14,8 +18,6 @@ function DetailProduct({ model }) {
 			try {
 				const response = await productService.getById(id);
 				setProduct(response.data.data);
-
-				
 			} catch (error) {
 				console.error("Error fetching product details: ", error);
 			}
@@ -24,9 +26,16 @@ function DetailProduct({ model }) {
 		fetchProduct();
 	}, [id]);
 
-	const { title, description, inventory, price, categoryName, brandName, images } =
-		product || {};
-
+	const {
+		title,
+		description,
+		inventory,
+		price,
+		categoryName,
+		brandName,
+		images,
+	} = product || {};
+	const imageSlides = images?.length > 0 &&  images.map((img) => ({ src: img.image }));
 	return (
 		<>
 			<TitleHeader
@@ -57,14 +66,20 @@ function DetailProduct({ model }) {
 
 				<div className="col-span-3">Hình ảnh:</div>
 				<div className="col-span-9 flex gap-2 flex-wrap">
-					{images?.map((image, index) => (
-						<img
-							src={image.image}
-							key={index}
-							alt={`product image ${index}`}
-							className="w-28 h-28 object-cover rounded border-gray-100 shadow-sm border"
-						/>
-					))}
+					{images &&
+						images.length > 0 &&
+						images.map((image, index) => (
+							<img
+								src={image.image}
+								key={index}
+								alt={`product image ${index}`}
+								className="w-28 h-28 object-cover rounded border shadow cursor-pointer"
+								onClick={() => {
+									setCurrentIndex(index);
+									setIsOpen(true);
+								}}
+							/>
+						))}
 				</div>
 
 				<div className="col-span-3">Mô tả:</div>
@@ -72,6 +87,15 @@ function DetailProduct({ model }) {
 					className="col-span-9"
 					dangerouslySetInnerHTML={{ __html: description }}
 				></div>
+
+				{/* Lightbox */}
+				{isOpen && (
+					<Lightbox
+						image={imageSlides[currentIndex]?.src}
+						title={`Hình ảnh ${currentIndex + 1}`}
+						onClose={() => setIsOpen(false)}
+					/>
+				)}
 			</div>
 		</>
 	);
