@@ -1,17 +1,12 @@
 import { useState, useEffect } from "react";
 import ImageUploadBrand from "../../../components/Admin/ImageUpload";
-import TiptapEditor from "../../../components/Admin/TiptapEditor";
-import { Button, ModalGenerateText } from "../../../components/Client";
+import { Button } from "../../../components/Client";
 import { adminPath } from "../../../utils/constants";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { TitleHeader } from "../../../components/Admin";
-import Select from "react-select";
-import { readMoneyVND } from "../../../utils/moneyUtils";
-import productService from "../../../services/ProductService";
-import brandService from "../../../services/BrandService";
-import categoryService from "../../../services/CategoryService";
 
-function PromotionForm({
+
+function AdsForm({
 	model,
 	initialData = {},
 	mode = "create",
@@ -26,37 +21,38 @@ function PromotionForm({
 	useEffect(() => {
 		if (initialData && !initialized) {
 			setTitle(initialData.title || "");
-			
 			setApproved(Boolean(initialData.approved));
 
-			if (Array.isArray(initialData.images)) {
-				const formattedImages = initialData.images.map((url) => ({
-					data_url: url.image,
-				}));
-				setImages(formattedImages);
+			if (initialData.image && typeof initialData.image === "string") {
+				setImages([{ data_url: initialData.image }]);
 			}
 
 			setInitialized(true);
 		}
 	}, [initialData, initialized]);
+	
 
 	const handleSubmit = async () => {
 		const formData = new FormData();
 		formData.append("title", title);
-		
 		formData.append("approved", approved ? 1 : 0);
+
+		if (images.length > 0 && images[0].file) {
+			formData.append("image", images[0].file);
+		}
 
 		if (mode === "edit") {
 			formData.append("id", initialData.id);
 		}
 
-		await onSubmit({ formData, images });
+		await onSubmit(formData);
 	};
+	
 
 	return (
 		<>
 			<TitleHeader
-				to={adminPath.list("products")}
+				to={adminPath.list("ads")}
 				title={"Thêm mới"}
 				buttonIcon={<FaArrowLeftLong />}
 				titleButton={"Danh sách"}
@@ -82,7 +78,7 @@ function PromotionForm({
 						</tr>
 						<tr className="grid grid-cols-12 gap-2">
 							<td className="col-span-3 p-[10px]">
-								Hình ảnh sản phẩm
+								Hình ảnh quảng cáo
 							</td>
 							<td className="col-span-9 p-[10px]">
 								<ImageUploadBrand
@@ -140,4 +136,4 @@ function PromotionForm({
 	);
 }
 
-export default PromotionForm;
+export default AdsForm;

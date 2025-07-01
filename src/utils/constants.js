@@ -83,6 +83,11 @@ export const menuAdmin = [
 	{
 		icon: LiaProductHunt,
 		title: "Quảng cáo",
+		path: "/admin/ads",
+	},
+	{
+		icon: LiaProductHunt,
+		title: "Khuyến mãi",
 		path: "/admin/promotions",
 	},
 ];
@@ -222,7 +227,8 @@ export const TABLE_COLUMNS = {
 			key: "image",
 			label: "Ảnh",
 			type: "image",
-			style: "w-12 h-12 object-contain",
+			style: "w-50 object-contain",
 		},
+		{ key: "approved", label: "Duyệt", type: "boolean" },
 	],
 };

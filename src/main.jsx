@@ -34,7 +34,11 @@ import {
 	DetailCategory,
 	EditCategory,
 	DetailProduct  as AdminDetailProduct,
-	EditProduct
+	EditProduct,
+	ShowTableAds,
+	AddNewAds,
+	DetailAds,
+	EditAds
 } from "./pages/Admin/index.js";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -48,7 +52,7 @@ export const adminModels = [
 		list: ShowTableBrand,
 		create: AddNewBrand,
 		detail: DetailBrand,
-		update: EditBrand
+		update: EditBrand,
 	},
 	{
 		model: "settings",
@@ -60,7 +64,7 @@ export const adminModels = [
 		list: ShowTableProduct,
 		create: AddNewProduct,
 		detail: AdminDetailProduct,
-		update: EditProduct
+		update: EditProduct,
 	},
 	{
 		model: "categories",
@@ -73,6 +77,13 @@ export const adminModels = [
 		model: "promotions",
 		list: ShowTablePromotion,
 		create: AddNewPromotion,
+	},
+	{
+		model: "ads",
+		list: ShowTableAds,
+		create: AddNewAds,
+		detail: DetailAds,
+		update: EditAds,
 	},
 ];
 const DefaultAdminIndex = adminModels[0].list;

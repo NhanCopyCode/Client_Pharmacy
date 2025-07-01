@@ -19,6 +19,13 @@ export { default as AddNewPromotion } from "./promotions/AddNewPromotion";
 // export { default as PromotionForm } from "./promotions/PromotionForm";
 // export { default as EditPromotion } from "./promotions/EditPromotion";
 
+// Ads
+export { default as ShowTableAds } from "./ads/ShowTableAds";
+export { default as AddNewAds } from "./ads/AddNewAds";
+export { default as AdsForm } from "./ads/AdsForm";
+export { default as DetailAds } from "./ads/DetailAds";
+export { default as EditAds } from "./ads/EditAds";
+
 
 // Brands
 export { default as ShowTableBrand } from "./brands/ShowTableBrand";

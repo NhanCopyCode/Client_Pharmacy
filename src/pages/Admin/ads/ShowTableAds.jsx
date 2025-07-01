@@ -97,7 +97,7 @@ function ShowTablePromotion() {
 						<TableList
 							columns={TABLE_COLUMNS.ads}
 							tableBody={ads}
-							model={"advertisements"}
+							model={"ads"}
 							onDeleteSuccess={fetchAds}
 							service={adsService}
 						/>
