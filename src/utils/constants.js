@@ -235,7 +235,12 @@ export const TABLE_COLUMNS = {
 		{ key: "", label: "", type: "checkbox", style: "text-center" },
 		{ key: "id", label: "ID" },
 		{ key: "title", label: "Tên khuyến mãi" },
-		{ key: "description", label: "Mô tả", style: "max-w-[300px]" },
+		{
+			key: "description",
+			label: "Mô tả",
+			style: "max-w-[300px] ",
+			type: "html",
+		},
 		{ key: "discount_type", label: "Loại giảm", type: "badge" }, // percent / fixed
 		{
 			key: "discount_value",
