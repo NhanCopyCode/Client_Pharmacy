@@ -107,7 +107,9 @@ function TableList({ columns, tableBody, model, onDeleteSuccess, service }) {
 											col.type,
 											parent.id,
 											setIds,
-											ids
+											ids,
+											parent,
+											col
 										)}
 									</td>
 								))}
@@ -140,7 +142,9 @@ function TableList({ columns, tableBody, model, onDeleteSuccess, service }) {
 													col.type,
 													child.id,
 													setIds,
-													ids
+													ids,
+													child,
+													col
 												)}
 											</div>
 										</td>
@@ -174,7 +178,7 @@ function TableList({ columns, tableBody, model, onDeleteSuccess, service }) {
 	);
 }
 
-function renderCell(value, type, id, setIdsFunction, ids) {
+function renderCell(value, type, id, setIdsFunction, ids,rowData = {}, col = {}) {
 	if (type === "image") {
 		return value ? (
 			<img src={value} alt="" className="w-full object-cover rounded" />
@@ -237,6 +241,43 @@ function renderCell(value, type, id, setIdsFunction, ids) {
 
 	if (type === "children") {
 		return;
+	}
+
+	if (type === "badge") {
+		const badgeColors = {
+			percent: "bg-green-100 text-green-700",
+			fixed: "bg-blue-100 text-blue-700",
+			order: "bg-purple-100 text-purple-700",
+			product: "bg-yellow-100 text-yellow-800",
+			category: "bg-pink-100 text-pink-700",
+		};
+
+		const label =
+			value === "percent"
+				? "Giảm %" // Localized
+				: value === "fixed"
+				? "Giảm tiền"
+				: value === "order"
+				? "Đơn hàng"
+				: value === "product"
+				? "Sản phẩm"
+				: value === "category"
+				? "Danh mục"
+				: value;
+
+		return (
+			<span
+				className={`inline-block px-2 py-1 rounded-full text-xs font-semibold ${
+					badgeColors[value] || "bg-gray-100 text-gray-700"
+				}`}
+			>
+				{label}
+			</span>
+		);
+	}
+
+	if(typeof col.render === 'function') {
+		return col.render(value, rowData);
 	}
 
 	return value != null ? value : "";

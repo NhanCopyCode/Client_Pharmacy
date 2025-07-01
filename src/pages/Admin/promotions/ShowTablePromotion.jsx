@@ -1,4 +1,3 @@
-import Select from "react-select";
 import { useEffect, useState } from "react";
 
 import { Button } from "../../../components/Client";
@@ -7,7 +6,8 @@ import { IoIosSearch } from "react-icons/io";
 import { TableList, TitleHeader } from "../../../components/Admin";
 import { adminPath, TABLE_COLUMNS } from "../../../utils/constants";
 import { Pagination } from "../../../components";
-import adsService from "../../../services/AdsService";
+import promotionService from "../../../services/PromotionService";
+
 
 function ShowTablePromotion() {
 	const [ads, setAds] = useState([]);
@@ -18,7 +18,7 @@ function ShowTablePromotion() {
 	const fetchAds = async (params = {}) => {
 		setLoading(true);
 		try {
-			const response = await adsService.getAll(params);
+			const response = await promotionService.getAll(params);
 			setAds(response.data.data);
 
 			setMeta(response.data.meta);
@@ -28,9 +28,6 @@ function ShowTablePromotion() {
 			setLoading(false);
 		}
 	};
-
-	
-
 	useEffect(() => {
 		fetchAds();
 	}, []);
@@ -48,10 +45,6 @@ function ShowTablePromotion() {
 		});
 	};
 
-	
-
-	
-
 	return (
 		<>
 			<TitleHeader
@@ -61,8 +54,6 @@ function ShowTablePromotion() {
 				to={adminPath.create("ads")}
 			/>
 			<div className="flex items-center justify-end w-full p-3 gap-2">
-			
-
 				<input
 					className="h-[38px] px-3 outline-0 border 
 					border-gray-200 rounded-md text-sm w-[180px]"
@@ -95,11 +86,11 @@ function ShowTablePromotion() {
 				) : (
 					<>
 						<TableList
-							columns={TABLE_COLUMNS.ads}
+							columns={TABLE_COLUMNS.promotions}
 							tableBody={ads}
-							model={"advertisements"}
+							model={"promotions"}
 							onDeleteSuccess={fetchAds}
-							service={adsService}
+							service={promotionService}
 						/>
 						<Pagination
 							meta={meta}

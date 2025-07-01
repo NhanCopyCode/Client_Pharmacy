@@ -15,9 +15,9 @@ export { default as EditCategory } from "./categories/EditCategory";
 //Promotions
 export { default as ShowTablePromotion } from "./promotions/ShowTablePromotion";
 export { default as AddNewPromotion } from "./promotions/AddNewPromotion";
-// export { default as DetailPromotion } from "./promotions/DetailPromotion";
-// export { default as PromotionForm } from "./promotions/PromotionForm";
-// export { default as EditPromotion } from "./promotions/EditPromotion";
+export { default as DetailPromotion } from "./promotions/DetailPromotion";
+export { default as PromotionForm } from "./promotions/PromotionForm";
+export { default as EditPromotion } from "./promotions/EditPromotion";
 
 // Ads
 export { default as ShowTableAds } from "./ads/ShowTableAds";

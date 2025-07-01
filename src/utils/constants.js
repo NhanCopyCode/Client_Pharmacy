@@ -231,4 +231,33 @@ export const TABLE_COLUMNS = {
 		},
 		{ key: "approved", label: "Duyệt", type: "boolean" },
 	],
+	promotions: [
+		{ key: "", label: "", type: "checkbox", style: "text-center" },
+		{ key: "id", label: "ID" },
+		{ key: "title", label: "Tên khuyến mãi" },
+		{ key: "description", label: "Mô tả", style: "max-w-[300px]" },
+		{ key: "discount_type", label: "Loại giảm", type: "badge" }, // percent / fixed
+		{
+			key: "discount_value",
+			label: "Giá trị giảm",
+			style: "text-green-600 font-bold",
+			render: (value, row) => {
+				if (row.discount_type === "percent") return `${value}%`;
+				if (row.discount_type === "fixed")
+					return `${Number(value).toLocaleString()}₫`;
+				return value;
+			},
+		},
+		{
+			key: "max_discount_value",
+			label: "Giảm tối đa",
+			type: "currency",
+		},
+		{
+			key: "min_order_value",
+			label: "Giá trị tối thiểu",
+			type: "currency",
+		},
+		{ key: "applies_to", label: "Áp dụng cho", type: "badge" }, // 	enum('product', 'category', 'order')
+	],
 };
