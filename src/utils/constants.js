@@ -90,6 +90,16 @@ export const menuAdmin = [
 		title: "Khuyến mãi",
 		path: "/admin/promotions",
 	},
+	{
+		icon: LiaProductHunt,
+		title: "Voucher",
+		path: "/admin/vouchers",
+	},
+	{
+		icon: LiaProductHunt,
+		title: "Khuyến mãi",
+		path: "/admin/promotions",
+	},
 ];
 
 export const adminPath = {
@@ -265,5 +275,50 @@ export const TABLE_COLUMNS = {
 		},
 		{ key: "applies_to", label: "Áp dụng cho", type: "badge" }, // 	enum('product', 'category', 'order')
 		{ key: "approved", label: "Duyệt", type: "boolean" },
+	],
+	vouchers: [
+		{ key: "", label: "", type: "checkbox", style: "text-center" },
+		{ key: "id", label: "ID" },
+		{ key: "code", label: "Mã giảm giá", style: "font-mono text-blue-600" },
+		{
+			key: "description",
+			label: "Mô tả",
+			style: "max-w-[300px]",
+			type: "html",
+		},
+		{ key: "discount_type", label: "Loại giảm", type: "badge" }, // percent / fixed
+		{
+			key: "discount_value",
+			label: "Giá trị giảm",
+			style: "text-green-600 font-bold",
+			render: (value, row) => {
+				if (row.discount_type === "percent") return `${value}%`;
+				if (row.discount_type === "fixed")
+					return `${Number(value).toLocaleString()}₫`;
+				return value;
+			},
+		},
+		{
+			key: "max_discount_value",
+			label: "Giảm tối đa",
+			type: "currency",
+		},
+		{
+			key: "min_order_value",
+			label: "Giá trị tối thiểu",
+			type: "currency",
+		},
+		{
+			key: "usage_limit",
+			label: "Giới hạn lượt dùng",
+		},
+		{
+			key: "usage_limit_per_user",
+			label: "Lượt dùng mỗi người",
+		},
+		{ key: "applies_to", label: "Áp dụng cho", type: "badge" }, // product / category / order
+		{ key: "approved", label: "Duyệt", type: "boolean" },
+		{ key: "start_date", label: "Ngày bắt đầu", type: "date" },
+		{ key: "end_date", label: "Ngày kết thúc", type: "date" },
 	],
 };

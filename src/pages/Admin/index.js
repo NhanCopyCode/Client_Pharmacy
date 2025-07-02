@@ -34,6 +34,13 @@ export { default as DetailBrand } from "./brands/DetailBrand";
 export { default as BrandForm } from "./brands/BrandForm";
 export { default as EditBrand } from "./brands/EditBrand";
 
+//Vouchers
+export { default as ShowTableVoucher } from "./vouchers/Table";
+export { default as AddNewVoucher } from "./vouchers/AddNew";
+export { default as DetailVoucher } from "./vouchers/Detail";
+export { default as VoucherForm } from "./vouchers/Form";
+export { default as EditVoucher } from "./vouchers/Edit";
+
 //Settings
 export { default as ShowTableSetting } from "./settings/ShowTableSetting";
 export { default as AddNewSetting } from "./settings/AddNewSetting";

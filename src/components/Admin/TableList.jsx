@@ -63,33 +63,7 @@ function TableList({ columns, tableBody, model, onDeleteSuccess, service }) {
 					</tr>
 				</thead>
 				<tbody>
-					{/* {tableBody?.map((item, rowIndex) => (
-						<tr key={rowIndex} className="hover:bg-gray-100">
-							{columns.map((col) => (
-								<td
-									key={col.key}
-									className={`border border-gray-300 p-2 ${
-										col.style || ""
-									}`}
-								>
-									{renderCell(
-										item[col.key],
-										col.type,
-										item.id,
-										setIds,
-										ids
-									)}
-								</td>
-							))}
-							<td className="border border-gray-300 p-2">
-								<GroupActionButton
-									id={item.id}
-									model={model}
-									onDeleteSuccess={onDeleteSuccess}
-								/>
-							</td>
-						</tr>
-					))} */}
+					
 					{tableBody?.map((parent) => (
 						<React.Fragment key={`parent-${parent.id}`}>
 							<tr className="bg-gray-50 hover:bg-gray-100">

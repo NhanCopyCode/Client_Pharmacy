@@ -40,7 +40,11 @@ import {
 	DetailAds,
 	EditAds,
 	DetailPromotion,
-	EditPromotion
+	EditPromotion,
+	ShowTableVoucher,
+	AddNewVoucher,
+	DetailVoucher,
+	EditVoucher
 } from "./pages/Admin/index.js";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -80,7 +84,7 @@ export const adminModels = [
 		list: ShowTablePromotion,
 		create: AddNewPromotion,
 		detail: DetailPromotion,
-		update: EditPromotion
+		update: EditPromotion,
 	},
 	{
 		model: "ads",
@@ -88,6 +92,13 @@ export const adminModels = [
 		create: AddNewAds,
 		detail: DetailAds,
 		update: EditAds,
+	},
+	{
+		model: "vouchers",
+		list: ShowTableVoucher,
+		create: AddNewVoucher,
+		detail: DetailVoucher,
+		update: EditVoucher,
 	},
 ];
 const DefaultAdminIndex = adminModels[0].list;
