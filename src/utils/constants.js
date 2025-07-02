@@ -264,5 +264,6 @@ export const TABLE_COLUMNS = {
 			type: "currency",
 		},
 		{ key: "applies_to", label: "Áp dụng cho", type: "badge" }, // 	enum('product', 'category', 'order')
+		{ key: "approved", label: "Duyệt", type: "boolean" },
 	],
 };

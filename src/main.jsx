@@ -38,7 +38,9 @@ import {
 	ShowTableAds,
 	AddNewAds,
 	DetailAds,
-	EditAds
+	EditAds,
+	DetailPromotion,
+	EditPromotion
 } from "./pages/Admin/index.js";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -77,6 +79,8 @@ export const adminModels = [
 		model: "promotions",
 		list: ShowTablePromotion,
 		create: AddNewPromotion,
+		detail: DetailPromotion,
+		update: EditPromotion
 	},
 	{
 		model: "ads",

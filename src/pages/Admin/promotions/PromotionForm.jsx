@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import TiptapEditor from "../../../components/Admin/TiptapEditor";
-import { Button, ModalGenerateText } from "../../../components/Client";
+import { Button } from "../../../components/Client";
 import { adminPath } from "../../../utils/constants";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { TitleHeader } from "../../../components/Admin";
 import Select from "react-select";
+import { readMoneyVND } from "../../../utils/moneyUtils";
+import { readPercent } from "../../../utils/readPercent";
+
 const discountTypeOptions = [
 	{ value: "percent", label: "Giảm %" },
 	{ value: "fixed", label: "Giảm tiền" },
@@ -60,6 +63,12 @@ function PromotionForm({
 		}
 	}, [initialData, initialized]);
 
+	useEffect(() => {
+		if (discountType?.value === "fixed") {
+			setMaxDiscountValue("");
+		}
+	}, [discountType]);
+
 	const handleSubmit = async () => {
 		const formData = new FormData();
 		formData.append("title", title);
@@ -82,7 +91,7 @@ function PromotionForm({
 	return (
 		<>
 			<TitleHeader
-				to={adminPath.list("products")}
+				to={adminPath.list("promotions")}
 				title={"Thêm mới"}
 				buttonIcon={<FaArrowLeftLong />}
 				titleButton={"Danh sách"}
@@ -143,18 +152,30 @@ function PromotionForm({
 								<input
 									type="number"
 									value={discountValue}
+									min={0}
+									max={
+										discountType == "percent"
+											? 100
+											: undefined
+									}
 									onChange={(e) =>
 										setDiscountValue(e.target.value)
 									}
-									className="w-full border border-gray-300 rounded px-2 py-1 text-sm"
+									className="w-full border  border-gray-300 rounded px-2 py-1 text-sm"
 								/>
+								<span className="text-success">
+									{discountValue &&
+										(discountType?.value === "percent"
+											? readPercent(discountValue)
+											: readMoneyVND(discountValue))}
+								</span>
+
 								<span className="text-redColor">
 									{errors.discount_value}
 								</span>
 							</td>
 						</tr>
 
-						{/* Max discount value */}
 						<tr className="grid grid-cols-12 gap-2">
 							<td className="col-span-3 p-2">Giảm tối đa</td>
 							<td className="col-span-9 p-2">
@@ -164,8 +185,17 @@ function PromotionForm({
 									onChange={(e) =>
 										setMaxDiscountValue(e.target.value)
 									}
-									className="w-full border border-gray-300 rounded px-2 py-1 text-sm"
+									disabled={discountType?.value === "fixed"}
+									className={`w-full border rounded px-2 py-1 text-sm ${
+										discountType?.value === "fixed"
+											? "bg-gray- border-gray-200 cursor-not-allowed"
+											: ""
+									}`}
 								/>
+								<span className="text-success">
+									{maxDiscountValue &&
+										readMoneyVND(maxDiscountValue)}
+								</span>
 								<span className="text-redColor">
 									{errors.max_discount_value}
 								</span>
@@ -186,6 +216,10 @@ function PromotionForm({
 									}
 									className="w-full border border-gray-300 rounded px-2 py-1 text-sm"
 								/>
+								<span className="text-success">
+									{minOrderValue &&
+										readMoneyVND(minOrderValue)}
+								</span>
 								<span className="text-redColor">
 									{errors.min_order_value}
 								</span>
@@ -215,7 +249,7 @@ function PromotionForm({
 									onChange={(e) =>
 										setStartDate(e.target.value)
 									}
-									className="w-full border rounded px-2 py-1 text-sm"
+									className="w-full border border-gray-300 rounded px-2 py-1 text-sm"
 								/>
 								<span className="text-redColor">
 									{errors.start_date}
@@ -231,7 +265,7 @@ function PromotionForm({
 									type="datetime-local"
 									value={endDate}
 									onChange={(e) => setEndDate(e.target.value)}
-									className="w-full border rounded px-2 py-1 text-sm"
+									className="w-full border border-gray-300 rounded px-2 py-1 text-sm"
 								/>
 								<span className="text-redColor">
 									{errors.end_date}
