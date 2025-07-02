@@ -29,11 +29,13 @@ function ProductForm({
 	const [selectedBrandOption, setSelectedBrandOption] = useState(null);
 	const [selectedCategoryOption, setSelectedCategoryOption] = useState(null);
 	const [images, setImages] = useState([]);
+	const [outstanding, setOutstanding] = useState(false);
 
 	useEffect(() => {
 		const fetchListParents = async () => {
 			try {
-				const listBrands = await brandService.getSelectBrandsNotDeleted();
+				const listBrands =
+					await brandService.getSelectBrandsNotDeleted();
 				const listCategories = await categoryService.getListChild();
 				setListBrands(listBrands.data);
 				setListCategories(listCategories.data);
@@ -78,7 +80,7 @@ function ProductForm({
 				}));
 				setImages(formattedImages);
 			}
-			
+			setOutstanding(Boolean(initialData.outstanding));
 
 			setInitialized(true);
 		}
@@ -93,6 +95,7 @@ function ProductForm({
 		formData.append("brandId", selectedBrandOption?.value || 0);
 		formData.append("categoryId", selectedCategoryOption?.value || 0);
 		formData.append("approved", approved ? 1 : 0);
+		formData.append("outstanding", outstanding ? 1 : 0);
 
 		if (mode === "edit") {
 			formData.append("id", initialData.id);
@@ -100,7 +103,6 @@ function ProductForm({
 
 		await onSubmit({ formData, images });
 	};
-
 
 	return (
 		<>
@@ -252,6 +254,24 @@ function ProductForm({
 								/>
 								<span className="text-redColor">
 									{errors.description}
+								</span>
+							</td>
+						</tr>
+						<tr className="grid grid-cols-12 gap-2">
+							<td className="col-span-3 p-[10px]">
+								<label>Nổi bật</label>
+							</td>
+							<td className="col-span-9 p-[10px]">
+								<input
+									type="checkbox"
+									checked={outstanding}
+									onChange={(e) =>
+										setOutstanding(e.target.checked)
+									}
+									className="w-5 h-5 accent-blue-600"
+								/>
+								<span className="text-redColor">
+									{errors.outstanding}
 								</span>
 							</td>
 						</tr>

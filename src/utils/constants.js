@@ -152,6 +152,11 @@ export const TABLE_COLUMNS = {
 			type: "currency",
 			style: "text-red-600 font-bold",
 		},
+		{
+			key: "outstanding",
+			label: "Nổi bật",
+			type: "boolean",
+		},
 		{ key: "approved", label: "Duyệt", type: "boolean" },
 	],
 
