@@ -165,7 +165,13 @@ export const TABLE_COLUMNS = {
 			type: "image",
 			style: "w-50 object-cover",
 		},
+
 		{ key: "parentName", label: "Danh mục cha", type: "parent" },
+		{
+			key: "outstanding",
+			label: "Nổi bật",
+			type: "boolean",
+		},
 		{ key: "approved", label: "Duyệt", type: "boolean" },
 	],
 

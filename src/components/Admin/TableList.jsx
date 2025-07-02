@@ -166,12 +166,25 @@ function renderCell(value, type, id, setIdsFunction, ids,rowData = {}, col = {})
 	}
 
 	if (type === "boolean") {
-		return value == 1 ? (
-			<span className="text-green-600 font-semibold">Đã duyệt</span>
-		) : (
-			<span className="text-red-600 font-semibold">Chưa duyệt</span>
+		const labelMap = {
+			approved: { true: "Đã duyệt", false: "Chưa duyệt" },
+			outstanding: { true: "Nổi bật", false: "Không nổi bật" },
+		};
+
+		const colKey = col.key || ""; 
+		const label = labelMap[colKey]?.[!!value] ?? (value ? "Có" : "Không");
+
+		return (
+			<span
+				className={`font-semibold ${
+					value ? "text-green-600" : "text-red-600"
+				}`}
+			>
+				{label}
+			</span>
 		);
 	}
+	
 
 	if (type === "date") {
 		return value ? new Date(value).toLocaleDateString("vi-VN") : "";

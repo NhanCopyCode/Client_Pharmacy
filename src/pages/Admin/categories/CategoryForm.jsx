@@ -19,6 +19,7 @@ function CategoryForm({
 	const [approved, setApproved] = useState(false);
 	const [initialized, setInitialized] = useState(false);
 	const [listParents, setListParents] = useState([]);
+	const [outstanding, setOutstanding] = useState(false);
 	const [selectedOption, setSelectedOption] = useState(null);
 	const [images, setImages] = useState([]);
 
@@ -30,6 +31,7 @@ function CategoryForm({
 					{ value: 0, label: "Không có danh mục cha" },
 					...response.data,
 				];
+
 				setListParents(options);
 				if (mode === "create") {
 					setSelectedOption(options[0]);
@@ -53,6 +55,7 @@ function CategoryForm({
 				matchedOption || { value: 0, label: "Không có danh mục cha" }
 			);
 			setApproved(Boolean(initialData.approved));
+			setOutstanding(Boolean(initialData.outstanding));
 
 			if (initialData.image) {
 				setImages([{ data_url: initialData.image }]);
@@ -67,6 +70,8 @@ function CategoryForm({
 		formData.append("name", name);
 		formData.append("parentId", selectedOption?.value || 0);
 		formData.append("approved", approved ? 1 : 0);
+		formData.append("outstanding", outstanding ? 1 : 0);
+
 		if (images?.[0]?.file) {
 			formData.append("image", images[0].file);
 		}
@@ -139,7 +144,25 @@ function CategoryForm({
 								</span>
 							</td>
 						</tr>
-						
+						<tr className="grid grid-cols-12 gap-2">
+							<td className="col-span-3 p-[10px]">
+								<label htmlFor="outstanding">Nổi bật</label>
+							</td>
+							<td className="col-span-9 p-[10px]">
+								<input
+									type="checkbox"
+									checked={outstanding}
+									onChange={(e) =>
+										setOutstanding(e.target.checked)
+									}
+									className="w-5 h-5 accent-blue-600"
+								/>
+								<span className="text-redColor">
+									{errors.outstanding}
+								</span>
+							</td>
+						</tr>
+
 						<tr className="grid grid-cols-12 gap-2">
 							<td className="col-span-3 p-[10px]">
 								<label htmlFor="test">Duyệt</label>

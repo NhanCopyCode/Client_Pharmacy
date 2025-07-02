@@ -22,7 +22,8 @@ function DetailCategory({ model }) {
 		fetchCategory();
 	}, [id]);
 
-	const { name, parentName, image } = category || {};
+	const { name, parentName, image, outstanding, approved } = category || {};
+
 
 	return (
 		<>
@@ -41,7 +42,15 @@ function DetailCategory({ model }) {
 				<div className="col-span-9">{name}</div>
 
 				<div className="col-span-3">Danh mục cha:</div>
-				<div className="col-span-9">{parentName ? parentName : <p className="italic text-gray">Không có danh mục cha</p>}</div>
+				<div className="col-span-9">
+					{parentName ? (
+						parentName
+					) : (
+						<p className="italic text-gray">
+							Không có danh mục cha
+						</p>
+					)}
+				</div>
 
 				<div className="col-span-3">Hình ảnh:</div>
 				<div className="col-span-9">
@@ -49,6 +58,32 @@ function DetailCategory({ model }) {
 						<img src={image} alt={name} />
 					) : (
 						<p className="italic text-gray">Không có hình ảnh</p>
+					)}
+				</div>
+
+				<div className="col-span-3">Nổi bật:</div>
+				<div className="col-span-9">
+					{outstanding ? (
+						<span className="text-green-600 font-semibold">
+							Nổi bật
+						</span>
+					) : (
+						<span className="text-gray-500 italic">
+							Không nổi bật
+						</span>
+					)}
+				</div>
+
+				<div className="col-span-3">Duyệt:</div>
+				<div className="col-span-9">
+					{approved ? (
+						<span className="text-green-600 font-semibold">
+							Đã duyệt
+						</span>
+					) : (
+						<span className="text-red-500 font-semibold">
+							Chưa duyệt
+						</span>
 					)}
 				</div>
 			</div>
