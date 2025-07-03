@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Select from "react-select";
 
 import { Button } from "../../../components/Client";
 import { IoMdAddCircle } from "react-icons/io";
@@ -9,17 +10,24 @@ import { Pagination } from "../../../components";
 import promotionService from "../../../services/PromotionService";
 
 
+const options = [
+	{ value: "percent", label: "Phần trăm (%)" },
+	{ value: "fixed", label: "Giá cố định" },
+];
+
 function ShowTablePromotion() {
 	const [promotions, setPromotions] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [searchInput, setSearchInput] = useState("");
 	const [meta, setMeta] = useState([]);
+	const [selectedOption, setSelectedOption] = useState(null);
+
 
 	const fetchPromotion = async (params = {}) => {
 		setLoading(true);
 		try {
 			const response = await promotionService.getAll(params);
-			
+
 			setPromotions(response.data.data);
 
 			setMeta(response.data.meta);
@@ -32,19 +40,25 @@ function ShowTablePromotion() {
 	useEffect(() => {
 		fetchPromotion();
 	}, []);
+	useEffect(() => {
+		handleSearch();
+	}, [selectedOption])
 
 	const handleSearch = () => {
 		fetchPromotion({
 			search: searchInput,
+			discount_type: selectedOption?.value,
 		});
 	};
 
 	const handlePageChange = (page) => {
 		fetchPromotion({
 			search: searchInput,
+			discount_type: selectedOption?.value,
 			page,
 		});
 	};
+	
 
 	return (
 		<>
@@ -55,6 +69,18 @@ function ShowTablePromotion() {
 				to={adminPath.create("promotions")}
 			/>
 			<div className="flex items-center justify-end w-full p-3 gap-2">
+				<Select
+					isClearable
+					isSearchable
+					className="text-sm w-[200px]"
+					placeholder="Loại khuyến mãi"
+					value={selectedOption}
+					onChange={(option) => {
+						setSelectedOption(option);
+					}}
+					options={options}
+				/>
+
 				<input
 					className="h-[38px] px-3 outline-0 border 
 					border-gray-200 rounded-md text-sm w-[180px]"
