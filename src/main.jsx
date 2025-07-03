@@ -44,7 +44,11 @@ import {
 	ShowTableVoucher,
 	AddNewVoucher,
 	DetailVoucher,
-	EditVoucher
+	EditVoucher,
+	ShowTablePost,
+	AddNewPost,
+	DetailPost,
+	EditPost
 } from "./pages/Admin/index.js";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -99,6 +103,13 @@ export const adminModels = [
 		create: AddNewVoucher,
 		detail: DetailVoucher,
 		update: EditVoucher,
+	},
+	{
+		model: "posts",
+		list: ShowTablePost,
+		create: AddNewPost,
+		detail: DetailPost,
+		update: EditPost,
 	},
 ];
 const DefaultAdminIndex = adminModels[0].list;

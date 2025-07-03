@@ -97,8 +97,8 @@ export const menuAdmin = [
 	},
 	{
 		icon: LiaProductHunt,
-		title: "Khuyến mãi",
-		path: "/admin/promotions",
+		title: "Bài viết",
+		path: "/admin/posts",
 	},
 ];
 
@@ -194,9 +194,8 @@ export const TABLE_COLUMNS = {
 		{ key: "", label: "", type: "checkbox", style: "text-center" },
 		{ key: "id", label: "ID" },
 		{ key: "title", label: "Tiêu đề" },
-		{ key: "description", label: "Nội dung" },
-		{ key: "createdAt", label: "Ngày tạo", type: "date" },
-		{ key: "isDeleted", label: "Đã xóa", type: "boolean" },
+		{ key: "description", label: "Nội dung", type: "html" },
+		{ key: "approved", label: "Duyệt", type: "boolean" },
 	],
 
 	discounts: [

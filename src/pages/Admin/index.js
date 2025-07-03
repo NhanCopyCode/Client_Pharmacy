@@ -41,6 +41,13 @@ export { default as DetailVoucher } from "./vouchers/Detail";
 export { default as VoucherForm } from "./vouchers/Form";
 export { default as EditVoucher } from "./vouchers/Edit";
 
+//Posts
+export { default as ShowTablePost } from "./posts/Table";
+export { default as AddNewPost } from "./posts/AddNew";
+export { default as DetailPost } from "./posts/Detail";
+export { default as PostForm } from "./posts/Form";
+export { default as EditPost } from "./posts/Edit";
+
 //Settings
 export { default as ShowTableSetting } from "./settings/ShowTableSetting";
 export { default as AddNewSetting } from "./settings/AddNewSetting";
