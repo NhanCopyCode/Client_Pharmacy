@@ -48,6 +48,13 @@ export { default as DetailPost } from "./posts/Detail";
 export { default as PostForm } from "./posts/Form";
 export { default as EditPost } from "./posts/Edit";
 
+//Videos
+export { default as ShowTableVideo } from "./videos/Table";
+export { default as AddNewVideo } from "./videos/AddNew";
+export { default as DetailVideo } from "./videos/Detail";
+export { default as VideoForm } from "./videos/Form";
+export { default as EditVideo } from "./videos/Edit";
+
 //Settings
 export { default as ShowTableSetting } from "./settings/ShowTableSetting";
 export { default as AddNewSetting } from "./settings/AddNewSetting";

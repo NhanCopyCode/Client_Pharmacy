@@ -63,7 +63,6 @@ function TableList({ columns, tableBody, model, onDeleteSuccess, service }) {
 					</tr>
 				</thead>
 				<tbody>
-					
 					{tableBody?.map((parent) => (
 						<React.Fragment key={`parent-${parent.id}`}>
 							<tr className="bg-gray-50 hover:bg-gray-100">
@@ -152,7 +151,15 @@ function TableList({ columns, tableBody, model, onDeleteSuccess, service }) {
 	);
 }
 
-function renderCell(value, type, id, setIdsFunction, ids,rowData = {}, col = {}) {
+function renderCell(
+	value,
+	type,
+	id,
+	setIdsFunction,
+	ids,
+	rowData = {},
+	col = {}
+) {
 	if (type === "image") {
 		return value ? (
 			<img src={value} alt="" className="w-full object-cover rounded" />
@@ -171,7 +178,7 @@ function renderCell(value, type, id, setIdsFunction, ids,rowData = {}, col = {})
 			outstanding: { true: "Nổi bật", false: "Không nổi bật" },
 		};
 
-		const colKey = col.key || ""; 
+		const colKey = col.key || "";
 		const label = labelMap[colKey]?.[!!value] ?? (value ? "Có" : "Không");
 
 		return (
@@ -184,7 +191,6 @@ function renderCell(value, type, id, setIdsFunction, ids,rowData = {}, col = {})
 			</span>
 		);
 	}
-	
 
 	if (type === "date") {
 		return value ? new Date(value).toLocaleDateString("vi-VN") : "";
@@ -215,6 +221,18 @@ function renderCell(value, type, id, setIdsFunction, ids,rowData = {}, col = {})
 					}
 				}}
 			/>
+		);
+	}
+	if (type === "link") {
+		return (
+			<a
+				href={`${value}`}
+				className="text-blue-600 underline hover:text-blue-800"
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				{value}
+			</a>
 		);
 	}
 
@@ -263,7 +281,7 @@ function renderCell(value, type, id, setIdsFunction, ids,rowData = {}, col = {})
 		);
 	}
 
-	if(typeof col.render === 'function') {
+	if (typeof col.render === "function") {
 		return col.render(value, rowData);
 	}
 

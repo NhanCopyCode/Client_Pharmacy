@@ -48,7 +48,11 @@ import {
 	ShowTablePost,
 	AddNewPost,
 	DetailPost,
-	EditPost
+	EditPost,
+	ShowTableVideo,
+	AddNewVideo,
+	DetailVideo,
+	EditVideo
 } from "./pages/Admin/index.js";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -110,6 +114,13 @@ export const adminModels = [
 		create: AddNewPost,
 		detail: DetailPost,
 		update: EditPost,
+	},
+	{
+		model: "videos",
+		list: ShowTableVideo,
+		create: AddNewVideo,
+		detail: DetailVideo,
+		update: EditVideo,
 	},
 ];
 const DefaultAdminIndex = adminModels[0].list;

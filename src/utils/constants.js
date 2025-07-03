@@ -100,6 +100,11 @@ export const menuAdmin = [
 		title: "Bài viết",
 		path: "/admin/posts",
 	},
+	{
+		icon: LiaProductHunt,
+		title: "Video",
+		path: "/admin/videos",
+	},
 ];
 
 export const adminPath = {
@@ -330,5 +335,18 @@ export const TABLE_COLUMNS = {
 		{ key: "approved", label: "Duyệt", type: "boolean" },
 		{ key: "start_date", label: "Ngày bắt đầu", type: "date" },
 		{ key: "end_date", label: "Ngày kết thúc", type: "date" },
+	],
+	videos: [
+		{ key: "", label: "", type: "checkbox", style: "text-center" },
+		{ key: "id", label: "ID" },
+		{ key: "name", label: "Tên video" },
+		{ key: "src", label: "Link video", type: "link" },
+		{
+			key: "image",
+			label: "Ảnh",
+			type: "image",
+			style: "w-50 object-contain",
+		},
+		{ key: "approved", label: "Duyệt", type: "boolean" },
 	],
 };
