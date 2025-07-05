@@ -19,19 +19,19 @@ function ShowTableAccount() {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		const fetchBrands = async ()  => {
+		const fetchBrands = async () => {
 			try {
-				const response =await brandService.getAll();
+				const response = await brandService.getAll();
 				setBrands(response.data.data);
 			} catch (error) {
-				console.log("Error: ",  error);
-			} finally  {
+				console.log("Error: ", error);
+			} finally {
 				setLoading(false);
 			}
-		}
+		};
 
 		fetchBrands();
-	}, [])
+	}, []);
 
 	return (
 		<>
@@ -73,14 +73,14 @@ function ShowTableAccount() {
 				</Button>
 			</div>
 
-			<div className="p-3">
+			<div className="p-3 overflow-y-scroll">
 				{loading ? (
 					<p>Loading...</p>
 				) : (
 					<TableList
 						tableHead={[...TABLE_HEADS.Brands, "Lựa chọn"]}
 						tableBody={brands}
-						model={'users'}
+						model={"users"}
 					/>
 				)}
 			</div>

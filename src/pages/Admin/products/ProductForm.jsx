@@ -11,6 +11,8 @@ import productService from "../../../services/ProductService";
 import brandService from "../../../services/BrandService";
 import categoryService from "../../../services/CategoryService";
 
+
+
 function ProductForm({
 	model,
 	initialData = {},
@@ -112,7 +114,7 @@ function ProductForm({
 				buttonIcon={<FaArrowLeftLong />}
 				titleButton={"Danh sách"}
 			/>
-			<div className="p-3">
+			<div className="p-3 overflow-y-scroll">
 				<table className="table-auto w-full">
 					<tbody>
 						<tr className="grid grid-cols-12 gap-2">

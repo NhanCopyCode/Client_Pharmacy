@@ -30,7 +30,7 @@ function AdminPage() {
 					))}
 				</div>
 
-				<div className="flex flex-col flex-1 h-screen">
+				<div className="flex flex-col flex-1 h-screen w-[230px]">
 					<div className="h-[50px] flex items-center z-10 justify-between bg-white shadow-sm border-b border-gray-200 px-4">
 						<div
 							className="p-2 cursor-pointer bg-gray-100"

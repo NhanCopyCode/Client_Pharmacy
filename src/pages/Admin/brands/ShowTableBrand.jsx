@@ -10,7 +10,6 @@ import { adminPath } from "../../../utils/constants";
 import { TABLE_COLUMNS } from "../../../utils/constants";
 import Pagination from "../../../components/Pagination";
 
-
 function ShowTableBrand({ model }) {
 	const [brands, setBrands] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -51,7 +50,6 @@ function ShowTableBrand({ model }) {
 				to={adminPath.create(model)}
 			/>
 			<div className="flex items-center justify-end w-full p-3 gap-2">
-			
 				<input
 					className="h-[38px] px-3 outline-0 border border-gray-200 rounded-md text-sm w-[180px]"
 					placeholder="Tìm kiếm..."
@@ -77,7 +75,7 @@ function ShowTableBrand({ model }) {
 				</Button>
 			</div>
 
-			<div className="p-3">
+			<div className="p-3 overflow-y-scroll">
 				{loading ? (
 					<p>Loading...</p>
 				) : (

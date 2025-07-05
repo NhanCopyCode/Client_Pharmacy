@@ -4,7 +4,7 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { adminPath } from "../../../utils/constants";
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
-import promotionService from '../../../services/PromotionService';
+import promotionService from "../../../services/PromotionService";
 
 function DetailPromotion({ model }) {
 	const [promotion, setPromotion] = useState(null);
@@ -23,7 +23,8 @@ function DetailPromotion({ model }) {
 		fetchPromotion();
 	}, [id]);
 
-	if (!promotion) return <div className="p-3">Đang tải...</div>;
+	if (!promotion)
+		return <div className="p-3 overflow-y-scroll">Đang tải...</div>;
 
 	const {
 		title,

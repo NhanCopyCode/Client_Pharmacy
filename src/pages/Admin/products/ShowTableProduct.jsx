@@ -10,6 +10,11 @@ import { Pagination } from "../../../components";
 import productService from "../../../services/ProductService";
 import brandService from "../../../services/BrandService";
 import categoryService from "../../../services/CategoryService";
+import handleExcelUpload from "../../../utils/handleExcelUpload";
+import Modal from "react-responsive-modal";
+import { IoMdClose } from "react-icons/io";
+import { FaFileExcel } from "react-icons/fa";
+import { LuDownload } from "react-icons/lu";
 
 function ShowTableProduct() {
 	const [listCategories, setListCategories] = useState([]);
@@ -18,10 +23,10 @@ function ShowTableProduct() {
 	const [loading, setLoading] = useState(true);
 	const [searchInput, setSearchInput] = useState("");
 	const [meta, setMeta] = useState([]);
-
-
 	const [selectedBrand, setSelectedBrand] = useState(null);
 	const [selectedCategory, setSelectedCategory] = useState(null);
+
+	const [modalExcelIsOpen, setModalExcelOpen] = useState(false);
 
 	const fetchProducts = async (params = {}) => {
 		setLoading(true);
@@ -39,7 +44,6 @@ function ShowTableProduct() {
 	};
 
 	useEffect(() => {
-
 		const fetchListBrandsAndListCategories = async () => {
 			try {
 				const listBrands =
@@ -52,11 +56,10 @@ function ShowTableProduct() {
 			} catch (error) {
 				console.error("Errors loading brands/categories: ", error);
 			}
-		}
+		};
 
 		fetchListBrandsAndListCategories();
-		
-	}, [])
+	}, []);
 
 	useEffect(() => {
 		fetchProducts();
@@ -95,8 +98,6 @@ function ShowTableProduct() {
 		});
 	};
 
-	
-
 	return (
 		<>
 			<TitleHeader
@@ -106,6 +107,15 @@ function ShowTableProduct() {
 				to={adminPath.create("products")}
 			/>
 			<div className="flex items-center justify-end w-full p-3 gap-2">
+				<Button
+					background="bg-success"
+					hoverEffect="hover:bg-darkSuccess"
+					onClick={() => setModalExcelOpen(true)}
+				>
+					Tải file excel
+				</Button>
+				
+
 				<Select
 					className=" text-sm"
 					placeholder="Chọn loại danh mục"
@@ -150,8 +160,7 @@ function ShowTableProduct() {
 					Tìm
 				</Button>
 			</div>
-
-			<div className="p-3">
+			<div className="p-3 overflow-y-scroll">
 				{loading ? (
 					<p>Loading...</p>
 				) : (
@@ -170,6 +179,69 @@ function ShowTableProduct() {
 					</>
 				)}
 			</div>
+			;
+			<Modal
+				open={modalExcelIsOpen}
+				onClose={() => setModalExcelOpen(false)}
+				showCloseIcon={false}
+				center
+			>
+				<div className="relative bg-white p-6 rounded-lg w-[400px] shadow-md">
+					{/* Close button */}
+					<button
+						className="absolute top-3 right-3 text-gray-500 hover:text-red-500 text-xl"
+						onClick={() => setModalExcelOpen(false)}
+					>
+						<IoMdClose />
+					</button>
+
+					{/* Title */}
+					<h2 className="text-xl font-semibold mb-2 text-center">
+						Upload sản phẩm bằng Excel
+					</h2>
+
+					<p className="text-sm text-gray-600 text-center mb-4">
+						Hệ thống hỗ trợ nhập dữ liệu sản phẩm từ file Excel
+						(.xlsx, .xls).
+					</p>
+
+					{/* File input */}
+					<div className="flex flex-col items-center gap-3">
+						<label className="bg-blue-500 text-white px-4 py-2 rounded cursor-pointer hover:bg-blue-600 flex items-center gap-2">
+							<FaFileExcel />
+							Chọn file Excel
+							<input
+								type="file"
+								accept=".xlsx, .xls"
+								hidden
+								onChange={(e) => {
+									handleExcelUpload(
+										e,
+										"products",
+										fetchProducts
+									);
+									setModalExcelOpen(false); // auto close on upload
+								}}
+							/>
+						</label>
+
+						{/* Download template button (optional) */}
+						<button
+							className="flex items-center gap-2 text-sm text-green-600 hover:underline cursor-pointer"
+							onClick={() => {
+								// Hàm tải file mẫu (Excel template)
+								window.open(
+									"/templates/products_vi_sample.xlsx",
+									"_blank"
+								);
+							}}
+						>
+							<LuDownload />
+							Tải file mẫu Excel
+						</button>
+					</div>
+				</div>
+			</Modal>
 		</>
 	);
 }

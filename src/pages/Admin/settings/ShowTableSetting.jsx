@@ -55,7 +55,7 @@ function ShowTableSetting() {
 				</Button>
 			</div>
 
-			<div className="p-3">
+			<div className="p-3 overflow-y-scroll">
 				<TableList />
 			</div>
 		</>

@@ -96,7 +96,7 @@ function PromotionForm({
 				buttonIcon={<FaArrowLeftLong />}
 				titleButton={"Danh sách"}
 			/>
-			<div className="p-3">
+			<div className="p-3 overflow-y-scroll">
 				<table className="table-auto w-full">
 					<tbody>
 						{/* Title */}

@@ -18,7 +18,7 @@ function Table() {
 		setLoading(true);
 		try {
 			const response = await postService.getAll(params);
-			
+
 			setListData(response.data.data);
 
 			setMeta(response.data.meta);
@@ -80,7 +80,7 @@ function Table() {
 				</Button>
 			</div>
 
-			<div className="p-3">
+			<div className="p-3 overflow-y-scroll">
 				{loading ? (
 					<p>Loading...</p>
 				) : (

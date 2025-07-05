@@ -8,7 +8,6 @@ import { adminPath } from "../../../utils/constants";
 import { ImageUpload } from "../../../components/Admin";
 
 function AddNewAccount() {
-
 	return (
 		<>
 			<TitleHeader
@@ -17,7 +16,7 @@ function AddNewAccount() {
 				buttonIcon={<FaArrowLeftLong />}
 				titleButton={"Danh sách"}
 			/>
-			<div className="p-3">
+			<div className="p-3 overflow-y-scroll">
 				<table className="table-auto w-full">
 					<tbody>
 						<tr className="grid grid-cols-12 gap-2">
@@ -30,7 +29,9 @@ function AddNewAccount() {
 							</td>
 						</tr>
 						<tr className="grid grid-cols-12 gap-2">
-							<td className="col-span-3 p-[10px]">Hình ảnh hãng</td>
+							<td className="col-span-3 p-[10px]">
+								Hình ảnh hãng
+							</td>
 							<td className="col-span-9 p-[10px]">
 								<ImageUpload />
 							</td>

@@ -5,7 +5,6 @@ import { adminPath } from "../../../utils/constants";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { TitleHeader } from "../../../components/Admin";
 
-
 function AdsForm({
 	model,
 	initialData = {},
@@ -30,7 +29,6 @@ function AdsForm({
 			setInitialized(true);
 		}
 	}, [initialData, initialized]);
-	
 
 	const handleSubmit = async () => {
 		const formData = new FormData();
@@ -47,7 +45,6 @@ function AdsForm({
 
 		await onSubmit(formData);
 	};
-	
 
 	return (
 		<>
@@ -57,7 +54,7 @@ function AdsForm({
 				buttonIcon={<FaArrowLeftLong />}
 				titleButton={"Danh sách"}
 			/>
-			<div className="p-3">
+			<div className="p-3 overflow-y-scroll">
 				<table className="table-auto w-full">
 					<tbody>
 						<tr className="grid grid-cols-12 gap-2">
@@ -92,7 +89,7 @@ function AdsForm({
 								</span>
 							</td>
 						</tr>
-					
+
 						<tr className="grid grid-cols-12 gap-2">
 							<td className="col-span-3 p-[10px]">
 								<label htmlFor="test">Duyệt</label>

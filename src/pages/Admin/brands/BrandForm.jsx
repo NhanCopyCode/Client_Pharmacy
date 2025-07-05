@@ -51,7 +51,7 @@ function BrandForm({
 				buttonIcon={<FaArrowLeftLong />}
 				titleButton={"Danh sách"}
 			/>
-			<div className="p-3">
+			<div className="p-3 overflow-y-scroll">
 				<table className="table-auto w-full">
 					<tbody>
 						<tr className="grid grid-cols-12 gap-2">
@@ -85,7 +85,11 @@ function BrandForm({
 						<tr className="grid grid-cols-12 gap-2">
 							<td className="col-span-3 p-[10px]">
 								<span>Mô tả hãng</span>
-								<ModalGenerateText service={brandService}  name={name} description={description} />
+								<ModalGenerateText
+									service={brandService}
+									name={name}
+									description={description}
+								/>
 							</td>
 							<td className="col-span-9 p-[10px]">
 								<TiptapEditor

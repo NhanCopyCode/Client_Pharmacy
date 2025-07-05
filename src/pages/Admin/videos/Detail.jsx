@@ -23,11 +23,9 @@ function Detail({ model }) {
 		fetchData();
 	}, [id]);
 
-	if (!data) return <div className="p-3">Đang tải...</div>;
+	if (!data) return <div className="p-3 overflow-y-scroll">Đang tải...</div>;
 
 	const { name, src, image, approved } = data;
-
-	
 
 	return (
 		<>

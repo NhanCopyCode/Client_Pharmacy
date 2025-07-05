@@ -29,8 +29,6 @@ function ShowTablePromotion() {
 		}
 	};
 
-	
-
 	useEffect(() => {
 		fetchAds();
 	}, []);
@@ -48,10 +46,6 @@ function ShowTablePromotion() {
 		});
 	};
 
-	
-
-	
-
 	return (
 		<>
 			<TitleHeader
@@ -61,8 +55,6 @@ function ShowTablePromotion() {
 				to={adminPath.create("ads")}
 			/>
 			<div className="flex items-center justify-end w-full p-3 gap-2">
-			
-
 				<input
 					className="h-[38px] px-3 outline-0 border 
 					border-gray-200 rounded-md text-sm w-[180px]"
@@ -89,7 +81,7 @@ function ShowTablePromotion() {
 				</Button>
 			</div>
 
-			<div className="p-3">
+			<div className="p-3 overflow-y-scroll">
 				{loading ? (
 					<p>Loading...</p>
 				) : (

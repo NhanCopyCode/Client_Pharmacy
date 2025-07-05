@@ -9,7 +9,6 @@ import { adminPath, TABLE_COLUMNS } from "../../../utils/constants";
 import { Pagination } from "../../../components";
 import promotionService from "../../../services/PromotionService";
 
-
 const options = [
 	{ value: "percent", label: "Phần trăm (%)" },
 	{ value: "fixed", label: "Giá cố định" },
@@ -21,7 +20,6 @@ function ShowTablePromotion() {
 	const [searchInput, setSearchInput] = useState("");
 	const [meta, setMeta] = useState([]);
 	const [selectedOption, setSelectedOption] = useState(null);
-
 
 	const fetchPromotion = async (params = {}) => {
 		setLoading(true);
@@ -42,7 +40,7 @@ function ShowTablePromotion() {
 	}, []);
 	useEffect(() => {
 		handleSearch();
-	}, [selectedOption])
+	}, [selectedOption]);
 
 	const handleSearch = () => {
 		fetchPromotion({
@@ -58,7 +56,6 @@ function ShowTablePromotion() {
 			page,
 		});
 	};
-	
 
 	return (
 		<>
@@ -107,7 +104,7 @@ function ShowTablePromotion() {
 				</Button>
 			</div>
 
-			<div className="p-3">
+			<div className="p-3 overflow-y-scroll">
 				{loading ? (
 					<p>Loading...</p>
 				) : (
