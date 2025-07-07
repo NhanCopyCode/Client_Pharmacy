@@ -21,7 +21,6 @@ function Form({
 
 	useEffect(() => {
 		if (initialData && !initialized) {
-			console.log("go in useEffect initialData", initialData);
 			setTitle(initialData.title || "");
 			setDescription(initialData.description || "");
 			setApproved(Boolean(initialData.approved));

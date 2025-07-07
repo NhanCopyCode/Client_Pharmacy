@@ -254,6 +254,8 @@ export const TABLE_COLUMNS = {
 			type: "image",
 			style: "w-50 object-contain",
 		},
+		{ key: "start_date", label: "Bắt đầu", type: "date" },
+		{ key: "end_date", label: "Kết thúc", type: "date" },
 		{ key: "approved", label: "Duyệt", type: "boolean" },
 	],
 	promotions: [

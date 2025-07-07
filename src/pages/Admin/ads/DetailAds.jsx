@@ -4,6 +4,7 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { adminPath } from "../../../utils/constants";
 import adsService from "../../../services/AdsService";
 import { useEffect, useState } from "react";
+import { format } from "date-fns";
 
 function DetailAds({ model }) {
 	const [ads, setAds] = useState(null);
@@ -21,8 +22,9 @@ function DetailAds({ model }) {
 
 		fetchAds();
 	}, [id]);
-
-	const { title, image, approved } = ads || {};
+	const formatDateTime = (value) =>
+		value ? format(new Date(value), "yyyy-MM-dd HH:mm:ss") : "";
+	const { title, image, approved, start_date, end_date } = ads || {};
 
 	return (
 		<>
@@ -44,10 +46,18 @@ function DetailAds({ model }) {
 				<div className="col-span-9">
 					<img src={image} alt={title} />
 				</div>
+				<div className="col-span-3">Ngày bắt đầu:</div>
+				<div className="col-span-9">{formatDateTime(start_date)}</div>
 
+				<div className="col-span-3">Ngày kết thúc:</div>
+				<div className="col-span-9">{formatDateTime(end_date)}</div>
 				<div className="col-span-3">Duyệt:</div>
 				<div className="col-span-9">
-					{ approved ? <p className="text-success">Đã duyệt</p> : <p className="text-redColor">Chưa duyệt</p>}
+					{approved ? (
+						<p className="text-success">Đã duyệt</p>
+					) : (
+						<p className="text-redColor">Chưa duyệt</p>
+					)}
 				</div>
 			</div>
 		</>

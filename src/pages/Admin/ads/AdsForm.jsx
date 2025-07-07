@@ -4,6 +4,10 @@ import { Button } from "../../../components/Client";
 import { adminPath } from "../../../utils/constants";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { TitleHeader } from "../../../components/Admin";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import formatDate from "../../../utils/formatDate";
+
 
 function AdsForm({
 	model,
@@ -16,11 +20,24 @@ function AdsForm({
 	const [title, setTitle] = useState("");
 	const [images, setImages] = useState([]);
 	const [approved, setApproved] = useState(false);
+	const [startDate, setStartDate] = useState(new Date());
+	const [endDate, setEndDate] = useState(new Date());
 
 	useEffect(() => {
 		if (initialData && !initialized) {
 			setTitle(initialData.title || "");
 			setApproved(Boolean(initialData.approved));
+
+			setStartDate(
+				initialData.start_date
+					? new Date(initialData.start_date)
+					: new Date()
+			);
+			setEndDate(
+				initialData.end_date
+					? new Date(initialData.end_date)
+					: new Date()
+			);
 
 			if (initialData.image && typeof initialData.image === "string") {
 				setImages([{ data_url: initialData.image }]);
@@ -29,12 +46,14 @@ function AdsForm({
 			setInitialized(true);
 		}
 	}, [initialData, initialized]);
+	
 
 	const handleSubmit = async () => {
 		const formData = new FormData();
 		formData.append("title", title);
 		formData.append("approved", approved ? 1 : 0);
-
+		formData.append("start_date", formatDate(startDate));
+		formData.append("end_date", formatDate(endDate));
 		if (images.length > 0 && images[0].file) {
 			formData.append("image", images[0].file);
 		}
@@ -86,6 +105,45 @@ function AdsForm({
 
 								<span className="text-redColor">
 									{errors.image}
+								</span>
+							</td>
+						</tr>
+						<tr className="grid grid-cols-12 gap-2">
+							<td className="col-span-3 p-[10px]">
+								Ngày bắt đầu
+							</td>
+							<td className="col-span-9 p-[10px]">
+								<DatePicker
+									selected={startDate}
+									onChange={(date) => setStartDate(date)}
+									showTimeSelect
+									timeFormat="HH:mm"
+									timeIntervals={15}
+									dateFormat="yyyy-MM-dd HH:mm"
+									className="border border-gray-300 w-full rounded-sm py-[5px] px-[10px] text-sm outline-0"
+								/>
+								<span className="text-redColor">
+									{errors.start_date}
+								</span>
+							</td>
+						</tr>
+
+						<tr className="grid grid-cols-12 gap-2">
+							<td className="col-span-3 p-[10px]">
+								Ngày kết thúc
+							</td>
+							<td className="col-span-9 p-[10px]">
+								<DatePicker
+									selected={endDate}
+									onChange={(date) => setEndDate(date)}
+									showTimeSelect
+									timeFormat="HH:mm"
+									timeIntervals={15}
+									dateFormat="yyyy-MM-dd HH:mm"
+									className="border border-gray-300 w-full rounded-sm py-[5px] px-[10px] text-sm outline-0"
+								/>
+								<span className="text-redColor">
+									{errors.end_date}
 								</span>
 							</td>
 						</tr>

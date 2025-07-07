@@ -9,7 +9,8 @@ import adsService from '../../../services/AdsService';
 function AddNewAds({ model }) {
 	const [errors, setErrors] = useState({});
 	const navigate = useNavigate();
-	const handleSubmit = async ({ formData }) => {
+	const handleSubmit = async (formData) => {
+		console.log('get in this handle submit', formData);
 		try {
 			await adsService.create(formData);
 			await Swal.fire({
