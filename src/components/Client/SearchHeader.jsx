@@ -4,6 +4,8 @@ import Typewriter from "typewriter-effect";
 import { useState, useRef, useEffect } from "react";
 import { IoSearch } from "react-icons/io5";
 import { Button, SearchHeaderPost, SearchHeaderProduct } from "../Client";
+import productService from "../../services/ProductService";
+import postService from "../../services/PostService";
 
 function SearchHeader() {
 	const [inputValue, setInputValue] = useState("");
@@ -11,6 +13,12 @@ function SearchHeader() {
 	const [tippyWidth, setTippyWidth] = useState(0);
 	const [isShowProduct, setShowProduct] = useState(true);
 	const [isShowPost, setShowPost] = useState(false);
+	const [listProductSearch, setListProductSearch] = useState([]);
+	const [listPostSearch, setListPostSearch] = useState([]);
+	const [debouncedInput, setDebouncedInput] = useState(inputValue);
+	const [productsCount, setProductsCount] = useState(0);
+	const [postsCount, setPostsCount] = useState(0);
+
 	const inputRef = useRef(null);
 	const widthInput = useRef(null);
 
@@ -42,6 +50,45 @@ function SearchHeader() {
 		return () => window.removeEventListener("resize", updateWidth);
 	}, []);
 
+	useEffect(() => {
+		const handler = setTimeout(() => {
+			setDebouncedInput(inputValue);
+		}, 500);
+
+		return () => clearTimeout(handler);
+	}, [inputValue]);
+
+	useEffect(() => {
+		const fetchListProductAndPost = async () => {
+			if (!debouncedInput.trim()) {
+				setListProductSearch([]);
+				setListPostSearch([]);
+				return;
+			}
+
+			const productResponse = await productService.search(debouncedInput);
+			const postResponse = await postService.search(debouncedInput);
+
+			setListProductSearch(productResponse?.data?.listProducts || []);
+			setListPostSearch(postResponse?.data?.listPosts || []);
+
+			setProductsCount(productResponse?.data?.productsCount);
+			setPostsCount(postResponse?.data?.postsCount);
+		};
+
+		fetchListProductAndPost();
+	}, [debouncedInput]);
+
+	const handleShowProductSearch = () => {
+		setInputValue("");
+		setListProductSearch([]);
+		setProductsCount(null);
+		setListPostSearch([]);
+		setPostsCount("");
+		setShowProduct(true);
+		setShowPost(false);
+	};
+
 	return (
 		<Tippy
 			interactive
@@ -50,12 +97,12 @@ function SearchHeader() {
 			onClickOutside={() => setIsFocus(false)}
 			render={(attrs) => (
 				<div
-					className="bg-white text-black rounded-md p-[10px] shadow-md"
+					className="bg-white text-black rounded-md p-[10px] shadow-2xl"
 					tabIndex={-1}
 					{...attrs}
 					style={{ width: tippyWidth }}
 				>
-					<div className="flex items-center gap-1 ">
+					<div className="flex items-center gap-1">
 						<Button
 							hoverEffect="hover:bg-primary"
 							background={`${
@@ -75,40 +122,83 @@ function SearchHeader() {
 							Tin tức
 						</Button>
 					</div>
-					<div className="">
-						<span className="text-success font-bold text-sm pt-4 inline-block">
-							Có 2 sản phẩm
-						</span>
-						<div className="flex flex-col items-start mt-4 divide-y divide-gray-200 border-b-1 border-gray-200 mb-4">
-							{isShowProduct && (
-								<>
-									<SearchHeaderProduct />
-									<SearchHeaderProduct />
-									<SearchHeaderProduct />
-								</>
-							)}
 
-							{isShowPost && (
-								<>
-									<SearchHeaderPost />
-									<SearchHeaderPost />
-									<SearchHeaderPost />
-								</>
-							)}
-						</div>
-						<Button
-							border="border-2 border-primary"
-							background="bg-white"
-							color="text-darkBlue"
-							hoverEffect="hover:bg-primary hover:text-white"
-							fontWeight="font-medium"
-						>
-							Xem tất cả
-						</Button>
+					<div className="">
+						{/* Display based on current tab */}
+						{isShowProduct ? (
+							<>
+								{!!productsCount && (
+									<span className="text-success font-bold text-sm pt-4 inline-block">
+										Có {productsCount} sản phẩm
+									</span>
+								)}
+								<div className="flex flex-col items-start mt-4 divide-y divide-gray-200 border-b border-gray-200 mb-4">
+									{listProductSearch.length === 0 ? (
+										<div className="text-center w-full text-gray-500 text-sm py-4">
+											Không có kết quả tìm kiếm
+										</div>
+									) : (
+										listProductSearch.map((product) => (
+											<SearchHeaderProduct
+												key={product.id}
+												handleOnClick={
+													handleShowProductSearch
+												}
+												product={product}
+											/>
+										))
+									)}
+								</div>
+								{!!productsCount && (
+									<Button
+										border="border-2 border-primary"
+										background="bg-white"
+										color="text-darkBlue"
+										hoverEffect="hover:bg-primary hover:text-white"
+										fontWeight="font-medium"
+									>
+										Xem tất cả
+									</Button>
+								)}
+							</>
+						) : (
+							<>
+								{!!postsCount && (
+									<span className="text-success font-bold text-sm pt-4 inline-block">
+										Có {postsCount} bài viết
+									</span>
+								)}
+								<div className="flex flex-col items-start mt-4 divide-y divide-gray-200 border-b border-gray-200 mb-4">
+									{listPostSearch.length === 0 ? (
+										<div className="text-center w-full text-gray-500 text-sm py-4">
+											Không có kết quả tìm kiếm
+										</div>
+									) : (
+										listPostSearch.map((post) => (
+											<SearchHeaderPost
+												key={post.id}
+												handleOnClick={
+													handleShowProductSearch
+												}
+												post={post}
+											/>
+										))
+									)}
+								</div>
+								{!!postsCount && (
+									<Button
+										border="border-2 border-primary"
+										background="bg-white"
+										color="text-darkBlue"
+										hoverEffect="hover:bg-primary hover:text-white"
+										fontWeight="font-medium"
+									>
+										Xem tất cả
+									</Button>
+								)}
+							</>
+						)}
 					</div>
-					{/* <div className="text-center text-sm font-light py-2">
-						Không thấy có kết quả tìm kiếm
-					</div> */}
 				</div>
 			)}
 		>
@@ -136,7 +226,7 @@ function SearchHeader() {
 							}}
 							options={{
 								delay: 100,
-								loop: true, // Loop the animation
+								loop: true,
 							}}
 						/>
 					)}

@@ -10,6 +10,7 @@ export const path = {
 	TIN_TUC: "tin-tuc",
 	CHI_TIET_SAN_PHAM: "san-pham/:id",
 	CHI_TIET_TIN_TUC: "tin-tuc/:id",
+	DANH_SACH_ITEM_TIM_KIEM: "tim-kiem",
 	GIO_HANG: "gio-hang",
 };
 
@@ -142,6 +143,8 @@ export const TABLE_COLUMNS = {
 		{ key: "", label: "", type: "checkbox", style: "text-center" },
 		{ key: "id", label: "ID" },
 		{ key: "title", label: "Tên sản phẩm" },
+		{ key: "main_image", label: "Hình ảnh chính", type: "image", style: "w-[80px]" },
+
 		{ key: "brandName", label: "Tên hãng" },
 		{ key: "categoryName", label: "Tên danh mục" },
 		{

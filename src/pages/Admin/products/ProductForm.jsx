@@ -11,8 +11,6 @@ import productService from "../../../services/ProductService";
 import brandService from "../../../services/BrandService";
 import categoryService from "../../../services/CategoryService";
 
-
-
 function ProductForm({
 	model,
 	initialData = {},
@@ -32,6 +30,7 @@ function ProductForm({
 	const [selectedCategoryOption, setSelectedCategoryOption] = useState(null);
 	const [images, setImages] = useState([]);
 	const [outstanding, setOutstanding] = useState(false);
+	const [mainImage, setMainImage] = useState(null);
 
 	useEffect(() => {
 		const fetchListParents = async () => {
@@ -76,6 +75,10 @@ function ProductForm({
 			setSelectedCategoryOption(matchedCategoryOption);
 			setApproved(Boolean(initialData.approved));
 
+			if (initialData.main_image) {
+				setMainImage({ data_url: initialData.main_image });
+			}
+
 			if (Array.isArray(initialData.images)) {
 				const formattedImages = initialData.images.map((url) => ({
 					data_url: url.image,
@@ -98,6 +101,9 @@ function ProductForm({
 		formData.append("categoryId", selectedCategoryOption?.value || 0);
 		formData.append("approved", approved ? 1 : 0);
 		formData.append("outstanding", outstanding ? 1 : 0);
+		if (mainImage?.file) {
+			formData.append("main_image", mainImage.file);
+		}
 
 		if (mode === "edit") {
 			formData.append("id", initialData.id);
@@ -133,6 +139,26 @@ function ProductForm({
 								</span>
 							</td>
 						</tr>
+
+						<tr className="grid grid-cols-12 gap-2">
+							<td className="col-span-3 p-[10px]">
+								Hình ảnh chính
+							</td>
+							<td className="col-span-9 p-[10px]">
+								<ImageUploadBrand
+									images={mainImage ? [mainImage] : []}
+									setImages={(imgs) =>
+										setMainImage(imgs[0] || null)
+									}
+									isUploadMultiple={false}
+								/>
+
+								<span className="text-redColor">
+									{errors.main_image}
+								</span>
+							</td>
+						</tr>
+
 						<tr className="grid grid-cols-12 gap-2">
 							<td className="col-span-3 p-[10px]">
 								Hình ảnh sản phẩm

@@ -54,7 +54,7 @@ function ShowTablePromotion() {
 				titleButton={"Thêm mới"}
 				to={adminPath.create("ads")}
 			/>
-			<div className="flex items-center justify-end w-full p-3 gap-2">
+			<div className="flex items-center justify-end w-full p-3 gap-2 flex-wrap">
 				<input
 					className="h-[38px] px-3 outline-0 border 
 					border-gray-200 rounded-md text-sm w-[180px]"

@@ -106,7 +106,7 @@ function ShowTableProduct() {
 				titleButton={"Thêm mới"}
 				to={adminPath.create("products")}
 			/>
-			<div className="flex items-center justify-end w-full p-3 gap-2">
+			<div className="flex items-center justify-end w-full p-3 gap-2 flex-wrap">
 				<Button
 					background="bg-success"
 					hoverEffect="hover:bg-darkSuccess"
@@ -114,7 +114,6 @@ function ShowTableProduct() {
 				>
 					Tải file excel
 				</Button>
-				
 
 				<Select
 					className=" text-sm"

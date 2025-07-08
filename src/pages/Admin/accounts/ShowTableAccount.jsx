@@ -41,7 +41,7 @@ function ShowTableAccount() {
 				titleButton={"Thêm mới"}
 				to={adminPath.BRANDS_CREATE}
 			/>
-			<div className="flex items-center justify-end w-full p-3 gap-2">
+			<div className="flex items-center justify-end w-full p-3 gap-2 flex-wrap">
 				<Select
 					className=" text-sm"
 					placeholder="Chọn loại bộ đề"

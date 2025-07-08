@@ -12,6 +12,11 @@ const postService = {
 			keyword,
 		});
 	},
+	search: (query) => {
+		return axiosInstance.get("/posts/search", {
+			params: { q: query },
+		});
+	},
 };
 
 export default postService;
