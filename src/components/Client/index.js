@@ -55,3 +55,4 @@ export { default as ContactButton } from "./ContactButton";
 export { default as CategoryList } from "./CategoryList";
 export { default as CategoryItem } from "./CategoryItem";
 export { default as ModalGenerateText } from "./ModalGenerateText";
+export { default as PostCard } from "./PostCard";

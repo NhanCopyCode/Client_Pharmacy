@@ -1,14 +1,19 @@
 import Button from "./Button";
 import { FaRegHeart } from "react-icons/fa";
 import { BsMinecart } from "react-icons/bs";
+import formatPriceVND from "../../utils/formatPriceVND";
+import { Link } from "react-router-dom";
 
 function ProductCard({
+	product,
 	hoverEffect,
 	displayNumProductSold = false,
 	numProductSold,
 }) {
+
+	const { id, title, price, main_image } = product;
 	return (
-		<div
+		<Link to={`/san-pham/${id}`}
 			className={`${hoverEffect} cursor-pointer hover:shadow-[0_0px_2px_0_#003cbf,_0_0px_6px_0px_#003cbf]
  rounded-md shadow-xl border border-gray-200  bg-white relative overflow-hidden group`}
 		>
@@ -29,18 +34,17 @@ function ProductCard({
 			<div className="w-[100%] h-[250px] flex items-center justify-center">
 				<img
 					className="h-full object-cover  group-hover:scale-105 transition-transform duration-300"
-					src="https://bizweb.dktcdn.net/thumb/large/100/491/197/products/hebe-tuyp-truoc-908f63e863.png?v=1689758514757"
+					src={main_image}
 				/>
 			</div>
 			<div className="mt-2 px-[5px] py-[10px]">
-				<h3 className="text-[16px] text-black line-clamp-2 font-bold">
-					Siro Top Grow Jpanwell hỗ trợ tăng cường sức khỏe, sức đề
-					kháng ở trẻ em (10 chai x 30ml)
+				<h3 className="text-[16px] text-black line-clamp-2 font-bold h-[48px]">
+					{title}
 				</h3>
 				<div className="flex items-center justify-between mt-1">
 					<div className="flex flex-col items-start">
 						<span className="text-[18px] font-bold text-success">
-							890.000đ
+							{formatPriceVND(price)}
 						</span>
 						<span className="text-[12px] font-bold text-[#666] line-through">
 							1.000.000đ
@@ -67,7 +71,7 @@ function ProductCard({
 					</>
 				)}
 			</div>
-		</div>
+		</Link>
 	);
 }
 

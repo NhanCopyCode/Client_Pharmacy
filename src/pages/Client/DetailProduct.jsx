@@ -1,5 +1,12 @@
 import { CiShoppingCart } from "react-icons/ci";
-import { Button, Container, ProductDetailImage, ProductSwiper, SidebarProductContainer, SidebarProductItem } from "../../components/Client";
+import {
+	Button,
+	Container,
+	ProductDetailImage,
+	ProductSwiper,
+	SidebarProductContainer,
+	SidebarProductItem,
+} from "../../components/Client";
 import { FaRegHeart } from "react-icons/fa6";
 import GiftBox from "../../assets/images/giftbox.png";
 import check from "../../assets/images/check.png";
@@ -7,6 +14,8 @@ import smallGift from "../../assets/images/small_gift.png";
 import camket1 from "../../assets/images/camket_1.png";
 import productSupport from "../../assets/images/evo_product_support.jpg";
 import chinhsach_1 from "../../assets/images/chinhsach_1.png";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 const images = [
 	"https://bizweb.dktcdn.net/thumb/large/100/491/197/products/00030869-sasagold-saffron-nhuy-h.png?v=1689759984450",
 	"https://bizweb.dktcdn.net/thumb/large/100/491/197/products/00030869-sasagold-saffron-nhuy-h-5.png?v=1689759985303",
@@ -15,6 +24,9 @@ const images = [
 	"https://bizweb.dktcdn.net/thumb/large/100/491/197/products/00030869-sasagold-saffron-nhuy-h-4.png?v=1689759986333",
 ];
 function DetailProduct() {
+	const [product, setProduct] = useState({});
+	const { id } = useParams();
+
 	return (
 		<Container>
 			<div className="grid grid-cols-12 gap-8">
@@ -375,10 +387,10 @@ function DetailProduct() {
 					</div>
 				</div>
 
-				<div className="col-span-12 mt-8">
+				{/* <div className="col-span-12 mt-8">
 					<ProductSwiper />
 					<ProductSwiper />
-				</div>
+				</div> */}
 			</div>
 		</Container>
 	);

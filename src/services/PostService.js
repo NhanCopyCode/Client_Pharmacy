@@ -17,6 +17,11 @@ const postService = {
 			params: { q: query },
 		});
 	},
+	searchMultiple: (query) => {
+		return axiosInstance.get("/posts/search-multiple-posts", {
+			params: { q: query },
+		});
+	},
 };
 
 export default postService;

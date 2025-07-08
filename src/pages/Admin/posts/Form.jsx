@@ -5,6 +5,7 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { TitleHeader } from "../../../components/Admin";
 import { adminPath } from "../../../utils/constants";
 import postService from "../../../services/PostService";
+import ImageUploadBrand from "../../../components/Admin/ImageUpload";
 
 function Form({
 	model,
@@ -18,13 +19,16 @@ function Form({
 	const [approved, setApproved] = useState(false);
 	const [initialized, setInitialized] = useState(false);
 	const [userId, setUserId] = useState("");
+	const [image, setImage] = useState(null);
 
 	useEffect(() => {
 		if (initialData && !initialized) {
 			setTitle(initialData.title || "");
 			setDescription(initialData.description || "");
 			setApproved(Boolean(initialData.approved));
-
+			if (initialData.image) {
+				setImage({ data_url: initialData.image });
+			}
 			setInitialized(true);
 		}
 	}, [initialData, initialized]);
@@ -39,6 +43,9 @@ function Form({
 		formData.append("description", description);
 		formData.append("approved", approved ? 1 : 0);
 		formData.append("userId", userId);
+		if (image?.file) {
+			formData.append("image", image.file);
+		}
 		if (mode === "edit") formData.append("id", initialData.id);
 		await onSubmit(formData);
 	};
@@ -71,6 +78,24 @@ function Form({
 							</td>
 						</tr>
 
+						<tr className="grid grid-cols-12 gap-2">
+							<td className="col-span-3 p-[10px]">
+								Hình ảnh bài viết
+							</td>
+							<td className="col-span-9 p-[10px]">
+								<ImageUploadBrand
+									images={image ? [image] : []}
+									setImages={(imgs) =>
+										setImage(imgs[0] || null)
+									}
+									isUploadMultiple={false}
+								/>
+
+								<span className="text-redColor">
+									{errors.image}
+								</span>
+							</td>
+						</tr>
 						{/* Description */}
 						<tr className="grid grid-cols-12 gap-2">
 							<td className="col-span-3 p-2">

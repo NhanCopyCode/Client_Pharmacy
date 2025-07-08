@@ -16,6 +16,7 @@ import {
 	NewsPage,
 	DetailNews,
 	AdminPage,
+	ListProductAndPost,
 } from "./pages/Client";
 import {
 	AddNewBrand,
@@ -153,6 +154,10 @@ createRoot(document.getElementById("root")).render(
 								path={path.CHI_TIET_TIN_TUC}
 								element={<DetailNews />}
 							/>
+							<Route
+								path={path.DANH_SACH_ITEM_TIM_KIEM}
+								element={<ListProductAndPost />}
+							/>
 						</Route>
 
 						<Route
@@ -225,7 +230,6 @@ createRoot(document.getElementById("root")).render(
 									</React.Fragment>
 								)
 							)}
-
 						</Route>
 					</Routes>
 					<ToastContainer

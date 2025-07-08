@@ -17,6 +17,11 @@ const productService = {
 			params: { q: query },
 		});
 	},
+	searchMultiple: (query) => {
+		return axios.get("/products/search-multiple-products", {
+			params: { q: query },
+		});
+	},
 };
 
 export default productService;

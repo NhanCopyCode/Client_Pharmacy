@@ -9,7 +9,6 @@ const formatDate = (date) => {
 	const seconds = pad(date.getSeconds());
 
 	const formatted = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-	console.log("Date formatted:", formatted);
 	return formatted;
 };
 

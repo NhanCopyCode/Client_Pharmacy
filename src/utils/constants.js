@@ -143,7 +143,12 @@ export const TABLE_COLUMNS = {
 		{ key: "", label: "", type: "checkbox", style: "text-center" },
 		{ key: "id", label: "ID" },
 		{ key: "title", label: "Tên sản phẩm" },
-		{ key: "main_image", label: "Hình ảnh chính", type: "image", style: "w-[80px]" },
+		{
+			key: "main_image",
+			label: "Hình ảnh chính",
+			type: "image",
+			style: "w-[80px]",
+		},
 
 		{ key: "brandName", label: "Tên hãng" },
 		{ key: "categoryName", label: "Tên danh mục" },
@@ -202,6 +207,12 @@ export const TABLE_COLUMNS = {
 		{ key: "", label: "", type: "checkbox", style: "text-center" },
 		{ key: "id", label: "ID" },
 		{ key: "title", label: "Tiêu đề" },
+		{
+			key: "image",
+			label: "Hình ảnh",
+			type: "image",
+			style: "w-50 object-cover",
+		},
 		{ key: "description", label: "Nội dung", type: "html" },
 		{ key: "approved", label: "Duyệt", type: "boolean" },
 	],

@@ -6,6 +6,7 @@ import { IoSearch } from "react-icons/io5";
 import { Button, SearchHeaderPost, SearchHeaderProduct } from "../Client";
 import productService from "../../services/ProductService";
 import postService from "../../services/PostService";
+import { path } from "../../utils/constants";
 
 function SearchHeader() {
 	const [inputValue, setInputValue] = useState("");
@@ -151,6 +152,7 @@ function SearchHeader() {
 								</div>
 								{!!productsCount && (
 									<Button
+										to={'/' + path.DANH_SACH_ITEM_TIM_KIEM + `?q=${inputValue}`}
 										border="border-2 border-primary"
 										background="bg-white"
 										color="text-darkBlue"
@@ -187,6 +189,7 @@ function SearchHeader() {
 								</div>
 								{!!postsCount && (
 									<Button
+										to={path.DANH_SACH_ITEM_TIM_KIEM}
 										border="border-2 border-primary"
 										background="bg-white"
 										color="text-darkBlue"
