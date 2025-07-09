@@ -10,8 +10,25 @@ import "swiper/css/scrollbar";
 import SwiperNextButton from "./SwiperNextButton";
 import SwiperPrevButton from "./SwiperPrevButton";
 import DiscountItem from "./DiscountItem";
+import voucherService from '../../services/VoucherService';
+import { useEffect, useState } from "react";
 
 function DiscountContainer() {
+	const [listVoucher, setListVoucher] = useState([]);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const response = await voucherService.getVoucherApproved();
+				setListVoucher(response.data);
+				console.log('response: ', response);
+			} catch (error) {
+				console.log('error in discount container file: ', error);
+			}
+		}
+
+		fetchData();
+	}, [])
 	return (
 		<div className="relative mt-6 z-0">
 			<SwiperPrevButton prevButton={"discount-prev"} />
@@ -40,7 +57,17 @@ function DiscountContainer() {
 					}
 				}}
 			>
-				<SwiperSlide className="w-full">
+				{
+					listVoucher.map((voucher) => {
+						return (
+							<SwiperSlide key={voucher.id} className="w-full">
+								<DiscountItem voucher={voucher}/>
+							</SwiperSlide>
+						);
+					})
+				}
+			
+				{/* <SwiperSlide className="w-full">
 					<DiscountItem />
 				</SwiperSlide>
 				<SwiperSlide className="w-full">
@@ -48,10 +75,7 @@ function DiscountContainer() {
 				</SwiperSlide>
 				<SwiperSlide className="w-full">
 					<DiscountItem />
-				</SwiperSlide>
-				<SwiperSlide className="w-full">
-					<DiscountItem />
-				</SwiperSlide>
+				</SwiperSlide> */}
 			</Swiper>
 		</div>
 	);

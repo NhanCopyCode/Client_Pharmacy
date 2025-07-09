@@ -11,7 +11,11 @@ function ProductCard({
 	numProductSold,
 }) {
 
-	const { id, title, price, main_image } = product;
+	// const { id, title, price, main_image } = product;
+	const id = 1;
+	const title = "khogn có title";
+	const price = 10000;
+	const main_image = "";
 	return (
 		<Link to={`/san-pham/${id}`}
 			className={`${hoverEffect} cursor-pointer hover:shadow-[0_0px_2px_0_#003cbf,_0_0px_6px_0px_#003cbf]

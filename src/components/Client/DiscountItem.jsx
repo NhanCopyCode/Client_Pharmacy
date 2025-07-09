@@ -3,10 +3,14 @@ import Button from "./Button";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import { LiaTimesSolid } from "react-icons/lia";
 import { customStylesModal } from "../../utils/constants";
+import formatPriceVND from "../../utils/formatPriceVND";
+import { toast } from "react-toastify"; 
 import Modal from "react-modal";
 Modal.setAppElement("#root");
-function DiscountItem() {
+function DiscountItem({ voucher }) {
 	const [modalIsOpen, setIsOpen] = useState(false);
+
+	const { code, title, end_date, description,discount_type, discount_value, max_discount_value, min_order_value } = voucher;
 
 	function openModal() {
 		setIsOpen(true);
@@ -14,6 +18,15 @@ function DiscountItem() {
 	function closeModal() {
 		setIsOpen(false);
 	}
+
+	const handleCopy = async () => {
+		try {
+			await navigator.clipboard.writeText(code);
+			toast.success("Đã sao chép mã giảm giá!");
+		} catch (err) {
+			toast.error("Sao chép thất bại!");
+		}
+	};
 	return (
 		<>
 			<div className="flex items-stretch w-full flex-1 mt-8">
@@ -27,7 +40,7 @@ function DiscountItem() {
 				</div>
 				<div className="border-2 border-primary rounded-md p-[5px] flex-1 border-l-1">
 					<div className="flex items-center justify-between text-[16px]">
-						<h4 className="text-black">DOLA10</h4>
+						<h4 className="text-black">{code}</h4>
 						<Button
 							background="bg-none"
 							hoverEffect="hover:none"
@@ -40,14 +53,14 @@ function DiscountItem() {
 							<IoIosInformationCircleOutline className="w-full h-full" />
 						</Button>
 					</div>
-					<span className="text-[12px]">
-						Giảm 10.000đ giá trị đơn hàng
-					</span>
+					<span className="text-[12px]">{title}</span>
 					<div className="flex items-center justify-between">
 						<span className="text-primary text-[12px]">
-							HSD: 1/1/2024
+							HSD: {end_date}
 						</span>
-						<Button fontSize="text-sm">Sao chép</Button>
+						<Button fontSize="text-sm" onClick={handleCopy}>
+							Sao chép
+						</Button>
 					</div>
 				</div>
 			</div>
@@ -70,19 +83,30 @@ function DiscountItem() {
 						<div className="text-darkBlue col-span-4">
 							Mã giảm giá:
 						</div>
-						<div className="col-span-8">FREESHIP</div>
+						<div className="col-span-8">{code}</div>
 					</div>
 					<div className="p-[10px] grid grid-cols-12 border-b border-gray-100">
 						<div className="text-darkBlue col-span-4">
-							Mã giảm giá:
+							Ngày hết hạn:
 						</div>
-						<div className="col-span-8">FREESHIP</div>
+						<div className="col-span-8">{end_date}</div>
 					</div>
 					<div className="p-[10px] grid grid-cols-12 border-b border-gray-100">
 						<div className="text-darkBlue col-span-4">
-							Mã giảm giá:
+							Điều kiện:
 						</div>
-						<div className="col-span-8">FREESHIP</div>
+						<div
+							className="col-span-8"
+							dangerouslySetInnerHTML={{ __html: description }}
+						></div>
+					</div>
+					<div className="p-[10px] grid grid-cols-12 border-b border-gray-100">
+						<div className="text-darkBlue col-span-4">
+							Giá trị đơn tối thiểu:
+						</div>
+						<div className="col-span-8">
+							{formatPriceVND(min_order_value)}
+						</div>
 					</div>
 				</div>
 			</Modal>
