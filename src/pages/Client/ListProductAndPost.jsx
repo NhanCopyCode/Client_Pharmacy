@@ -8,6 +8,8 @@ import {
 import { useEffect, useState } from "react";
 import productService from "../../services/ProductService";
 import postService from "../../services/PostService";
+import { TailSpin } from "react-loader-spinner";
+import { Pagination } from "../../components";
 
 function ListProductAndPost() {
 	const [searchParams] = useSearchParams();
@@ -19,27 +21,42 @@ function ListProductAndPost() {
 	const [postsCount, setPostsCount] = useState(null);
 	const [productsCount, setProductsCount] = useState(null);
 	const [loading, setLoading] = useState(false);
+	const [productMeta, setProductMeta] = useState(null);
+	const [postMeta, setPostMeta] = useState(null);
+	const [productPage, setProductPage] = useState(1);
+	const [postPage, setPostPage] = useState(1);
 
 	useEffect(() => {
 		const query = searchParams.get("q") || "";
 		setSearchQuery(query);
+		setProductPage(1);
+		setPostPage(1); 
 	}, [searchParams]);
+	
 
 	useEffect(() => {
 		const fetchData = async () => {
 			setLoading(true);
 			try {
-				const productResponse = await productService.searchMultiple(
-					searchQuery
-				);
-				const postResponse = await postService.searchMultiple(
-					searchQuery
-				);
+				const [productResponse, postResponse] = await Promise.all([
+					productService.searchMultiple({
+						q: searchQuery,
+						page: productPage,
+					}),
+					postService.searchMultiple({
+						q: searchQuery,
+						page: postPage,
+					}),
+				]);
 
 				setListProduct(productResponse.data.listProducts);
 				setListPost(postResponse.data.listPosts);
+
 				setProductsCount(productResponse.data.productsCount);
 				setPostsCount(postResponse.data.postsCount);
+
+				setProductMeta(productResponse.data.meta);
+				setPostMeta(postResponse.data.meta);
 			} catch (error) {
 				console.error("Error fetching data:", error);
 			} finally {
@@ -48,7 +65,17 @@ function ListProductAndPost() {
 		};
 
 		fetchData();
-	}, [searchQuery]);
+	}, [searchQuery, productPage, postPage]);
+
+	// Pagination handler cho sản phẩm
+	const handleProductPageChange = (page) => {
+		setProductPage(page);
+	};
+
+	// Pagination handler cho bài viết
+	const handlePostPageChange = (page) => {
+		setPostPage(page);
+	};
 
 	return (
 		<Container>
@@ -79,9 +106,10 @@ function ListProductAndPost() {
 					Tin tức
 				</Button>
 			</div>
+
 			{loading ? (
-				<div className="text-center mt-10 text-blue-600 font-medium">
-					Đang tìm kiếm...
+				<div className="flex justify-center mt-10">
+					<TailSpin height={50} width={50} color="#2563eb" />
 				</div>
 			) : (
 				<>
@@ -101,14 +129,20 @@ function ListProductAndPost() {
 								)}
 							</div>
 							{productsCount > 0 && (
-								<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 mt-6">
-									{listProduct.map((product) => (
-										<ProductCard
-											key={product.id}
-											product={product}
-										/>
-									))}
-								</div>
+								<>
+									<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 mt-6">
+										{listProduct.map((product) => (
+											<ProductCard
+												key={product.id}
+												product={product}
+											/>
+										))}
+									</div>
+									<Pagination
+										meta={productMeta}
+										onPageChange={handleProductPageChange}
+									/>
+								</>
 							)}
 						</>
 					)}
@@ -129,11 +163,20 @@ function ListProductAndPost() {
 								)}
 							</div>
 							{postsCount > 0 && (
-								<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 mt-6">
-									{listPost.map((post) => (
-										<PostCard key={post.id} post={post} />
-									))}
-								</div>
+								<>
+									<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 mt-6">
+										{listPost.map((post) => (
+											<PostCard
+												key={post.id}
+												post={post}
+											/>
+										))}
+									</div>
+									<Pagination
+										meta={postMeta}
+										onPageChange={handlePostPageChange}
+									/>
+								</>
 							)}
 						</>
 					)}

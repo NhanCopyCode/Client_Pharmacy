@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 function Pagination({ meta, onPageChange }) {
+	console.log('This is pagination', meta);
 	if (!meta || meta.last_page <= 1) return null;
 
 	return (

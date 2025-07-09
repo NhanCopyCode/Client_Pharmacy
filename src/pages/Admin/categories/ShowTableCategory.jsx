@@ -78,13 +78,7 @@ function ShowTableCategory() {
 					]}
 					isClearable
 				/>
-				{/* <Select
-						className=" text-sm"
-						placeholder="Chọn loại danh mục"
-						defaultValue={selectedOption}
-						onChange={setSelectedOption}
-						options={options}
-					/> */}
+				
 				<input
 					className="h-[38px] px-3 outline-0 border 
 						border-gray-200 rounded-md text-sm w-[180px]"

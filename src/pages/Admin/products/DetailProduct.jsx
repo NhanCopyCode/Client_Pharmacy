@@ -34,6 +34,7 @@ function DetailProduct({ model }) {
 		categoryName,
 		brandName,
 		images,
+		main_image,
 	} = product || {};
 	const imageSlides =
 		images?.length > 0 && images.map((img) => ({ src: img.image }));
@@ -67,19 +68,35 @@ function DetailProduct({ model }) {
 
 				<div className="col-span-3">Hình ảnh:</div>
 				<div className="col-span-9 flex gap-2 flex-wrap">
-					{images && images.length > 0 ? (
-						images.map((image, index) => (
-							<img
-								src={image.image}
-								key={index}
-								alt={`product image ${index}`}
-								className="w-28 h-28 object-cover rounded border border-gray-100 shadow cursor-pointer"
-								onClick={() => {
-									setCurrentIndex(index);
-									setIsOpen(true);
-								}}
-							/>
-						))
+					{main_image || (images && images.length > 0) ? (
+						<>
+							{main_image && (
+								<img
+									src={main_image}
+									alt="Main product"
+									className="w-28 h-28 object-cover rounded border border-gray-100 shadow cursor-pointer"
+									onClick={() => {
+										setCurrentIndex(0);
+										setIsOpen(true);
+									}}
+								/>
+							)}
+							{images &&
+								images.map((image, index) => (
+									<img
+										src={image.image}
+										key={index}
+										alt={`product image ${index + 1}`}
+										className="w-28 h-28 object-cover rounded border border-gray-100 shadow cursor-pointer"
+										onClick={() => {
+											setCurrentIndex(
+												main_image ? index + 1 : index
+											);
+											setIsOpen(true);
+										}}
+									/>
+								))}
+						</>
 					) : (
 						<p className="text-gray-500 italic">
 							Sản phẩm chưa có hình ảnh
@@ -87,6 +104,7 @@ function DetailProduct({ model }) {
 					)}
 				</div>
 
+				
 				<div className="col-span-3">Mô tả:</div>
 				<div
 					className="col-span-9"

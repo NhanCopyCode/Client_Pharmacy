@@ -17,9 +17,9 @@ const productService = {
 			params: { q: query },
 		});
 	},
-	searchMultiple: (query) => {
+	searchMultiple(params) {
 		return axios.get("/products/search-multiple-products", {
-			params: { q: query },
+			params, 
 		});
 	},
 };

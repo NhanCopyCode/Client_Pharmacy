@@ -100,6 +100,10 @@ function SearchHeader() {
 		setShowPost(false);
 	};
 
+	const handleCloseTippy = () => {
+		setIsFocus(false);
+	}
+
 	return (
 		<Tippy
 			interactive
@@ -179,6 +183,7 @@ function SearchHeader() {
 										color="text-darkBlue"
 										hoverEffect="hover:bg-primary hover:text-white"
 										fontWeight="font-medium"
+										onClick={handleCloseTippy}
 									>
 										Xem tất cả
 									</Button>
@@ -218,12 +223,17 @@ function SearchHeader() {
 								</div>
 								{!!postsCount && (
 									<Button
-										to={path.DANH_SACH_ITEM_TIM_KIEM}
+										to={
+											"/" +
+											path.DANH_SACH_ITEM_TIM_KIEM +
+											`?q=${inputValue}`
+										}
 										border="border-2 border-primary"
 										background="bg-white"
 										color="text-darkBlue"
 										hoverEffect="hover:bg-primary hover:text-white"
 										fontWeight="font-medium"
+										onClick={handleCloseTippy}
 									>
 										Xem tất cả
 									</Button>

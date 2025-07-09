@@ -17,9 +17,9 @@ const postService = {
 			params: { q: query },
 		});
 	},
-	searchMultiple: (query) => {
+	searchMultiple(params) {
 		return axiosInstance.get("/posts/search-multiple-posts", {
-			params: { q: query },
+			params,
 		});
 	},
 };
