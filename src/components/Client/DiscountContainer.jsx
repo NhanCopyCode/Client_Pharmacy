@@ -67,15 +67,6 @@ function DiscountContainer() {
 					})
 				}
 			
-				{/* <SwiperSlide className="w-full">
-					<DiscountItem />
-				</SwiperSlide>
-				<SwiperSlide className="w-full">
-					<DiscountItem />
-				</SwiperSlide>
-				<SwiperSlide className="w-full">
-					<DiscountItem />
-				</SwiperSlide> */}
 			</Swiper>
 		</div>
 	);
