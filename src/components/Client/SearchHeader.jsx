@@ -1,6 +1,6 @@
 import Tippy from "@tippyjs/react/headless";
 import Typewriter from "typewriter-effect";
-
+import { TailSpin } from "react-loader-spinner";
 import { useState, useRef, useEffect } from "react";
 import { IoSearch } from "react-icons/io5";
 import { Button, SearchHeaderPost, SearchHeaderProduct } from "../Client";
@@ -19,6 +19,7 @@ function SearchHeader() {
 	const [debouncedInput, setDebouncedInput] = useState(inputValue);
 	const [productsCount, setProductsCount] = useState(0);
 	const [postsCount, setPostsCount] = useState(0);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const inputRef = useRef(null);
 	const widthInput = useRef(null);
@@ -67,14 +68,23 @@ function SearchHeader() {
 				return;
 			}
 
-			const productResponse = await productService.search(debouncedInput);
-			const postResponse = await postService.search(debouncedInput);
+			setIsLoading(true);
 
-			setListProductSearch(productResponse?.data?.listProducts || []);
-			setListPostSearch(postResponse?.data?.listPosts || []);
+			try {
+				const productResponse = await productService.search(
+					debouncedInput
+				);
+				const postResponse = await postService.search(debouncedInput);
 
-			setProductsCount(productResponse?.data?.productsCount);
-			setPostsCount(postResponse?.data?.postsCount);
+				setListProductSearch(productResponse?.data?.listProducts || []);
+				setListPostSearch(postResponse?.data?.listPosts || []);
+				setProductsCount(productResponse?.data?.productsCount);
+				setPostsCount(postResponse?.data?.postsCount);
+			} catch (error) {
+				console.error("Search error:", error);
+			} finally {
+				setIsLoading(false);
+			}
 		};
 
 		fetchListProductAndPost();
@@ -125,7 +135,6 @@ function SearchHeader() {
 					</div>
 
 					<div className="">
-						{/* Display based on current tab */}
 						{isShowProduct ? (
 							<>
 								{!!productsCount && (
@@ -134,7 +143,15 @@ function SearchHeader() {
 									</span>
 								)}
 								<div className="flex flex-col items-start mt-4 divide-y divide-gray-200 border-b border-gray-200 mb-4">
-									{listProductSearch.length === 0 ? (
+									{isLoading ? (
+										<div className="w-full flex justify-center py-4">
+											<TailSpin
+												height={30}
+												width={30}
+												color="#0f172a"
+											/>
+										</div>
+									) : listProductSearch.length === 0 ? (
 										<div className="text-center w-full text-gray-500 text-sm py-4">
 											Không có kết quả tìm kiếm
 										</div>
@@ -152,7 +169,11 @@ function SearchHeader() {
 								</div>
 								{!!productsCount && (
 									<Button
-										to={'/' + path.DANH_SACH_ITEM_TIM_KIEM + `?q=${inputValue}`}
+										to={
+											"/" +
+											path.DANH_SACH_ITEM_TIM_KIEM +
+											`?q=${inputValue}`
+										}
 										border="border-2 border-primary"
 										background="bg-white"
 										color="text-darkBlue"
@@ -171,7 +192,15 @@ function SearchHeader() {
 									</span>
 								)}
 								<div className="flex flex-col items-start mt-4 divide-y divide-gray-200 border-b border-gray-200 mb-4">
-									{listPostSearch.length === 0 ? (
+									{isLoading ? (
+										<div className="w-full flex justify-center py-4">
+											<TailSpin
+												height={30}
+												width={30}
+												color="#0f172a"
+											/>
+										</div>
+									) : listPostSearch.length === 0 ? (
 										<div className="text-center w-full text-gray-500 text-sm py-4">
 											Không có kết quả tìm kiếm
 										</div>
