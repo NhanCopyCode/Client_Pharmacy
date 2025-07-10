@@ -21,7 +21,6 @@ function DiscountContainer() {
 			try {
 				const response = await voucherService.getVoucherApproved();
 				setListVoucher(response.data);
-				console.log('response: ', response);
 			} catch (error) {
 				console.log('error in discount container file: ', error);
 			}

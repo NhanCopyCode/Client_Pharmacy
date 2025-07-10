@@ -19,8 +19,11 @@ const productService = {
 	},
 	searchMultiple(params) {
 		return axios.get("/products/search-multiple-products", {
-			params, 
+			params,
 		});
+	},
+	getLatest() {
+		return axios.get("/products/latest");
 	},
 };
 

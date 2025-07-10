@@ -10,16 +10,18 @@ function ProductCard({
 	displayNumProductSold = false,
 	numProductSold,
 }) {
-
 	// const { id, title, price, main_image } = product;
-	const id = 1;
-	const title = "khogn có title";
-	const price = 10000;
-	const main_image = "";
+	const {
+		id = 0,
+		title = "Không có tiêu đề",
+		price = 0,
+		main_image = "",
+	} = product || {};
 	return (
-		<Link to={`/san-pham/${id}`}
+		<Link
+			to={`/san-pham/${id}`}
 			className={`${hoverEffect} cursor-pointer hover:shadow-[0_0px_2px_0_#003cbf,_0_0px_6px_0px_#003cbf]
- rounded-md shadow-xl border border-gray-200  bg-white relative overflow-hidden group`}
+ rounded-md shadow-xl border border-gray-200  bg-white relative overflow-hidden group !inline-block !w-full`}
 		>
 			<div className="flex items-center justify-between p-[5px] absolute top-0 w-[100%] z-[2]">
 				<Button
@@ -37,7 +39,7 @@ function ProductCard({
 			</div>
 			<div className="w-[100%] h-[250px] flex items-center justify-center">
 				<img
-					className="h-full object-cover  group-hover:scale-105 transition-transform duration-300"
+					className=" h-full object-cover  group-hover:scale-105 transition-transform duration-300"
 					src={main_image}
 				/>
 			</div>

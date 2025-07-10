@@ -7,6 +7,7 @@ import { Button, SearchHeaderPost, SearchHeaderProduct } from "../Client";
 import productService from "../../services/ProductService";
 import postService from "../../services/PostService";
 import { path } from "../../utils/constants";
+import { useNavigate } from "react-router-dom";
 
 function SearchHeader() {
 	const [inputValue, setInputValue] = useState("");
@@ -24,6 +25,7 @@ function SearchHeader() {
 	const inputRef = useRef(null);
 	const widthInput = useRef(null);
 
+	const navigate = useNavigate();
 	const handleInputChange = (e) => {
 		setInputValue(e.target.value);
 		setIsFocus(true);
@@ -103,7 +105,11 @@ function SearchHeader() {
 	const handleCloseTippy = () => {
 		setIsFocus(false);
 	}
-
+	const handleSearch = (e) => {
+		if(e.key === 'Enter') {
+			navigate("/" + path.DANH_SACH_ITEM_TIM_KIEM + `?q=${inputValue}`);
+		}
+	}
 	return (
 		<Tippy
 			interactive
@@ -254,6 +260,7 @@ function SearchHeader() {
 					value={inputValue}
 					onChange={handleInputChange}
 					onFocus={() => setIsFocus(true)}
+					onKeyDown={e => handleSearch(e)}
 					placeholder=""
 				/>
 				<div className="absolute left-[10px] w-full text-black font-light text-sm pointer-events-none">
