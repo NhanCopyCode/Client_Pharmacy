@@ -67,6 +67,23 @@ export const menuAdmin = [
 		],
 	},
 	{
+		icon: MdSettingsSystemDaydream,
+		title: "Quản lý banner",
+		children: [
+			{
+				icon: LiaProductHunt,
+				title: "Vị trí banner",
+				path: "/admin/banner_positions",
+			},
+			{
+				icon: LiaProductHunt,
+				title: "Banner",
+				path: "/admin/banners",
+			},
+		],
+	},
+
+	{
 		icon: LiaProductHunt,
 		title: "Danh mục",
 		path: "/admin/categories",
@@ -202,7 +219,29 @@ export const TABLE_COLUMNS = {
 		{ key: "phoneNumber", label: "SĐT" },
 		{ key: "address", label: "Địa chỉ" },
 	],
+	banners: [
+		{ key: "", label: "", type: "checkbox", style: "text-center" },
+		{ key: "id", label: "ID" },
+		{ key: "title", label: "Tên hình ảnh" },
+		{
+			key: "position_name",
+			label: "Vị trí hiển thị",
+		},
+		{
+			key: "image",
+			label: "Hình ảnh",
+			type: "image",
+			style: "w-50 object-cover",
+		},
+		{ key: "approved", label: "Duyệt", type: "boolean" },
+	],
+	banner_positions: [
+		{ key: "", label: "", type: "checkbox", style: "text-center" },
+		{ key: "id", label: "ID" },
+		{ key: "name", label: "Vị trí" },
 
+		{ key: "approved", label: "Duyệt", type: "boolean" },
+	],
 	posts: [
 		{ key: "", label: "", type: "checkbox", style: "text-center" },
 		{ key: "id", label: "ID" },

@@ -7,6 +7,7 @@ import { TableList, TitleHeader } from "../../../components/Admin";
 import { adminPath, TABLE_COLUMNS } from "../../../utils/constants";
 import { Pagination } from "../../../components";
 import videoService from "../../../services/VideoService";
+import { TailSpin } from "react-loader-spinner";
 
 function Table() {
 	const [listData, setListData] = useState([]);
@@ -82,7 +83,16 @@ function Table() {
 
 			<div className="p-3 overflow-y-scroll">
 				{loading ? (
-					<p>Loading...</p>
+					<div className="flex justify-center items-center h-40">
+						<TailSpin
+							height="40"
+							width="40"
+							color="#4fa94d"
+							ariaLabel="tail-spin-loading"
+							radius="1"
+							visible={true}
+						/>
+					</div>
 				) : (
 					<>
 						<TableList

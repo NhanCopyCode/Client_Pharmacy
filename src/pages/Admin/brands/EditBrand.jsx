@@ -4,6 +4,8 @@ import brandService from "../../../services/BrandService";
 import BrandForm from "./BrandForm";
 import { adminPath } from "../../../utils/constants";
 import Swal from "sweetalert2";
+import { TailSpin } from "react-loader-spinner"; 
+
 
 function EditBrand({ model }) {
 	const { id } = useParams();
@@ -53,7 +55,19 @@ function EditBrand({ model }) {
 		}
 	};
 
-	if (loading) return <p className="p-4">Đang tải dữ liệu...</p>;
+	if (loading)
+		return (
+			<div className="flex justify-center items-center h-40">
+				<TailSpin
+					height="40"
+					width="40"
+					color="#4fa94d"
+					ariaLabel="tail-spin-loading"
+					radius="1"
+					visible={true}
+				/>
+			</div>
+		);
 
 	return (
 		<BrandForm

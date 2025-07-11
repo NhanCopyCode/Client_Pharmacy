@@ -1,27 +1,27 @@
-import Select from "react-select";
 import { useEffect, useState } from "react";
 
 import { Button } from "../../../components/Client";
 import { IoMdAddCircle } from "react-icons/io";
 import { IoIosSearch } from "react-icons/io";
 import { TableList, TitleHeader } from "../../../components/Admin";
-import brandService from "../../../services/BrandService";
-import { adminPath } from "../../../utils/constants";
-import { TABLE_COLUMNS } from "../../../utils/constants";
-import Pagination from "../../../components/Pagination";
+import { adminPath, TABLE_COLUMNS } from "../../../utils/constants";
+import { Pagination } from "../../../components";
+import bannerService from "../../../services/BannerService";
 import { TailSpin } from "react-loader-spinner";
 
-function ShowTableBrand({ model }) {
-	const [brands, setBrands] = useState([]);
+function Table() {
+	const [listData, setListData] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [searchInput, setSearchInput] = useState("");
 	const [meta, setMeta] = useState([]);
 
-	const fetchBrands = async (params = {}) => {
+	const fetchListData = async (params = {}) => {
 		setLoading(true);
 		try {
-			const response = await brandService.getAll(params);
-			setBrands(response.data.data);
+			const response = await bannerService.getAll(params);
+
+			setListData(response.data.data);
+
 			setMeta(response.data.meta);
 		} catch (error) {
 			console.error("Error: ", error);
@@ -29,17 +29,21 @@ function ShowTableBrand({ model }) {
 			setLoading(false);
 		}
 	};
-
 	useEffect(() => {
-		fetchBrands();
+		fetchListData();
 	}, []);
 
 	const handleSearch = () => {
-		fetchBrands({ search: searchInput });
+		fetchListData({
+			search: searchInput,
+		});
 	};
 
 	const handlePageChange = (page) => {
-		fetchBrands({ search: searchInput, page });
+		fetchListData({
+			search: searchInput,
+			page,
+		});
 	};
 
 	return (
@@ -48,11 +52,12 @@ function ShowTableBrand({ model }) {
 				title={"Thêm mới"}
 				buttonIcon={<IoMdAddCircle />}
 				titleButton={"Thêm mới"}
-				to={adminPath.create(model)}
+				to={adminPath.create("banners")}
 			/>
 			<div className="flex items-center justify-end w-full p-3 gap-2 flex-wrap">
 				<input
-					className="h-[38px] px-3 outline-0 border border-gray-200 rounded-md text-sm w-[180px]"
+					className="h-[38px] px-3 outline-0 border 
+					border-gray-200 rounded-md text-sm w-[180px]"
 					placeholder="Tìm kiếm..."
 					value={searchInput}
 					onChange={(e) => setSearchInput(e.target.value)}
@@ -91,11 +96,11 @@ function ShowTableBrand({ model }) {
 				) : (
 					<>
 						<TableList
-							columns={TABLE_COLUMNS.brands}
-							tableBody={brands}
-							model={"brands"}
-							onDeleteSuccess={fetchBrands}
-							service={brandService}
+							columns={TABLE_COLUMNS.banners}
+							tableBody={listData}
+							model={"banners"}
+							onDeleteSuccess={fetchListData}
+							service={bannerService}
 						/>
 						<Pagination
 							meta={meta}
@@ -108,4 +113,4 @@ function ShowTableBrand({ model }) {
 	);
 }
 
-export default ShowTableBrand;
+export default Table;

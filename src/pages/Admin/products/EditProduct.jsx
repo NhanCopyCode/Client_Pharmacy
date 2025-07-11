@@ -5,6 +5,8 @@ import Swal from "sweetalert2";
 import ProductForm from "./ProductForm";
 import productService from "../../../services/ProductService";
 import productImageService from "../../../services/ProductImageService";
+import { TailSpin } from "react-loader-spinner"; 
+
 
 function EditProduct({ model }) {
 	const { id } = useParams();
@@ -39,8 +41,8 @@ function EditProduct({ model }) {
 			if (productId) {
 				const imagesToKeep = images.filter(
 					(img) => !img.file && img.data_url
-				); 
-				const imagesToUpload = images.filter((img) => img.file); 
+				);
+				const imagesToUpload = images.filter((img) => img.file);
 
 				const imageFormData = new FormData();
 				imageFormData.append("productId", productId);
@@ -74,9 +76,20 @@ function EditProduct({ model }) {
 			}
 		}
 	};
-	
 
-	if (loading) return <p className="p-4">Đang tải dữ liệu...</p>;
+	if (loading)
+		return (
+			<div className="flex justify-center items-center h-40">
+				<TailSpin
+					height="40"
+					width="40"
+					color="#4fa94d"
+					ariaLabel="tail-spin-loading"
+					radius="1"
+					visible={true}
+				/>
+			</div>
+		);
 
 	return (
 		<ProductForm

@@ -55,6 +55,20 @@ export { default as DetailVideo } from "./videos/Detail";
 export { default as VideoForm } from "./videos/Form";
 export { default as EditVideo } from "./videos/Edit";
 
+//Banners
+export { default as ShowTableBanner } from "./banners/Table";
+export { default as AddNewBanner } from "./banners/AddNew";
+export { default as DetailBanner } from "./banners/Detail";
+export { default as BannerForm } from "./banners/Form";
+export { default as EditBanner } from "./banners/Edit";
+
+//Banner positions
+export { default as ShowTableBannerPosition } from "./banner-positions/Table";
+export { default as AddNewBannerPosition } from "./banner-positions/AddNew";
+export { default as DetailBannerPosition } from "./banner-positions/Detail";
+export { default as BannerPositionForm } from "./banner-positions/Form";
+export { default as EditBannerPosition } from "./banner-positions/Edit";
+
 //Settings
 export { default as ShowTableSetting } from "./settings/ShowTableSetting";
 export { default as AddNewSetting } from "./settings/AddNewSetting";

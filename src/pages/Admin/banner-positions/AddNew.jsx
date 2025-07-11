@@ -2,16 +2,16 @@ import { useState } from "react";
 import { adminPath } from "../../../utils/constants";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import AdsForm from "./AdsForm";
-import adsService from "../../../services/AdsService";
+import Form from "./Form";
+import bannerPositionService from "../../../services/BannerPositionService";
 
-function AddNewAds({ model }) {
+function AddNew({ model }) {
 	const [errors, setErrors] = useState({});
 	const navigate = useNavigate();
 	const handleSubmit = async (formData) => {
-		console.log("get in this handle submit", formData);
 		try {
-			await adsService.create(formData);
+			await bannerPositionService.create(formData);
+
 			await Swal.fire({
 				icon: "success",
 				title: "Thành công!",
@@ -31,7 +31,7 @@ function AddNewAds({ model }) {
 		}
 	};
 
-	return <AdsForm model={model} errors={errors} onSubmit={handleSubmit} />;
+	return <Form model={model} errors={errors} onSubmit={handleSubmit} />;
 }
 
-export default AddNewAds;
+export default AddNew;

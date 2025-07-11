@@ -6,7 +6,6 @@ import productService from "../../../services/ProductService";
 import productImageService from "../../../services/ProductImageService";
 import Swal from "sweetalert2";
 
-
 function AddNewProduct({ model }) {
 	const [errors, setErrors] = useState({});
 	const navigate = useNavigate();
@@ -30,7 +29,7 @@ function AddNewProduct({ model }) {
 			await Swal.fire({
 				icon: "success",
 				title: "Thành công!",
-				text: "Sản phẩm đã được thêm mới.",
+				text: "Thêm mới thành công",
 				showConfirmButton: true,
 			});
 			navigate(adminPath.list(model));
@@ -45,13 +44,9 @@ function AddNewProduct({ model }) {
 			}
 		}
 	};
-	
+
 	return (
-		<ProductForm
-			model={model}
-			errors={errors}
-			onSubmit={handleSubmit}
-		/>
+		<ProductForm model={model} errors={errors} onSubmit={handleSubmit} />
 	);
 }
 

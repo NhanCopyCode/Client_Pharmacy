@@ -4,7 +4,7 @@ import { adminPath } from "../../../utils/constants";
 import Swal from "sweetalert2";
 import Form from "./Form";
 import videoService from "../../../services/VideoService";
-
+import { TailSpin } from "react-loader-spinner"; 
 function Edit({ model }) {
 	const { id } = useParams();
 	const navigate = useNavigate();
@@ -53,7 +53,19 @@ function Edit({ model }) {
 		}
 	};
 
-	if (loading) return <p className="p-4">Đang tải dữ liệu...</p>;
+	if (loading)
+		return (
+			<div className="flex justify-center items-center h-40">
+				<TailSpin
+					height="40"
+					width="40"
+					color="#4fa94d"
+					ariaLabel="tail-spin-loading"
+					radius="1"
+					visible={true}
+				/>
+			</div>
+		);
 
 	return (
 		<Form

@@ -15,6 +15,7 @@ import Modal from "react-responsive-modal";
 import { IoMdClose } from "react-icons/io";
 import { FaFileExcel } from "react-icons/fa";
 import { LuDownload } from "react-icons/lu";
+import { TailSpin } from "react-loader-spinner";
 
 function ShowTableProduct() {
 	const [listCategories, setListCategories] = useState([]);
@@ -161,7 +162,16 @@ function ShowTableProduct() {
 			</div>
 			<div className="p-3 overflow-y-scroll">
 				{loading ? (
-					<p>Loading...</p>
+					<div className="flex justify-center items-center h-40">
+						<TailSpin
+							height="40"
+							width="40"
+							color="#4fa94d"
+							ariaLabel="tail-spin-loading"
+							radius="1"
+							visible={true}
+						/>
+					</div>
 				) : (
 					<>
 						<TableList

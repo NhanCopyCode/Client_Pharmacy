@@ -53,7 +53,15 @@ import {
 	ShowTableVideo,
 	AddNewVideo,
 	DetailVideo,
-	EditVideo
+	EditVideo,
+	ShowTableBanner,
+	AddNewBanner,
+	DetailBanner,
+	EditBanner,
+	ShowTableBannerPosition,
+	AddNewBannerPosition,
+	DetailBannerPosition,
+	EditBannerPosition
 } from "./pages/Admin/index.js";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -122,6 +130,20 @@ export const adminModels = [
 		create: AddNewVideo,
 		detail: DetailVideo,
 		update: EditVideo,
+	},
+	{
+		model: "banners",
+		list: ShowTableBanner,
+		create: AddNewBanner,
+		detail: DetailBanner,
+		update: EditBanner,
+	},
+	{
+		model: "banner_positions",
+		list: ShowTableBannerPosition,
+		create: AddNewBannerPosition,
+		detail: DetailBannerPosition,
+		update: EditBannerPosition,
 	},
 ];
 const DefaultAdminIndex = adminModels[0].list;

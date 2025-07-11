@@ -21,7 +21,6 @@ function LoginPage() {
 		setLoading(true);
 		try {
 			const data = await login(form.username, form.password);
-
 			loginUser(data);	
 
 			navigate("/admin");

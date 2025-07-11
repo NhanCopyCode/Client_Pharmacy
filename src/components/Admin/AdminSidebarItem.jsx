@@ -72,7 +72,7 @@ function AdminSidebarItem({ menu, isOpenSidebar }) {
 							<li key={index}>
 								<Link
 									to={item.path}
-									className={`py-2 pl-8 hover:bg-darkBlue/90 inline-block w-full  ${
+									className={`py-2 pl-8 hover:bg-darkBlue/90 inline-block w-full text-sm ${
 										item.path === location.pathname
 											? "bg-darkBlue/90"
 											: ""

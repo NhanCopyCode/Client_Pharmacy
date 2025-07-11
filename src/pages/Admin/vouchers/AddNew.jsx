@@ -14,7 +14,7 @@ function AddNew({ model }) {
 			await Swal.fire({
 				icon: "success",
 				title: "Thành công!",
-				text: "Sản phẩm đã được thêm mới.",
+				text: "Thêm mới thành công",
 				showConfirmButton: true,
 			});
 			navigate(adminPath.list(model));
@@ -30,9 +30,7 @@ function AddNew({ model }) {
 		}
 	};
 
-	return (
-		<Form model={model} errors={errors} onSubmit={handleSubmit} />
-	);
+	return <Form model={model} errors={errors} onSubmit={handleSubmit} />;
 }
 
 export default AddNew;

@@ -1,5 +1,3 @@
-// src/components/Auth/LoginForm.jsx
-
 import React, { useState } from "react";
 
 function LoginForm({ onSubmit, loading, error }) {
@@ -19,10 +17,10 @@ function LoginForm({ onSubmit, loading, error }) {
 		<form onSubmit={handleSubmit}>
 			<div className="mb-4">
 				<label className="block mb-1 text-sm font-medium text-gray-600">
-					Username
+					Email
 				</label>
 				<input
-					type="text"
+					type="email"
 					name="username"
 					value={form.username}
 					onChange={handleChange}

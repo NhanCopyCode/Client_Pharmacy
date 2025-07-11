@@ -2,12 +2,11 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { adminPath } from "../../../utils/constants";
 import Swal from "sweetalert2";
-import categoryService from "../../../services/CategoryService";
-import CategoryForm from "./CategoryForm";
+import Form from "./Form";
 import { TailSpin } from "react-loader-spinner"; 
+import bannerPositionService from "../../../services/BannerPositionService";
 
-
-function EditCategory({ model }) {
+function Edit({ model }) {
 	const { id } = useParams();
 	const navigate = useNavigate();
 	const [initialData, setInitialData] = useState(null);
@@ -17,7 +16,7 @@ function EditCategory({ model }) {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const response = await categoryService.getById(id);
+				const response = await bannerPositionService.getById(id);
 				setInitialData(response.data.data);
 			} catch (error) {
 				if (error) {
@@ -34,7 +33,7 @@ function EditCategory({ model }) {
 
 	const handleSubmit = async (formData) => {
 		try {
-			await categoryService.update(id, formData);
+			await bannerPositionService.update(id, formData);
 			await Swal.fire({
 				icon: "success",
 				title: "Thành công!",
@@ -43,7 +42,7 @@ function EditCategory({ model }) {
 			});
 			navigate(adminPath.list(model));
 		} catch (error) {
-			console.error("Lỗi khi cập nhật hãng:", error);
+			console.error("Lỗi khi cập nhật quảng cáo:", error);
 			setErrors(error.response?.data?.errors || {});
 			if (error.response?.data?.errors) {
 				Swal.fire({
@@ -70,7 +69,7 @@ function EditCategory({ model }) {
 		);
 
 	return (
-		<CategoryForm
+		<Form
 			model={model}
 			mode="edit"
 			initialData={initialData}
@@ -80,4 +79,4 @@ function EditCategory({ model }) {
 	);
 }
 
-export default EditCategory;
+export default Edit;

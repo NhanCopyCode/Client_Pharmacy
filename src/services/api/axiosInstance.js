@@ -17,6 +17,11 @@ axiosInstance.interceptors.request.use(
 	},
 	(error) => Promise.reject(error)
 );
+const refreshInstance = axios.create({
+	baseURL: "http://127.0.0.1:8000/api/",
+	timeout: 10000,
+	withCredentials: false,
+});
 
 axiosInstance.interceptors.response.use(
 	(response) => response,
@@ -26,28 +31,21 @@ axiosInstance.interceptors.response.use(
 		if (error.response?.status === 401 && !originalRequest._retry) {
 			originalRequest._retry = true;
 
-			const expiredToken = localStorage.getItem("token");
-
 			try {
-				const refreshResponse = await axiosInstance.post(
-					"/refresh",
-					{},
-					{
-						headers: {
-							Authorization: `Bearer ${expiredToken}`,
-						},
-					}
-				);
+				const refresh_token = localStorage.getItem("refresh_token");
+				const refreshResponse = await refreshInstance.post("/refresh", {
+					refresh_token,
+				});
 
 				const newToken = refreshResponse.data.access_token;
 				localStorage.setItem("token", newToken);
 
 				originalRequest.headers.Authorization = `Bearer ${newToken}`;
 				return axiosInstance(originalRequest);
-			} catch (refreshError) {
-				console.error("Refresh failed. Redirecting to login.");
-				// localStorage.clear();
-				// window.location.href = "/admin/login";
+			} catch (err) {
+				console.error("Refresh token failed");
+				localStorage.clear();
+				window.location.href = "/admin/login";
 			}
 		}
 

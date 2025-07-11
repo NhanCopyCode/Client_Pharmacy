@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import promotionService from "../../../services/PromotionService";
 
-
 function AddNewPromotion({ model }) {
 	const [errors, setErrors] = useState({});
 	const navigate = useNavigate();
@@ -13,11 +12,10 @@ function AddNewPromotion({ model }) {
 		try {
 			await promotionService.create(formData);
 
-			
 			await Swal.fire({
 				icon: "success",
 				title: "Thành công!",
-				text: "Sản phẩm đã được thêm mới.",
+				text: "Thêm mới thành công",
 				showConfirmButton: true,
 			});
 			navigate(adminPath.list(model));
@@ -32,7 +30,7 @@ function AddNewPromotion({ model }) {
 			}
 		}
 	};
-	
+
 	return (
 		<PromotionForm model={model} errors={errors} onSubmit={handleSubmit} />
 	);

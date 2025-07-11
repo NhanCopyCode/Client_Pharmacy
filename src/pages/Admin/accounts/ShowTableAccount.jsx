@@ -75,7 +75,16 @@ function ShowTableAccount() {
 
 			<div className="p-3 overflow-y-scroll">
 				{loading ? (
-					<p>Loading...</p>
+					<div className="flex justify-center items-center h-40">
+						<TailSpin
+							height="40"
+							width="40"
+							color="#4fa94d"
+							ariaLabel="tail-spin-loading"
+							radius="1"
+							visible={true}
+						/>
+					</div>
 				) : (
 					<TableList
 						tableHead={[...TABLE_HEADS.Brands, "Lựa chọn"]}

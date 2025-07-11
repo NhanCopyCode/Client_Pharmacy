@@ -8,6 +8,7 @@ import { TableList, TitleHeader } from "../../../components/Admin";
 import { adminPath, TABLE_COLUMNS } from "../../../utils/constants";
 import { Pagination } from "../../../components";
 import categoryService from "../../../services/CategoryService";
+import { TailSpin } from "react-loader-spinner";
 
 function ShowTableCategory() {
 	const [listParents, setListParents] = useState([]);
@@ -78,7 +79,7 @@ function ShowTableCategory() {
 					]}
 					isClearable
 				/>
-				
+
 				<input
 					className="h-[38px] px-3 outline-0 border 
 						border-gray-200 rounded-md text-sm w-[180px]"
@@ -107,7 +108,16 @@ function ShowTableCategory() {
 
 			<div className="p-3 overflow-y-scroll">
 				{loading ? (
-					<p>Loading...</p>
+					<div className="flex justify-center items-center h-40">
+						<TailSpin
+							height="40"
+							width="40"
+							color="#4fa94d"
+							ariaLabel="tail-spin-loading"
+							radius="1"
+							visible={true}
+						/>
+					</div>
 				) : (
 					<>
 						<TableList
