@@ -6,7 +6,24 @@ import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 import "swiper/css";
 
+import bannerService from "../../services/BannerService";
+import { useEffect, useState } from "react";
+
 function Slider() {
+	const [homePageSlider, setHomePageSlider] = useState([]);
+	useEffect(() => {
+		try {
+			const fetchData = async() => {
+				const res = await bannerService.getBannerHomePage();
+				console.log('res banner homepage: ', res.data);
+				setHomePageSlider(res.data);
+			}
+
+			fetchData();
+		} catch (error) {
+			console.log("Error at Slider component: ", error);
+		}
+	}, [])
 	return (
 		<div className="mt-6 relative z-0">
 			<Swiper
@@ -15,18 +32,22 @@ function Slider() {
 				modules={[Pagination, EffectFade]}
 				pagination={{ clickable: true }}
 			>
-				<SwiperSlide>
-					<img
-						src="https://bizweb.dktcdn.net/100/491/197/themes/917410/assets/slider_1.jpg?1736388760084"
-						className="w-full object-cover rounded-xl"
-					/>
-				</SwiperSlide>
-				<SwiperSlide>
-					<img
-						src="https://bizweb.dktcdn.net/100/491/197/themes/917410/assets/slider_2.jpg?1736388760084"
-						className="w-full object-cover rounded-xl"
-					/>
-				</SwiperSlide>
+				{
+					homePageSlider.length > 0 &&
+					homePageSlider.map(slide => {
+						return (
+							<SwiperSlide>
+								<img
+									src={slide.image}
+									alt={slide.name}
+									className="w-full object-cover rounded-xl"
+								/>
+							</SwiperSlide>
+						);
+					})
+				}
+				
+				
 			</Swiper>
 		</div>
 	);
