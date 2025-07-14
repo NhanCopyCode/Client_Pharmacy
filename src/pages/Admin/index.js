@@ -48,6 +48,13 @@ export { default as DetailPost } from "./posts/Detail";
 export { default as PostForm } from "./posts/Form";
 export { default as EditPost } from "./posts/Edit";
 
+//Post categories
+export { default as ShowTablePostCategory } from "./post-categories/Table";
+export { default as AddNewPostCategory } from "./post-categories/AddNew";
+export { default as DetailPostCategory } from "./post-categories/Detail";
+export { default as PostCategoryForm } from "./post-categories/Form";
+export { default as EditPostCategory } from "./post-categories/Edit";
+
 //Videos
 export { default as ShowTableVideo } from "./videos/Table";
 export { default as AddNewVideo } from "./videos/AddNew";

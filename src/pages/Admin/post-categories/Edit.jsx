@@ -3,8 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { adminPath } from "../../../utils/constants";
 import Swal from "sweetalert2";
 import Form from "./Form";
-import postService from "../../../services/PostService";
 import { TailSpin } from "react-loader-spinner"; 
+import postCategoryService from "../../../services/PostCategoryService";
 
 
 function Edit({ model }) {
@@ -17,7 +17,7 @@ function Edit({ model }) {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const response = await postService.getById(id);
+				const response = await postCategoryService.getById(id);
 				setInitialData(response.data.data);
 			} catch (error) {
 				if (error) {
@@ -31,9 +31,10 @@ function Edit({ model }) {
 
 		fetchData();
 	}, [id]);
+
 	const handleSubmit = async (formData) => {
 		try {
-			await postService.update(id, formData);
+			await postCategoryService.update(id, formData);
 			await Swal.fire({
 				icon: "success",
 				title: "Thành công!",

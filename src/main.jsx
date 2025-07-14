@@ -61,7 +61,11 @@ import {
 	ShowTableBannerPosition,
 	AddNewBannerPosition,
 	DetailBannerPosition,
-	EditBannerPosition
+	EditBannerPosition,
+	ShowTablePostCategory,
+	AddNewPostCategory,
+	DetailPostCategory,
+	EditPostCategory
 } from "./pages/Admin/index.js";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -144,6 +148,13 @@ export const adminModels = [
 		create: AddNewBannerPosition,
 		detail: DetailBannerPosition,
 		update: EditBannerPosition,
+	},
+	{
+		model: "post-categories",
+		list: ShowTablePostCategory,
+		create: AddNewPostCategory,
+		detail: DetailPostCategory,
+		update: EditPostCategory,
 	},
 ];
 const DefaultAdminIndex = adminModels[0].list;

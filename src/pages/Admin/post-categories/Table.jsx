@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Select from "react-select";
+
 import { Button } from "../../../components/Client";
 import { IoMdAddCircle } from "react-icons/io";
 import { IoIosSearch } from "react-icons/io";
@@ -7,7 +7,6 @@ import { TableList, TitleHeader } from "../../../components/Admin";
 import { adminPath, TABLE_COLUMNS } from "../../../utils/constants";
 import { Pagination } from "../../../components";
 import { TailSpin } from "react-loader-spinner";
-import postService from "../../../services/PostService";
 import postCategoryService from "../../../services/PostCategoryService";
 
 function Table() {
@@ -15,16 +14,14 @@ function Table() {
 	const [loading, setLoading] = useState(true);
 	const [searchInput, setSearchInput] = useState("");
 	const [meta, setMeta] = useState([]);
-	const [categorySelected, setCategorySelected] = useState(null);
-	const [listCategories, setListCategories] = useState([]);
 
 	const fetchListData = async (params = {}) => {
 		setLoading(true);
 		try {
-			const response = await postService.getAll(params);
-			const resCategories = await postCategoryService.getListCategories();
+			const response = await postCategoryService.getAll(params);
+
 			setListData(response.data.data);
-			setListCategories(resCategories.data);
+
 			setMeta(response.data.meta);
 		} catch (error) {
 			console.error("Error: ", error);
@@ -48,30 +45,16 @@ function Table() {
 			page,
 		});
 	};
-	const handleCategoryChange = (selectedOption) => {
-		setCategorySelected(selectedOption);
-		fetchListData({
-			search: searchInput,
-			post_category_id: selectedOption?.value ?? "",
-		});
-	};
+
 	return (
 		<>
 			<TitleHeader
 				title={"Thêm mới"}
 				buttonIcon={<IoMdAddCircle />}
 				titleButton={"Thêm mới"}
-				to={adminPath.create("posts")}
+				to={adminPath.create("post-categories")}
 			/>
 			<div className="flex items-center justify-end w-full p-3 gap-2 flex-wrap">
-				<Select
-					className="w-[200px]"
-					placeholder="Chọn danh mục"
-					options={listCategories}
-					value={categorySelected}
-					onChange={handleCategoryChange}
-					isClearable
-				/>
 				<input
 					className="h-[38px] px-3 outline-0 border 
 					border-gray-200 rounded-md text-sm w-[180px]"
@@ -113,11 +96,11 @@ function Table() {
 				) : (
 					<>
 						<TableList
-							columns={TABLE_COLUMNS.posts}
+							columns={TABLE_COLUMNS.post_categories}
 							tableBody={listData}
-							model={"posts"}
+							model={"post-categories"}
 							onDeleteSuccess={fetchListData}
-							service={postService}
+							service={postCategoryService}
 						/>
 						<Pagination
 							meta={meta}

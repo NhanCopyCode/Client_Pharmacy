@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
+import Select from "react-select";
 import TiptapEditor from "../../../components/Admin/TiptapEditor";
 import { Button, ModalGenerateText } from "../../../components/Client";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { TitleHeader } from "../../../components/Admin";
 import { adminPath } from "../../../utils/constants";
 import postService from "../../../services/PostService";
+import postCategoryService from "../../../services/PostCategoryService";
 import ImageUploadBrand from "../../../components/Admin/ImageUpload";
 
 function Form({
@@ -20,6 +22,8 @@ function Form({
 	const [initialized, setInitialized] = useState(false);
 	const [userId, setUserId] = useState("");
 	const [image, setImage] = useState(null);
+	const [categories, setCategories] = useState([]);
+	const [selectedCategory, setSelectedCategory] = useState(null);
 
 	useEffect(() => {
 		if (initialData && !initialized) {
@@ -29,12 +33,28 @@ function Form({
 			if (initialData.image) {
 				setImage({ data_url: initialData.image });
 			}
+			if (initialData.post_category_id && initialData.category_name) {
+				setSelectedCategory({
+					value: initialData.post_category_id,
+					label: initialData.category_name,
+				});
+			}
 			setInitialized(true);
 		}
 	}, [initialData, initialized]);
 
 	useEffect(() => {
 		setUserId(JSON.parse(localStorage.getItem("user"))?.id);
+		const fetchCategories = async () => {
+			try {
+				const res = await postCategoryService.getListCategories();
+
+				setCategories(res.data);
+			} catch (err) {
+				console.error("Error loading categories:", err);
+			}
+		};
+		fetchCategories();
 	}, []);
 
 	const handleSubmit = async () => {
@@ -43,6 +63,9 @@ function Form({
 		formData.append("description", description);
 		formData.append("approved", approved ? 1 : 0);
 		formData.append("userId", userId);
+		if (selectedCategory?.value) {
+			formData.append("post_category_id", selectedCategory.value);
+		}
 		if (image?.file) {
 			formData.append("image", image.file);
 		}
@@ -77,7 +100,22 @@ function Form({
 								</span>
 							</td>
 						</tr>
-
+						<tr className="grid grid-cols-12 gap-2">
+							<td className="col-span-3 p-2">
+								Danh mục bài viết
+							</td>
+							<td className="col-span-9 p-2">
+								<Select
+									placeholder="Chọn danh mục"
+									options={categories}
+									value={selectedCategory}
+									onChange={(val) => setSelectedCategory(val)}
+								/>
+								<span className="text-redColor">
+									{errors.post_category_id}
+								</span>
+							</td>
+						</tr>
 						<tr className="grid grid-cols-12 gap-2">
 							<td className="col-span-3 p-[10px]">
 								Hình ảnh bài viết

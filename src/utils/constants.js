@@ -82,7 +82,22 @@ export const menuAdmin = [
 			},
 		],
 	},
-
+	{
+		icon: LiaProductHunt,
+		title: "Quản lý bài viết",
+		children: [
+			{
+				icon: LiaProductHunt,
+				title: "Loại bài viết",
+				path: "/admin/post-categories",
+			},
+			{
+				icon: LiaProductHunt,
+				title: "Bài viết",
+				path: "/admin/posts",
+			},
+		],
+	},
 	{
 		icon: LiaProductHunt,
 		title: "Danh mục",
@@ -113,11 +128,7 @@ export const menuAdmin = [
 		title: "Voucher",
 		path: "/admin/vouchers",
 	},
-	{
-		icon: LiaProductHunt,
-		title: "Bài viết",
-		path: "/admin/posts",
-	},
+
 	{
 		icon: LiaProductHunt,
 		title: "Video",
@@ -253,9 +264,15 @@ export const TABLE_COLUMNS = {
 			style: "w-50 object-cover",
 		},
 		{ key: "description", label: "Nội dung", type: "html" },
+		{ key: "category_name", label: "Thể loại" },
 		{ key: "approved", label: "Duyệt", type: "boolean" },
 	],
-
+	post_categories: [
+		{ key: "", label: "", type: "checkbox", style: "text-center" },
+		{ key: "id", label: "ID" },
+		{ key: "title", label: "Tiêu đề" },
+		{ key: "approved", label: "Duyệt", type: "boolean" },
+	],
 	discounts: [
 		{ key: "", label: "", type: "checkbox", style: "text-center" },
 		{ key: "id", label: "ID" },
