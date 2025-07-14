@@ -8,7 +8,7 @@ function CategoryItemHeader() {
 				/>
 			</div>
 			<span className="line-clamp-2 text-black text-sm ml-2 font-medium">
-				Thuốc không kê đơn Thuốc không kê đơn
+				Thuốc không kê đơn Thuốc không kê đơn dsfasd
 			</span>
 		</div>
 	);

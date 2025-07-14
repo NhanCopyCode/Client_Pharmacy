@@ -9,7 +9,7 @@ function ListProduct() {
 	return (
 		<div className="mt-12">
 			<h2 className="text-[30px] text-black font-bold ">
-				Sản phẩm nổi bật
+				Sản phẩm theo đối tượng
 			</h2>
 			<div className="grid grid-cols-12 gap-4 mt-4">
 				<div className="xl:col-span-3 col-span-12">

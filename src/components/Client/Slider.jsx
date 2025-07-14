@@ -15,7 +15,6 @@ function Slider() {
 		try {
 			const fetchData = async() => {
 				const res = await bannerService.getBannerHomePage();
-				console.log('res banner homepage: ', res.data);
 				setHomePageSlider(res.data);
 			}
 

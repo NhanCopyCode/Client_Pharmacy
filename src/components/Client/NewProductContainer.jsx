@@ -17,7 +17,6 @@ function NewProductContainer() {
 			setProducts(res.data.data);
 		});
 	}, []);
-	console.log('products', products);
 	return (
 		<div className="mt-8">
 			<h2 className="text-[30px] text-black font-bold">Sản phẩm mới</h2>

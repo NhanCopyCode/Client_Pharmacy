@@ -1,12 +1,28 @@
 import { IoMdArrowDropdown } from "react-icons/io";
 import Button from "./Button";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NavbarHeaderItem from "./NavbarHeaderItem";
+
+import categoryService from "../../services/CategoryService";
 
 function NavBar() {
 	const [isShowCategory, setShowCategory] = useState(false);
 	const [isShowPost, setShowPost] = useState(false);
+	const [listCategories, setListCategories] = useState([]);
+
+	useEffect(() => {
+		try {
+			const fetchData = async () => {
+				const res = await categoryService.getListParentAndChild();
+				setListCategories(res.data);
+			};
+
+			fetchData();
+		} catch (error) {
+			console.log("Error at NavBar component file: ", error);
+		}
+	}, []);
 	return (
 		<div className="hidden md:flex items-center gap-1 relative mt-4">
 			<Button
@@ -51,22 +67,16 @@ function NavBar() {
 				{isShowCategory && (
 					<div className="absolute z-20 top-[112%] left-0 bg-white shadow-md rounded-md w-full max-h-[600px] overflow-y-auto">
 						<div className="grid grid-cols-12 gap-4 p-[10px]">
-							<NavbarHeaderItem />
-							<NavbarHeaderItem />
-							<NavbarHeaderItem />
-							<NavbarHeaderItem />
-							<NavbarHeaderItem />
-							<NavbarHeaderItem />
-							<NavbarHeaderItem />
-							<NavbarHeaderItem />
-							<NavbarHeaderItem />
-							<NavbarHeaderItem />
-							<NavbarHeaderItem />
-							<NavbarHeaderItem />
-							<NavbarHeaderItem />
-							<NavbarHeaderItem />
-							<NavbarHeaderItem />
-							<NavbarHeaderItem />
+							{listCategories.length > 0 &&
+								listCategories.map((category) => {
+									return (
+										<NavbarHeaderItem
+											key={category.id}
+											category={category}
+										/>
+									);
+								})}
+						
 						</div>
 					</div>
 				)}

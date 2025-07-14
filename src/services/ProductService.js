@@ -25,6 +25,9 @@ const productService = {
 	getLatest() {
 		return axios.get("/products/latest");
 	},
+	getProductTrending() {
+		return axios.get("/products/trending");
+	},
 };
 
 export default productService;
