@@ -69,12 +69,26 @@ export { default as DetailBanner } from "./banners/Detail";
 export { default as BannerForm } from "./banners/Form";
 export { default as EditBanner } from "./banners/Edit";
 
+//Product images
+export { default as ShowTableProductImage } from "./product-images/Table";
+export { default as AddNewProductImage } from "./product-images/AddNew";
+export { default as DetailProductImage } from "./product-images/Detail";
+export { default as ProductImageForm } from "./product-images/Form";
+export { default as EditProductImage } from "./product-images/Edit";
+
 //Banner positions
 export { default as ShowTableBannerPosition } from "./banner-positions/Table";
 export { default as AddNewBannerPosition } from "./banner-positions/AddNew";
 export { default as DetailBannerPosition } from "./banner-positions/Detail";
 export { default as BannerPositionForm } from "./banner-positions/Form";
 export { default as EditBannerPosition } from "./banner-positions/Edit";
+
+//Banner positions
+export { default as ShowTablePolicy } from "./policies/Table";
+export { default as AddNewPolicy } from "./policies/AddNew";
+export { default as DetailPolicy } from "./policies/Detail";
+export { default as PolicyForm } from "./policies/Form";
+export { default as EditPolicy } from "./policies/Edit";
 
 //Settings
 export { default as ShowTableSetting } from "./settings/ShowTableSetting";

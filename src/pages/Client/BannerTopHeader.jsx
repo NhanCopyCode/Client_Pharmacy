@@ -25,7 +25,7 @@ function BannerTopHeader() {
 		}
 	}, []);
 	return (
-		<div className="relative h-[82px]">
+		<div className="relative">
 			<Swiper
 				slidesPerView={1}
 				effect="fade"

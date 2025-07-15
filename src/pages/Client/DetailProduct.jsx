@@ -14,59 +14,106 @@ import smallGift from "../../assets/images/small_gift.png";
 import camket1 from "../../assets/images/camket_1.png";
 import productSupport from "../../assets/images/evo_product_support.jpg";
 import chinhsach_1 from "../../assets/images/chinhsach_1.png";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-const images = [
-	"https://bizweb.dktcdn.net/thumb/large/100/491/197/products/00030869-sasagold-saffron-nhuy-h.png?v=1689759984450",
-	"https://bizweb.dktcdn.net/thumb/large/100/491/197/products/00030869-sasagold-saffron-nhuy-h-5.png?v=1689759985303",
-	"https://bizweb.dktcdn.net/thumb/large/100/491/197/products/00030869-sasagold-saffron-nhuy-h-4.png?v=1689759986333",
-	"https://bizweb.dktcdn.net/thumb/large/100/491/197/products/00030869-sasagold-saffron-nhuy-h-4.png?v=1689759986333",
-	"https://bizweb.dktcdn.net/thumb/large/100/491/197/products/00030869-sasagold-saffron-nhuy-h-4.png?v=1689759986333",
-];
+
+import productService from "../../services/ProductService";
+import formatPriceVND from "../../utils/formatPriceVND";
+
 function DetailProduct() {
 	const [product, setProduct] = useState({});
-	const { id } = useParams();
+	const [quantity, setQuantity] = useState(1);
+	const [expanded, setExpanded] = useState(false);
+	const [isOverflowing, setIsOverflowing] = useState(false);
+	const contentRef = useRef(null);
+	const [isShowDesc, setIsShowDesc] = useState(true);
 
+	const { id } = useParams();
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const res = await productService.getById(id);
+
+				setProduct(res.data.data);
+			} catch (error) {
+				console.log("error: ", error);
+			}
+		};
+
+		fetchData();
+	}, [id]);
+
+	useEffect(() => {
+		if (!contentRef.current) return;
+
+		const observer = new ResizeObserver(() => {
+			const contentEl = contentRef.current;
+			if (contentEl) {
+				const hasOverflow =
+					contentEl.scrollHeight > contentEl.clientHeight;
+				setIsOverflowing(hasOverflow);
+			}
+		});
+
+		observer.observe(contentRef.current);
+
+		return () => {
+			observer.disconnect();
+		};
+	}, [product?.description, isShowDesc]);
+
+	const handleUpdateQuantity = (action) => {
+		if (action === "up") {
+			setQuantity(quantity + 1);
+		}
+
+		if (action === "down") {
+			setQuantity(quantity - 1);
+		}
+	};
 	return (
 		<Container>
 			<div className="grid grid-cols-12 gap-8">
 				<div className="col-span-4">
-					<ProductDetailImage images={images} />
+					<ProductDetailImage images={product?.images} />
 				</div>
 				<div className="col-span-5">
-					<h3 className="text-[24px] font-bold">
-						Nhụy hoa nghệ tây Sasagold Saffron hỗ trợ làm đẹp và phù
-						hợp cho người bệnh (1g)
-					</h3>
+					<h3 className="text-[24px] font-bold">{product?.title}</h3>
 					<div className="grid grid-cols-12 text-[16px] mt-4 font-bold gap-1">
 						<div className="col-span-6">
 							<p>
 								Thương hiệu:{" "}
-								<span className="text-darkBlue">Vesta</span>
+								<span className="text-darkBlue">
+									{product?.brandName}
+								</span>
 							</p>
 						</div>
 						<div className="col-span-6">
 							<p>
-								Thương hiệu:{" "}
-								<span className="text-darkBlue">Vesta</span>
+								Loại:{" "}
+								<span className="text-darkBlue">
+									{product?.categoryName}
+								</span>
 							</p>
 						</div>
 						<div className="col-span-6">
 							<p>
-								Thương hiệu:{" "}
-								<span className="text-darkBlue">Vesta</span>
+								Tình trạng:{" "}
+								<span className="text-darkBlue">{`Con hàng: ${product.inventory}`}</span>
 							</p>
 						</div>
 						<div className="col-span-6">
 							<p>
-								Thương hiệu:{" "}
-								<span className="text-darkBlue">Vesta</span>
+								Mã sản phẩm:{" "}
+								<span className="text-darkBlue">
+									{product?.id}
+								</span>
 							</p>
 						</div>
 					</div>
 
 					<div className="p-[10px] bg-[#d9e6ff] mt-2 rounded-md text-[30px] text-primary font-bold">
-						438.000₫
+						{formatPriceVND(product?.price)}
 					</div>
 					<div className="flex flex-col gap-2 mt-4">
 						<span className="text-sm text-black font-bold">
@@ -79,12 +126,14 @@ function DetailProduct() {
 								hoverEffect="hover:bg-primary"
 								fontSize="text-[20px]"
 								background="bg-darkBlue"
+								onClick={() => handleUpdateQuantity("down")}
 							>
 								-
 							</Button>
 							<input
 								className="text-primary font-medium mx-4 border-0 outline-0 inline-block w-[60px] h-[35px] text-center text-[15px]"
-								value={3}
+								value={quantity}
+								onChange={(e) => setQuantity(e.target.value)}
 							/>
 
 							<Button
@@ -93,6 +142,7 @@ function DetailProduct() {
 								fontSize="text-[20px]"
 								background="bg-darkBlue"
 								hoverEffect="hover:bg-primary"
+								onClick={() => handleUpdateQuantity("up")}
 							>
 								+
 							</Button>
@@ -181,7 +231,7 @@ function DetailProduct() {
 								className="w-[26px] h-[26px] object-cover"
 							/>
 							<span className="text-sm text-black font-medium">
-								Cam kết 100% chính hãng
+								Hoàn tiền 111% nếu hàng giả
 							</span>
 						</div>
 						<div className="col-span-6 flex items-center gap-3">
@@ -190,7 +240,7 @@ function DetailProduct() {
 								className="w-[26px] h-[26px] object-cover"
 							/>
 							<span className="text-sm text-black font-medium">
-								Cam kết 100% chính hãng
+								Giao tận tay khách hàng
 							</span>
 						</div>
 						<div className="col-span-6 flex items-center gap-3">
@@ -199,7 +249,7 @@ function DetailProduct() {
 								className="w-[26px] h-[26px] object-cover"
 							/>
 							<span className="text-sm text-black font-medium">
-								Cam kết 100% chính hãng
+								Mở hộp kiểm tra nhận hàng
 							</span>
 						</div>
 						<div className="col-span-6 flex items-center gap-3">
@@ -208,7 +258,7 @@ function DetailProduct() {
 								className="w-[26px] h-[26px] object-cover"
 							/>
 							<span className="text-sm text-black font-medium">
-								Cam kết 100% chính hãng
+								Hỗ trợ 24/7
 							</span>
 						</div>
 						<div className="col-span-6 flex items-center gap-3">
@@ -217,7 +267,7 @@ function DetailProduct() {
 								className="w-[26px] h-[26px] object-cover"
 							/>
 							<span className="text-sm text-black font-medium">
-								Cam kết 100% chính hãng
+								Đổi trả trong 7 ngày
 							</span>
 						</div>
 					</div>
@@ -330,53 +380,160 @@ function DetailProduct() {
 							<div className="flex items-center gap-3">
 								<Button
 									fontSize="text-[16px]"
-									color="text-darkBlue"
+									color={
+										isShowDesc
+											? "text-white"
+											: "text-darkBlue"
+									}
 									fontWeight="font-bold"
 									border="border border-darkBlue"
 									rounded="rounded-md"
-									background="bg-white"
+									background={
+										isShowDesc ? "bg-darkBlue" : "bg-white"
+									}
 									padding="px-[15px] py-[10px]"
 									hoverEffect="hover:bg-darkBlue hover:text-white"
+									onClick={() => setIsShowDesc(true)}
 								>
 									Mô tả sản phẩm
 								</Button>
 								<Button
 									fontSize="text-[16px]"
-									color="text-darkBlue"
+									color={
+										!isShowDesc
+											? "text-white"
+											: "text-darkBlue"
+									}
 									fontWeight="font-bold"
 									border="border border-darkBlue"
 									rounded="rounded-md"
-									background="bg-white"
+									background={
+										!isShowDesc ? "bg-darkBlue" : "bg-white"
+									}
 									hoverEffect="hover:bg-darkBlue hover:text-white"
 									padding="px-[15px] py-[10px]"
+									onClick={() => setIsShowDesc(false)}
 								>
 									Hướng dẫn mua hàng
 								</Button>
 							</div>
 
-							<div className="border border-darkBlue p-[10px] rounded-md max-h-[1260px] mt-4 relative">
-								<h3>adsfsdfa</h3>
-								<h3>adsfsdfa</h3>
-								<h3>adsfsdfa</h3>
-								<h3>adsfsdfa</h3>
-								<h3>adsfsdfa</h3>
-								<h3>adsfsdfa</h3>
-								<h3>adsfsdfa</h3>
-								<h3>adsfsdfa</h3>
-								<h3>adsfsdfa</h3>
-								<h3>adsfsdfa</h3>
-								<div className="flex items-center justify-center bg-white/95 w-[98%] py-8 absolute bottom-0">
-									<Button
-										border="border border-darkBlue"
-										background="bg-white"
-										color="text-darkBlue"
-										fontSize="text-[16px]"
-										padding="py-[5px] px-[15px]"
-										hoverEffect="hover:bg-primary hover:border-primary hover:text-white"
+							<div
+								className={`border border-darkBlue p-[10px] rounded-md mt-4 relative transition-all duration-300`}
+							>
+								{isShowDesc ? (
+									<div
+										ref={contentRef}
+										dangerouslySetInnerHTML={{
+											__html: product?.description,
+										}}
+										className={`transition-all overflow-hidden ${
+											expanded
+												? "max-h-full"
+												: ""
+										}`}
+									></div>
+								) : (
+									<div
+										ref={contentRef}
+										className={`transition-all overflow-hidden ${
+											expanded
+												? "max-h-full"
+												: ""
+										}`}
 									>
-										Xem thêm
-									</Button>
-								</div>
+										<div class="flex flex-col gap-4 h-full">
+											<p>
+												<strong>Bước 1:</strong>
+												&nbsp;Truy cập website và lựa
+												chọn sản phẩm&nbsp;cần mua
+											</p>
+											<p>
+												<strong>Bước 2:</strong>
+												&nbsp;Click và sản phẩm muốn
+												mua, màn hình hiển thị ra pop up
+												với các lựa chọn sau
+											</p>
+											<p>
+												Nếu bạn muốn tiếp tục mua hàng:
+												Bấm vào phần tiếp tục mua hàng
+												để lựa chọn thêm sản phẩm vào
+												giỏ hàng
+											</p>
+											<p>
+												Nếu bạn muốn xem giỏ hàng để cập
+												nhật sản phẩm: Bấm vào xem giỏ
+												hàng
+											</p>
+											<p>
+												Nếu bạn muốn đặt hàng và thanh
+												toán cho sản phẩm này vui lòng
+												bấm vào: Đặt hàng và thanh toán
+											</p>
+											<p>
+												<strong>Bước 3:</strong>
+												&nbsp;Lựa chọn thông tin tài
+												khoản thanh toán
+											</p>
+											<p>
+												Nếu bạn đã có tài khoản vui lòng
+												nhập thông tin tên đăng nhập là
+												email và mật khẩu vào mục đã có
+												tài khoản trên hệ thống
+											</p>
+											<p>
+												Nếu bạn chưa có tài khoản và
+												muốn đăng ký tài khoản vui lòng
+												điền các thông tin cá nhân để
+												tiếp tục đăng ký tài khoản. Khi
+												có tài khoản bạn sẽ dễ dàng theo
+												dõi được đơn hàng của mình
+											</p>
+											<p>
+												Nếu bạn muốn mua hàng mà không
+												cần tài khoản vui lòng nhấp
+												chuột vào mục đặt hàng không cần
+												tài khoản
+											</p>
+											<p>
+												<strong>Bước 4:</strong>
+												&nbsp;Điền các thông tin của bạn
+												để nhận đơn hàng, lựa chọn hình
+												thức thanh toán và vận chuyển
+												cho đơn hàng của mình
+											</p>
+											<p>
+												<strong>Bước 5:</strong>
+												&nbsp;Xem lại thông tin đặt
+												hàng, điền chú thích và gửi đơn
+												hàng
+											</p>
+											<p>
+												Sau khi nhận được đơn hàng bạn
+												gửi chúng tôi sẽ liên hệ bằng
+												cách gọi điện lại để xác nhận
+												lại đơn hàng và địa chỉ của bạn.
+											</p>
+											<p>Trân trọng cảm ơn.</p>
+										</div>
+									</div>
+								)}
+
+								{isShowDesc && !expanded && isOverflowing && (
+									<div className="flex items-center justify-center bg-white/95 w-[98%] py-8 absolute bottom-0">
+										<Button
+											border="border border-darkBlue"
+											background="bg-white"
+											color="text-darkBlue"
+											fontSize="text-[16px]"
+											padding="py-[5px] px-[15px]"
+											hoverEffect="hover:bg-primary hover:border-primary hover:text-white"
+											onClick={() => setExpanded(true)}
+										>
+											Xem thêm
+										</Button>
+									</div>
+								)}
 							</div>
 						</div>
 

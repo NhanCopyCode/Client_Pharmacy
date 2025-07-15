@@ -65,7 +65,11 @@ import {
 	ShowTablePostCategory,
 	AddNewPostCategory,
 	DetailPostCategory,
-	EditPostCategory
+	EditPostCategory,
+	ShowTablePolicy,
+	AddNewPolicy,
+	DetailPolicy,
+	EditPolicy
 } from "./pages/Admin/index.js";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -155,6 +159,13 @@ export const adminModels = [
 		create: AddNewPostCategory,
 		detail: DetailPostCategory,
 		update: EditPostCategory,
+	},
+	{
+		model: "policies",
+		list: ShowTablePolicy,
+		create: AddNewPolicy,
+		detail: DetailPolicy,
+		update: EditPolicy,
 	},
 ];
 const DefaultAdminIndex = adminModels[0].list;

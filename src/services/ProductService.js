@@ -28,6 +28,9 @@ const productService = {
 	getProductTrending() {
 		return axios.get("/products/trending");
 	},
+	getProductSameSegment() {
+		return axios.get("/products/sameSegment");
+	}
 };
 
 export default productService;

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Select from "react-select";
 
 import { Button } from "../../../components/Client";
 import { IoMdAddCircle } from "react-icons/io";
@@ -7,34 +6,21 @@ import { IoIosSearch } from "react-icons/io";
 import { TableList, TitleHeader } from "../../../components/Admin";
 import { adminPath, TABLE_COLUMNS } from "../../../utils/constants";
 import { Pagination } from "../../../components";
-import promotionService from "../../../services/PromotionService";
 import { TailSpin } from "react-loader-spinner";
+import policyService from "../../../services/PolicyService";
 
-const options = [
-	{ value: "percent", label: "Phần trăm (%)" },
-	{ value: "fixed", label: "Giá cố định" },
-];
-const appliesToOptions = [
-	{ value: "product", label: "Sản phẩm" },
-	{ value: "category", label: "Danh mục" },
-	{ value: "order", label: "Đơn hàng" },
-];
-
-function ShowTablePromotion() {
-	const [promotions, setPromotions] = useState([]);
+function Table() {
+	const [listData, setListData] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [searchInput, setSearchInput] = useState("");
 	const [meta, setMeta] = useState([]);
-	const [selectedOption, setSelectedOption] = useState(null);
-	const [appliesTo, setAppliesTo] = useState(null);
-	const [discountType, setDiscountType] = useState(null);
 
-	const fetchPromotion = async (params = {}) => {
+	const fetchListData = async (params = {}) => {
 		setLoading(true);
 		try {
-			const response = await promotionService.getAll(params);
+			const response = await policyService.getAll(params);
 
-			setPromotions(response.data.data);
+			setListData(response.data.data);
 
 			setMeta(response.data.meta);
 		} catch (error) {
@@ -43,32 +29,19 @@ function ShowTablePromotion() {
 			setLoading(false);
 		}
 	};
-
 	useEffect(() => {
-		fetchPromotion();
+		fetchListData();
 	}, []);
 
-	useEffect(() => {
-		handleSearch();
-	}, [selectedOption]);
-
-	useEffect(() => {
-		handleSearch();
-	}, [appliesTo, discountType]);
-
 	const handleSearch = () => {
-		fetchPromotion({
+		fetchListData({
 			search: searchInput,
-			applies_to: appliesTo?.value,
-			discount_type: selectedOption?.value,
 		});
 	};
 
 	const handlePageChange = (page) => {
-		fetchPromotion({
+		fetchListData({
 			search: searchInput,
-			applies_to: appliesTo?.value,
-			discount_type: selectedOption?.value,
 			page,
 		});
 	};
@@ -79,30 +52,9 @@ function ShowTablePromotion() {
 				title={"Thêm mới"}
 				buttonIcon={<IoMdAddCircle />}
 				titleButton={"Thêm mới"}
-				to={adminPath.create("promotions")}
+				to={adminPath.create("policies")}
 			/>
 			<div className="flex items-center justify-end w-full p-3 gap-2 flex-wrap">
-				<Select
-					isClearable
-					isSearchable
-					className="text-sm w-[200px]"
-					placeholder="Áp dụng cho"
-					value={appliesTo}
-					onChange={(option) => setAppliesTo(option)}
-					options={appliesToOptions}
-				/>
-				<Select
-					isClearable
-					isSearchable
-					className="text-sm w-[200px]"
-					placeholder="Loại khuyến mãi"
-					value={selectedOption}
-					onChange={(option) => {
-						setSelectedOption(option);
-					}}
-					options={options}
-				/>
-
 				<input
 					className="h-[38px] px-3 outline-0 border 
 					border-gray-200 rounded-md text-sm w-[180px]"
@@ -144,11 +96,11 @@ function ShowTablePromotion() {
 				) : (
 					<>
 						<TableList
-							columns={TABLE_COLUMNS.promotions}
-							tableBody={promotions}
-							model={"promotions"}
-							onDeleteSuccess={fetchPromotion}
-							service={promotionService}
+							columns={TABLE_COLUMNS.policies}
+							tableBody={listData}
+							model={"policies"}
+							onDeleteSuccess={fetchListData}
+							service={policyService}
 						/>
 						<Pagination
 							meta={meta}
@@ -161,4 +113,4 @@ function ShowTablePromotion() {
 	);
 }
 
-export default ShowTablePromotion;
+export default Table;

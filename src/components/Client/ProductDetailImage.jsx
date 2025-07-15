@@ -16,7 +16,7 @@ function ProductDetailImage({ images = [] }) {
 	return (
 		<div className="sticky top-3">
 			{/* Main Swiper */}
-			<div className="bg-white rounded-md shadow-md ">
+			<div className="bg-white rounded-md shadow-md">
 				<Swiper
 					slidesPerView={1}
 					spaceBetween={20}
@@ -28,12 +28,12 @@ function ProductDetailImage({ images = [] }) {
 						setActiveIndex(swiper.activeIndex)
 					}
 				>
-					{images.map((src, index) => (
-						<SwiperSlide key={index}>
+					{images.map((img, index) => (
+						<SwiperSlide key={img.id || index}>
 							<img
-								className="p-3"
-								src={src}
-								alt={`Product image ${index + 1}`}
+								className="p-3 w-full object-contain"
+								src={img.image}
+								alt={`Hình ảnh sản phẩm ${index + 1}`}
 							/>
 						</SwiperSlide>
 					))}
@@ -56,10 +56,13 @@ function ProductDetailImage({ images = [] }) {
 						prevEl: ".productDetail-prev",
 					}}
 				>
-					{images.map((src, index) => (
-						<SwiperSlide key={index}>
+					{images.map((img, index) => (
+						<SwiperSlide
+							key={img.id || index}
+							className="!h-[80px]"
+						>
 							<div
-								className={`p-1 rounded-md shadow-sm border-2 cursor-pointer ${
+								className={`p-1 h-full rounded-md shadow-sm border-2 cursor-pointer flex items-center justify-center ${
 									activeIndex === index
 										? "border-primary"
 										: "border-gray-300"
@@ -67,9 +70,9 @@ function ProductDetailImage({ images = [] }) {
 								onClick={() => mainSwiper?.slideTo(index)}
 							>
 								<img
-									className="w-full h-full object-cover"
-									src={src}
-									alt={`Thumbnail ${index + 1}`}
+									className="h-full w-auto object-contain max-h-[80px]"
+									src={img.image}
+									alt={`Ảnh xem trước ${index + 1}`}
 								/>
 							</div>
 						</SwiperSlide>

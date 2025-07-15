@@ -64,6 +64,10 @@ export const menuAdmin = [
 				title: "Tài khoản",
 				path: "/admin/accounts",
 			},
+			{
+				title: "Chính sách",
+				path: "/admin/policies",
+			},
 		],
 	},
 	{
@@ -100,6 +104,38 @@ export const menuAdmin = [
 	},
 	{
 		icon: LiaProductHunt,
+		title: "Quản lý khuyến mãi",
+		children: [
+			{
+				icon: LiaProductHunt,
+				title: "Chương trình khuyến mãi",
+				path: "/admin/promotions",
+			},
+			{
+				icon: LiaProductHunt,
+				title: "Khuyến mãi",
+				path: "/admin/promotions",
+			},
+		],
+	},
+	{
+		icon: LiaProductHunt,
+		title: "Quản lý sản phẩm",
+		children: [
+			{
+				icon: LiaProductHunt,
+				title: "Sản phẩm",
+				path: "/admin/products",
+			},
+			{
+				icon: LiaProductHunt,
+				title: "Hình ảnh sản phẩm",
+				path: "/admin/product-images",
+			},
+		],
+	},
+	{
+		icon: LiaProductHunt,
 		title: "Danh mục",
 		path: "/admin/categories",
 	},
@@ -110,19 +146,10 @@ export const menuAdmin = [
 	},
 	{
 		icon: LiaProductHunt,
-		title: "Sản phẩm",
-		path: "/admin/products",
-	},
-	{
-		icon: LiaProductHunt,
 		title: "Quảng cáo",
 		path: "/admin/ads",
 	},
-	{
-		icon: LiaProductHunt,
-		title: "Khuyến mãi",
-		path: "/admin/promotions",
-	},
+
 	{
 		icon: LiaProductHunt,
 		title: "Voucher",
@@ -413,6 +440,19 @@ export const TABLE_COLUMNS = {
 		{ key: "id", label: "ID" },
 		{ key: "name", label: "Tên video" },
 		{ key: "src", label: "Link video", type: "link" },
+		{
+			key: "image",
+			label: "Ảnh",
+			type: "image",
+			style: "w-50 object-contain",
+		},
+		{ key: "approved", label: "Duyệt", type: "boolean" },
+	],
+	policies: [
+		{ key: "", label: "", type: "checkbox", style: "text-center" },
+		{ key: "id", label: "ID" },
+		{ key: "title", label: "Tên chính sách" },
+		{ key: "content", label: "Nội dung chính sách" },
 		{
 			key: "image",
 			label: "Ảnh",
