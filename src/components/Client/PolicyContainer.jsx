@@ -6,8 +6,24 @@ import "swiper/css";
 import SwiperNextButton from "./SwiperNextButton";
 import SwiperPrevButton from "./SwiperPrevButton";
 import PolicyItem from "./PolicyItem";
+import policyService from "../../services/PolicyService";
+import { useEffect, useState } from "react";
 
 function PolicyContainer() {
+	const [policies, setPolicies] = useState([]);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const res = await policyService.getAll();
+				setPolicies(res.data.data);
+			} catch (error) {
+				console.log("error: ", error);
+			}
+		};
+		fetchData();
+	}, []);
+	console.log("policies: ", policies);
 	return (
 		<div className="mt-8">
 			<div className="mt-4 relative">
@@ -34,31 +50,18 @@ function PolicyContainer() {
 						prevEl: ".policy-prev",
 					}}
 				>
-					<SwiperSlide>
-						<PolicyItem
-							title={"Miễn phí vẫn chuyển"}
-							description="Cho tất cả đơn hàng trong nội thành Hồ Chí Minh"
-						/>
-					</SwiperSlide>
-					<SwiperSlide>
-						<PolicyItem
-							title={"Miễn phí vẫn chuyển"}
-							description="Cho tất cả đơn hàng trong nội thành Hồ Chí Minh"
-						/>
-					</SwiperSlide>
-					<SwiperSlide>
-						<PolicyItem
-							title={"Miễn phí vẫn chuyển"}
-							description="Cho tất cả đơn hàng trong nội thành Hồ Chí Minh"
-						/>
-					</SwiperSlide>
-					<SwiperSlide>
-						<PolicyItem
-							title={"Miễn phí vẫn chuyển"}
-							description="Cho tất cả đơn hàng trong nội thành Hồ Chí Minh"
-						/>
-					</SwiperSlide>
-                    
+					{policies.length > 0 &&
+						policies.map((policy) => {
+							return (
+								<SwiperSlide key={policy.id}>
+									<PolicyItem
+										title={policy.title}
+										description={policy.content}
+										image={policy.image}
+									/>
+								</SwiperSlide>
+							);
+						})}
 				</Swiper>
 			</div>
 		</div>

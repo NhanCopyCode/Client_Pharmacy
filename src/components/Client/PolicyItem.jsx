@@ -1,8 +1,8 @@
-function PolicyItem({ title, description}) {
+function PolicyItem({ title, description, image}) {
     return (
 		<div className="flex items-center gap-3">
 			<img
-				src="https://bizweb.dktcdn.net/100/491/197/themes/917410/assets/chinhsach_1.png?1736388760084"
+				src={image}
 				className="w-10 h-10 object-cover"
 			/>
 			<div className="flex flex-col gap-1">
