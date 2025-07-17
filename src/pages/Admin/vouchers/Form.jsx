@@ -7,6 +7,7 @@ import { TitleHeader } from "../../../components/Admin";
 import Select from "react-select";
 import { readMoneyVND } from "../../../utils/moneyUtils";
 import { readPercent } from "../../../utils/readPercent";
+import ImageUploadBrand from "../../../components/Admin/ImageUpload";
 
 const discountTypeOptions = [
 	{ value: "percent", label: "Giảm %" },
@@ -39,6 +40,7 @@ function Form({
 	const [usageLimit, setUsageLimit] = useState("");
 	const [usageLimitPerUser, setUsageLimitPerUser] = useState("");
 	const [approved, setApproved] = useState(false);
+	const [image, setImage] = useState(null);
 
 	useEffect(() => {
 		if (initialData && !initialized) {
@@ -64,6 +66,9 @@ function Form({
 			setEndDate(initialData.end_date?.slice(0, 16) || "");
 			setApproved(Boolean(initialData.approved));
 			setInitialized(true);
+			if (initialData.image && typeof initialData.image === "string") {
+				setImage([{ data_url: initialData.image }]);
+			}
 		}
 	}, [initialData, initialized]);
 
@@ -88,6 +93,10 @@ function Form({
 		formData.append("approved", approved ? 1 : 0);
 		formData.append("start_date", startDate);
 		formData.append("end_date", endDate);
+
+		if (image.length > 0 && image[0].file) {
+			formData.append("image", image[0].file);
+		}
 		if (mode === "edit") {
 			formData.append("id", initialData.id);
 		}
@@ -135,7 +144,20 @@ function Form({
 								</span>
 							</td>
 						</tr>
+						<tr className="grid grid-cols-12 gap-2">
+							<td className="col-span-3 p-[10px]">Hình ảnh</td>
+							<td className="col-span-9 p-[10px]">
+								<ImageUploadBrand
+									images={image}
+									setImages={setImage}
+									isUploadMultiple={false}
+								/>
 
+								<span className="text-redColor">
+									{errors.image}
+								</span>
+							</td>
+						</tr>
 						{/* Description */}
 						<tr className="grid grid-cols-12 gap-2">
 							<td className="col-span-3 p-2">Mô tả</td>

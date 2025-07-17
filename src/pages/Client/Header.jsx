@@ -20,27 +20,47 @@ import { SearchHeader } from "../../components/Client";
 import { IoIosMenu } from "react-icons/io";
 import { FaAngleRight } from "react-icons/fa6";
 import { path } from "../../utils/constants";
+import categoryService from "../../services/CategoryService";
 
 function Header() {
+	const [categories, setCategories] = useState([]);
 	const [isShowCategory, setShowCategory] = useState(false);
 	const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
 	const [isShowHeaderSidebar, setShowHeaderSidebar] = useState(false);
+	const [selectedParentId, setSelectedParentId] = useState(null);
 	useEffect(() => {
 		const mediaQuery = window.matchMedia("(max-width: 960px)"); // 4xl in Tailwind is 1536px
 
 		const handleMediaChange = (e) => {
 			setIsMobileOrTablet(e.matches);
 		};
-
-		// Initial check
 		setIsMobileOrTablet(mediaQuery.matches);
-
-		// Listen for changes
 		mediaQuery.addEventListener("change", handleMediaChange);
-
-		// Cleanup
 		return () =>
 			mediaQuery.removeEventListener("change", handleMediaChange);
+	}, []);
+
+	useEffect(() => {
+		if (
+			categories.length > 0 &&
+			isShowCategory &&
+			selectedParentId === null
+		) {
+			setSelectedParentId(categories[0].id);
+		}
+	}, [categories, isShowCategory, selectedParentId]);
+
+	useEffect(() => {
+		const fetchDataCategories = async () => {
+			try {
+				const res = await categoryService.getAll();
+				setCategories(res.data.data);
+			} catch (error) {
+				console.log("error: ", error);
+			}
+		};
+
+		fetchDataCategories();
 	}, []);
 
 	const handleShowCategory = () => {
@@ -229,51 +249,44 @@ function Header() {
 						<div className="absolute top-[100%] w-full bg-white text-black shadow-md rounded-xl z-20">
 							<div className="flex items-start">
 								<div className="col-span-3 p-[10px] flex flex-col gap-2">
-									<div
-										className={`${"flex items-center justify-between bg-darkBlue text-white p-[10px] rounded-xl w-[250px] hover:cursor-pointer"}`}
-									>
-										<span className="text-[16px] font-bold">
-											Dược phẩm
-										</span>
-										<FaAngleRight className="w-5 h-5" />
-									</div>
-									<div
-										className={`${"flex items-center justify-between bg-darkBlue text-white p-[10px] rounded-xl w-[250px] hover:cursor-pointer"}`}
-									>
-										<span className="text-[16px] font-bold">
-											Dược phẩm
-										</span>
-										<FaAngleRight className="w-5 h-5" />
-									</div>
-									<div
-										className={`${"flex items-center justify-between bg-darkBlue text-white p-[10px] rounded-xl w-[250px] hover:cursor-pointer"}`}
-									>
-										<span className="text-[16px] font-bold">
-											Dược phẩm
-										</span>
-										<FaAngleRight className="w-5 h-5" />
-									</div>
+									{categories.map((parent) => (
+										<div
+											key={parent.id}
+											className={`flex items-center justify-between ${
+												selectedParentId === parent.id
+													? "bg-primary"
+													: "bg-darkBlue"
+											} text-white p-[10px] rounded-xl w-[250px] hover:cursor-pointer`}
+											onClick={() =>
+												setSelectedParentId(parent.id)
+											}
+										>
+											<span className="text-[16px] font-bold">
+												{parent.name}
+											</span>
+											<FaAngleRight className="w-5 h-5" />
+										</div>
+									))}
+									
 								</div>
 								<div className="col-span-9 flex flex-wrap gap-2 p-[10px]">
 									<div className="grid grid-cols-12 gap-3">
-										<div className="md:col-span-3 sm:col-span-4 col-span-6">
-											<CategoryItemHeader />
-										</div>
-										<div className="md:col-span-3 sm:col-span-4 col-span-6">
-											<CategoryItemHeader />
-										</div>
-										<div className="md:col-span-3 sm:col-span-4 col-span-6">
-											<CategoryItemHeader />
-										</div>
-										<div className="md:col-span-3 sm:col-span-4 col-span-6">
-											<CategoryItemHeader />
-										</div>
-										<div className="md:col-span-3 sm:col-span-4 col-span-6">
-											<CategoryItemHeader />
-										</div>
-										<div className="md:col-span-3 sm:col-span-4 col-span-6">
-											<CategoryItemHeader />
-										</div>
+										{categories
+											.find(
+												(cat) =>
+													cat.id === selectedParentId
+											)
+											?.children.map((child) => (
+												<div
+													key={child.id}
+													className="md:col-span-3 sm:col-span-4 col-span-6"
+												>
+													<CategoryItemHeader
+														category={child} // Make sure your component accepts this prop
+													/>
+												</div>
+											))}
+									
 									</div>
 								</div>
 							</div>

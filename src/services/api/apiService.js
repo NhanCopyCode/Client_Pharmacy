@@ -1,9 +1,6 @@
 import axios from "./axiosInstance";
 
-/**
- * Create a reusable API service for any REST resource
- * @param {string} resource - e.g. "brands", "categories", etc.
- */
+
 export const createApiService = (resource) => {
 	return {
 		getAll: (params = {}) => axios.get(`/${resource}`, { params }),
@@ -21,10 +18,6 @@ export const createApiService = (resource) => {
 		},
 		deleteById: (id) => axios.delete(`/${resource}/${id}`),
 
-		// // Optional: extra flexibility for PATCH
-		// patch: (id, data) => axios.patch(`/${resource}/${id}`, data),
-
-		// // Optional: if your API uses soft-delete restore
-		// restore: (id) => axios.post(`/${resource}/${id}/restore`),
+		
 	};
 };

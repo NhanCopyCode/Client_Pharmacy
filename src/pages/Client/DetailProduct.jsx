@@ -3,10 +3,10 @@ import {
 	Button,
 	Container,
 	ProductDetailImage,
-	ProductSwiper,
 	SidebarProductContainer,
-	SidebarProductItem,
 } from "../../components/Client";
+import { toast } from "react-toastify";
+
 import { FaRegHeart } from "react-icons/fa6";
 import GiftBox from "../../assets/images/giftbox.png";
 import check from "../../assets/images/check.png";
@@ -16,9 +16,10 @@ import productSupport from "../../assets/images/evo_product_support.jpg";
 import chinhsach_1 from "../../assets/images/chinhsach_1.png";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-
+import { TailSpin } from "react-loader-spinner";
 import productService from "../../services/ProductService";
 import formatPriceVND from "../../utils/formatPriceVND";
+import { useCart } from "../../context/CartContext";
 
 function DetailProduct() {
 	const [product, setProduct] = useState({});
@@ -27,16 +28,21 @@ function DetailProduct() {
 	const [isOverflowing, setIsOverflowing] = useState(false);
 	const contentRef = useRef(null);
 	const [isShowDesc, setIsShowDesc] = useState(true);
+	const [loading, setLoading] = useState(false);
+	const { addToCart } = useCart();
 
 	const { id } = useParams();
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
+				setLoading(true);
 				const res = await productService.getById(id);
 
 				setProduct(res.data.data);
 			} catch (error) {
 				console.log("error: ", error);
+			} finally {
+				setLoading(false);
 			}
 		};
 
@@ -71,207 +77,261 @@ function DetailProduct() {
 			setQuantity(quantity - 1);
 		}
 	};
+
+	const handleUpdateOrder = () => {
+		const numericQuantity = Number(quantity);
+		const price = product.price;
+		const discount = product.discount || 0;
+		const finalPrice = (price - discount) * numericQuantity;
+
+		const item = {
+			id: crypto.randomUUID(),
+			orderId: null,
+			productId: product.id,
+			quantity: numericQuantity,
+			price,
+			discount,
+			finalPrice,
+		};
+
+		addToCart(item);
+		toast.success("🛒 Đã thêm vào giỏ hàng!", {
+			position: "top-right",
+		});
+	};
+
 	return (
 		<Container>
 			<div className="grid grid-cols-12 gap-8">
-				<div className="col-span-4">
-					<ProductDetailImage images={product?.images} />
-				</div>
-				<div className="col-span-5">
-					<h3 className="text-[24px] font-bold">{product?.title}</h3>
-					<div className="grid grid-cols-12 text-[16px] mt-4 font-bold gap-1">
-						<div className="col-span-6">
-							<p>
-								Thương hiệu:{" "}
-								<span className="text-darkBlue">
-									{product?.brandName}
-								</span>
-							</p>
-						</div>
-						<div className="col-span-6">
-							<p>
-								Loại:{" "}
-								<span className="text-darkBlue">
-									{product?.categoryName}
-								</span>
-							</p>
-						</div>
-						<div className="col-span-6">
-							<p>
-								Tình trạng:{" "}
-								<span className="text-darkBlue">{`Con hàng: ${product.inventory}`}</span>
-							</p>
-						</div>
-						<div className="col-span-6">
-							<p>
-								Mã sản phẩm:{" "}
-								<span className="text-darkBlue">
-									{product?.id}
-								</span>
-							</p>
-						</div>
+				{loading ? (
+					<div className="col-span-9 flex justify-center items-center min-h-[300px]">
+						<TailSpin
+							height="50"
+							width="50"
+							color="#1D4ED8"
+							ariaLabel="loading"
+						/>
 					</div>
+				) : (
+					<>
+						<div className="col-span-4">
+							<ProductDetailImage images={product?.images} />
+						</div>
+						<div className="col-span-5">
+							<h3 className="text-[24px] font-bold">
+								{product?.title}
+							</h3>
+							<div className="grid grid-cols-12 text-[16px] mt-4 font-bold gap-1">
+								<div className="col-span-6">
+									<p>
+										Thương hiệu:{" "}
+										<span className="text-darkBlue">
+											{product?.brandName}
+										</span>
+									</p>
+								</div>
+								<div className="col-span-6">
+									<p>
+										Loại:{" "}
+										<span className="text-darkBlue">
+											{product?.categoryName}
+										</span>
+									</p>
+								</div>
+								<div className="col-span-6">
+									<p>
+										Tình trạng:{" "}
+										<span className="text-darkBlue">{`Con hàng: ${product.inventory}`}</span>
+									</p>
+								</div>
+								<div className="col-span-6">
+									<p>
+										Mã sản phẩm:{" "}
+										<span className="text-darkBlue">
+											{product?.id}
+										</span>
+									</p>
+								</div>
+							</div>
 
-					<div className="p-[10px] bg-[#d9e6ff] mt-2 rounded-md text-[30px] text-primary font-bold">
-						{formatPriceVND(product?.price)}
-					</div>
-					<div className="flex flex-col gap-2 mt-4">
-						<span className="text-sm text-black font-bold">
-							Số lượng:
-						</span>
-						<div className="inline-flex w-fit items-center justify-between  p-[2px] gap-1 rounded-md border border-darkBlue">
-							<Button
-								buttonSize="w-[35px] h-[35px]"
-								color="text-white"
-								hoverEffect="hover:bg-primary"
-								fontSize="text-[20px]"
-								background="bg-darkBlue"
-								onClick={() => handleUpdateQuantity("down")}
-							>
-								-
-							</Button>
-							<input
-								className="text-primary font-medium mx-4 border-0 outline-0 inline-block w-[60px] h-[35px] text-center text-[15px]"
-								value={quantity}
-								onChange={(e) => setQuantity(e.target.value)}
-							/>
+							<div className="p-[10px] bg-[#d9e6ff] mt-2 rounded-md text-[30px] text-primary font-bold">
+								{formatPriceVND(product?.price)}
+							</div>
+							<div className="flex flex-col gap-2 mt-4">
+								<span className="text-sm text-black font-bold">
+									Số lượng:
+								</span>
+								<div className="inline-flex w-fit items-center justify-between  p-[2px] gap-1 rounded-md border border-darkBlue">
+									<Button
+										buttonSize="w-[35px] h-[35px]"
+										color="text-white"
+										hoverEffect="hover:bg-primary"
+										fontSize="text-[20px]"
+										background="bg-darkBlue"
+										onClick={() =>
+											handleUpdateQuantity("down")
+										}
+									>
+										-
+									</Button>
+									<input
+										className="text-primary font-medium mx-4 border-0 outline-0 inline-block w-[60px] h-[35px] text-center text-[15px]"
+										value={quantity}
+										onChange={(e) =>
+											setQuantity(e.target.value)
+										}
+									/>
 
-							<Button
-								buttonSize="w-[35px] h-[35px]"
-								color="text-white"
-								fontSize="text-[20px]"
-								background="bg-darkBlue"
-								hoverEffect="hover:bg-primary"
-								onClick={() => handleUpdateQuantity("up")}
-							>
-								+
-							</Button>
-						</div>
-					</div>
-					<div className="flex items-center gap-3 mt-2 overflow-hidden">
-						<div className="hover:bg-success cursor-pointer hover:border-success group border-2 border-primary rounded-md bg-primary h-[50px] text-white w-[88%] flex items-center">
-							<div dir="ltr" className=" h-[100%]">
-								<div className="bg-white h-[100%] rounded-s-md w-[60px] flex items-center justify-center">
-									<CiShoppingCart
-										color="darkBlue"
-										className="w-[30px] h-[30px]"
+									<Button
+										buttonSize="w-[35px] h-[35px]"
+										color="text-white"
+										fontSize="text-[20px]"
+										background="bg-darkBlue"
+										hoverEffect="hover:bg-primary"
+										onClick={() =>
+											handleUpdateQuantity("up")
+										}
+									>
+										+
+									</Button>
+								</div>
+							</div>
+							<div className="flex items-center gap-3 mt-2 overflow-hidden">
+								<div className="hover:bg-success cursor-pointer hover:border-success group border-2 border-primary rounded-md bg-primary h-[50px] text-white w-[88%] flex items-center">
+									<div dir="ltr" className=" h-[100%]">
+										<div className="bg-white h-[100%] rounded-s-md w-[60px] flex items-center justify-center">
+											<CiShoppingCart
+												color="darkBlue"
+												className="w-[30px] h-[30px]"
+											/>
+										</div>
+									</div>
+									<div
+										className="flex flex-col items-center bg-primary flex-1 group-hover:bg-success"
+										onClick={handleUpdateOrder}
+									>
+										<span className="text-sm font-bold">
+											Thêm vào giỏ hàng
+										</span>
+										<span className="text-[12px]">
+											Giao hàng tận nơi miễn phí
+										</span>
+									</div>
+								</div>
+								<div className="flex-1 h-[50px] rounded-md bg-primary hover:bg-success cursor-pointer flex items-center justify-center">
+									<FaRegHeart
+										className="w-[25px] h-[25px]"
+										color="white"
 									/>
 								</div>
 							</div>
-							<div className="flex flex-col items-center bg-primary flex-1 group-hover:bg-success">
-								<span className="text-sm font-bold">
-									Thêm vào giỏ hàng
-								</span>
-								<span className="text-[12px]">
-									Giao hàng tận nơi miễn phí
+
+							<div className="inline-flex px-[15px] py-[7px] rounded-tl-md rounded-tr-md items-center gap-3 mt-4 bg-darkBlue">
+								<img
+									src={GiftBox}
+									className="w-[30px] h-[30px] object-cover"
+								/>
+								<span className="text-sm text-white font-bold">
+									Khuyến mãi đặc biệt !!!
 								</span>
 							</div>
-						</div>
-						<div className="flex-1 h-[50px] rounded-md bg-primary hover:bg-success cursor-pointer flex items-center justify-center">
-							<FaRegHeart
-								className="w-[25px] h-[25px]"
-								color="white"
-							/>
-						</div>
-					</div>
+							<div className="border border-darkBlue rounded-tr-md  rounded-br-md rounded-bl-md flex flex-col gap-3 pt-[25px] pb-[5px] px-[15px]">
+								<div className="flex items-center gap-3">
+									<img
+										src={check}
+										className="w-5 h-5 object-cover"
+									/>
+									<span className="text-sm text-black">
+										Áp dụng Phiếu quà tặng/ Mã giảm giá theo
+										ngành hàng
+									</span>
+								</div>
+								<div className="flex items-center gap-3">
+									<img
+										src={check}
+										className="w-5 h-5 object-cover"
+									/>
+									<span className="text-sm text-black">
+										Áp dụng Phiếu quà tặng/ Mã giảm giá theo
+										ngành hàng
+									</span>
+								</div>
+								<div className="flex items-center gap-3">
+									<img
+										src={smallGift}
+										className="w-5 h-5 object-cover"
+									/>
+									<span className="text-sm text-black">
+										Tặng 100.000₫ mua hàng tại website thành
+										viên Dola Watch, áp dụng khi mua Online
+										tại Hồ Chí Minh và 1 số khu vực khác.
+									</span>
+								</div>
+							</div>
 
-					<div className="inline-flex px-[15px] py-[7px] rounded-tl-md rounded-tr-md items-center gap-3 mt-4 bg-darkBlue">
-						<img
-							src={GiftBox}
-							className="w-[30px] h-[30px] object-cover"
-						/>
-						<span className="text-sm text-white font-bold">
-							Khuyến mãi đặc biệt !!!
-						</span>
-					</div>
-					<div className="border border-darkBlue rounded-tr-md  rounded-br-md rounded-bl-md flex flex-col gap-3 pt-[25px] pb-[5px] px-[15px]">
-						<div className="flex items-center gap-3">
-							<img src={check} className="w-5 h-5 object-cover" />
-							<span className="text-sm text-black">
-								Áp dụng Phiếu quà tặng/ Mã giảm giá theo ngành
-								hàng
-							</span>
+							<h3 className="text-[16px] font-bold text-black mt-4">
+								Cam kết của chúng tôi
+							</h3>
+							<div className="grid grid-cols-12 gap-1 mt-2">
+								<div className="col-span-6 flex items-center gap-3">
+									<img
+										src={camket1}
+										className="w-[26px] h-[26px] object-cover"
+									/>
+									<span className="text-sm text-black font-medium">
+										Cam kết 100% chính hãng
+									</span>
+								</div>
+								<div className="col-span-6 flex items-center gap-3">
+									<img
+										src={camket1}
+										className="w-[26px] h-[26px] object-cover"
+									/>
+									<span className="text-sm text-black font-medium">
+										Hoàn tiền 111% nếu hàng giả
+									</span>
+								</div>
+								<div className="col-span-6 flex items-center gap-3">
+									<img
+										src={camket1}
+										className="w-[26px] h-[26px] object-cover"
+									/>
+									<span className="text-sm text-black font-medium">
+										Giao tận tay khách hàng
+									</span>
+								</div>
+								<div className="col-span-6 flex items-center gap-3">
+									<img
+										src={camket1}
+										className="w-[26px] h-[26px] object-cover"
+									/>
+									<span className="text-sm text-black font-medium">
+										Mở hộp kiểm tra nhận hàng
+									</span>
+								</div>
+								<div className="col-span-6 flex items-center gap-3">
+									<img
+										src={camket1}
+										className="w-[26px] h-[26px] object-cover"
+									/>
+									<span className="text-sm text-black font-medium">
+										Hỗ trợ 24/7
+									</span>
+								</div>
+								<div className="col-span-6 flex items-center gap-3">
+									<img
+										src={camket1}
+										className="w-[26px] h-[26px] object-cover"
+									/>
+									<span className="text-sm text-black font-medium">
+										Đổi trả trong 7 ngày
+									</span>
+								</div>
+							</div>
 						</div>
-						<div className="flex items-center gap-3">
-							<img src={check} className="w-5 h-5 object-cover" />
-							<span className="text-sm text-black">
-								Áp dụng Phiếu quà tặng/ Mã giảm giá theo ngành
-								hàng
-							</span>
-						</div>
-						<div className="flex items-center gap-3">
-							<img
-								src={smallGift}
-								className="w-5 h-5 object-cover"
-							/>
-							<span className="text-sm text-black">
-								Tặng 100.000₫ mua hàng tại website thành viên
-								Dola Watch, áp dụng khi mua Online tại Hồ Chí
-								Minh và 1 số khu vực khác.
-							</span>
-						</div>
-					</div>
+					</>
+				)}
 
-					<h3 className="text-[16px] font-bold text-black mt-4">
-						Cam kết của chúng tôi
-					</h3>
-					<div className="grid grid-cols-12 gap-1 mt-2">
-						<div className="col-span-6 flex items-center gap-3">
-							<img
-								src={camket1}
-								className="w-[26px] h-[26px] object-cover"
-							/>
-							<span className="text-sm text-black font-medium">
-								Cam kết 100% chính hãng
-							</span>
-						</div>
-						<div className="col-span-6 flex items-center gap-3">
-							<img
-								src={camket1}
-								className="w-[26px] h-[26px] object-cover"
-							/>
-							<span className="text-sm text-black font-medium">
-								Hoàn tiền 111% nếu hàng giả
-							</span>
-						</div>
-						<div className="col-span-6 flex items-center gap-3">
-							<img
-								src={camket1}
-								className="w-[26px] h-[26px] object-cover"
-							/>
-							<span className="text-sm text-black font-medium">
-								Giao tận tay khách hàng
-							</span>
-						</div>
-						<div className="col-span-6 flex items-center gap-3">
-							<img
-								src={camket1}
-								className="w-[26px] h-[26px] object-cover"
-							/>
-							<span className="text-sm text-black font-medium">
-								Mở hộp kiểm tra nhận hàng
-							</span>
-						</div>
-						<div className="col-span-6 flex items-center gap-3">
-							<img
-								src={camket1}
-								className="w-[26px] h-[26px] object-cover"
-							/>
-							<span className="text-sm text-black font-medium">
-								Hỗ trợ 24/7
-							</span>
-						</div>
-						<div className="col-span-6 flex items-center gap-3">
-							<img
-								src={camket1}
-								className="w-[26px] h-[26px] object-cover"
-							/>
-							<span className="text-sm text-black font-medium">
-								Đổi trả trong 7 ngày
-							</span>
-						</div>
-					</div>
-				</div>
 				<div className="col-span-3">
 					<div className="p-[10px] shadow-md rounded-md border border-gray-100">
 						<h3 className="text-sm text-black uppercase font-bold text-center">
@@ -428,18 +488,14 @@ function DetailProduct() {
 											__html: product?.description,
 										}}
 										className={`transition-all overflow-hidden ${
-											expanded
-												? "max-h-full"
-												: ""
+											expanded ? "max-h-full" : ""
 										}`}
 									></div>
 								) : (
 									<div
 										ref={contentRef}
 										className={`transition-all overflow-hidden ${
-											expanded
-												? "max-h-full"
-												: ""
+											expanded ? "max-h-full" : ""
 										}`}
 									>
 										<div class="flex flex-col gap-4 h-full">

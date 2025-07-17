@@ -90,6 +90,13 @@ export { default as DetailPolicy } from "./policies/Detail";
 export { default as PolicyForm } from "./policies/Form";
 export { default as EditPolicy } from "./policies/Edit";
 
+// Promotions products
+// export { default as ShowTablePolicy } from "./policies/Table";
+export { default as AddNewPromoProduct } from "./promotions-products/AddNew";
+// export { default as DetailPolicy } from "./policies/Detail";
+// export { default as PolicyForm } from "./policies/Form";
+// export { default as EditPolicy } from "./policies/Edit";
+
 //Settings
 export { default as ShowTableSetting } from "./settings/ShowTableSetting";
 export { default as AddNewSetting } from "./settings/AddNewSetting";

@@ -7,8 +7,23 @@ import SwiperPrevButton from "./SwiperPrevButton";
 import SwiperNextButton from "./SwiperNextButton";
 import VideoItem from "./VideoItem";
 import Button from "./Button";
+import videoService from '../../services/VideoService';
+import { useEffect, useState } from "react";
 
 function VideoContainer() {
+	const [videos, setVideos] = useState([]);
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const res = await videoService.getAll();
+				console.log('res:', res)
+				setVideos(res.data.data);
+			} catch (error) {
+				console.log('error: ', error);
+			}
+		}
+		fetchData();
+	}, [])
 	return (
 		<div className="mt-8">
 			<h2 className="text-[30px] text-black font-bold ">
@@ -38,30 +53,20 @@ function VideoContainer() {
 						prevEl: ".video-prev",
 					}}
 				>
-					<SwiperSlide>
-						<VideoItem
-							title={"Xin chào mọi người"}
-							url={"https://www.youtube.com/embed/ioE-uoXKZTE"}
-						/>
-					</SwiperSlide>
-					<SwiperSlide>
-						<VideoItem
-							title={"Xin chào mọi người"}
-							url={"https://www.youtube.com/embed/cgHK_paW-ZE"}
-						/>
-					</SwiperSlide>
-					<SwiperSlide>
-						<VideoItem
-							title={"Xin chào mọi người"}
-							url={"https://www.youtube.com/watch?v=ioE-uoXKZTE"}
-						/>
-					</SwiperSlide>
-					<SwiperSlide>
-						<VideoItem
-							title={"Xin chào mọi người"}
-							url={"https://www.youtube.com/watch?v=ioE-uoXKZTE"}
-						/>
-					</SwiperSlide>
+					{videos.length > 0 &&
+						videos.map((video) => (
+							<SwiperSlide key={video.key}>
+								<VideoItem
+									title={video.name}
+									image={video.image}
+									url={
+										video.src
+									}
+								/>
+							</SwiperSlide>
+						))}
+
+					
 				</Swiper>
 			</div>
 

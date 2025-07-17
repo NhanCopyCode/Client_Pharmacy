@@ -23,7 +23,6 @@ function PolicyContainer() {
 		};
 		fetchData();
 	}, []);
-	console.log("policies: ", policies);
 	return (
 		<div className="mt-8">
 			<div className="mt-4 relative">

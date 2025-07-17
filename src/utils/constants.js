@@ -109,7 +109,7 @@ export const menuAdmin = [
 			{
 				icon: LiaProductHunt,
 				title: "Chương trình khuyến mãi",
-				path: "/admin/promotions",
+				path: "/admin/promotions-products",
 			},
 			{
 				icon: LiaProductHunt,
@@ -394,6 +394,12 @@ export const TABLE_COLUMNS = {
 		{ key: "", label: "", type: "checkbox", style: "text-center" },
 		{ key: "id", label: "ID" },
 		{ key: "code", label: "Mã giảm giá", style: "font-mono text-blue-600" },
+		{
+			key: "image",
+			label: "Ảnh",
+			type: "image",
+			style: "w-50 object-contain",
+		},
 		{
 			key: "description",
 			label: "Mô tả",

@@ -34,8 +34,8 @@ function DiscountItem({ voucher }) {
 				<div className="border-2 border-primary border-r-0 rounded-md w-[75px] p-2 shrink-0 flex items-center justify-center after:content-['']">
 					<img
 						className="w-full object-cover"
-						src="https://bizweb.dktcdn.net/100/491/197/themes/917410/assets/img_coupon_1.jpg?1736388760084"
-						alt=""
+						src={voucher.image}
+						alt={voucher.title}
 					/>
 				</div>
 				<div className="border-2 border-primary rounded-md p-[5px] flex-1 border-l-1">

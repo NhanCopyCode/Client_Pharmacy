@@ -30,7 +30,11 @@ const productService = {
 	},
 	getProductSameSegment() {
 		return axios.get("/products/sameSegment");
-	}
+	},
+	getAllProductsNoPagination() {
+		return axios.get("/products/all");
+	},
+	
 };
 
 export default productService;

@@ -34,7 +34,7 @@ import {
 	EditBrand,
 	DetailCategory,
 	EditCategory,
-	DetailProduct  as AdminDetailProduct,
+	DetailProduct as AdminDetailProduct,
 	EditProduct,
 	ShowTableAds,
 	AddNewAds,
@@ -69,13 +69,15 @@ import {
 	ShowTablePolicy,
 	AddNewPolicy,
 	DetailPolicy,
-	EditPolicy
+	EditPolicy,
+	AddNewPromoProduct,
 } from "./pages/Admin/index.js";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import RenderWithProps from "./utils/RenderWithProps.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { CartProvider } from "./context/CartContext.jsx";
 
 export const adminModels = [
 	{
@@ -167,128 +169,150 @@ export const adminModels = [
 		detail: DetailPolicy,
 		update: EditPolicy,
 	},
+	{
+		model: "promotions-products",
+		create: AddNewPromoProduct,
+	},
 ];
 const DefaultAdminIndex = adminModels[0].list;
 createRoot(document.getElementById("root")).render(
 	<StrictMode>
 		<Provider store={store}>
 			<AuthProvider>
-				<BrowserRouter>
-					<Routes>
-						<Route path={path.HOME} element={<Homepage />}>
-							<Route path="*" element={<Home />} />
-							<Route
-								path="khuyen-mai-hot"
-								element={<DetailCategoryPage />}
-							/>
-							<Route
-								path={path.CHI_TIET_SAN_PHAM}
-								element={<DetailProduct />}
-							/>
-							<Route
-								path={path.GIO_HANG}
-								element={<CartDetail />}
-							/>
-							<Route
-								path={path.DANG_NHAP}
-								element={<LoginPage />}
-							/>
-							<Route path={path.TIN_TUC} element={<NewsPage />} />
-							<Route
-								path={path.CHI_TIET_TIN_TUC}
-								element={<DetailNews />}
-							/>
-							<Route
-								path={path.DANH_SACH_ITEM_TIM_KIEM}
-								element={<ListProductAndPost />}
-							/>
-						</Route>
+				<CartProvider>
+					<BrowserRouter>
+						<Routes>
+							<Route path={path.HOME} element={<Homepage />}>
+								<Route path="*" element={<Home />} />
+								<Route
+									path="khuyen-mai-hot"
+									element={<DetailCategoryPage />}
+								/>
+								<Route
+									path={path.CHI_TIET_SAN_PHAM}
+									element={<DetailProduct />}
+								/>
+								<Route
+									path={path.GIO_HANG}
+									element={<CartDetail />}
+								/>
+								<Route
+									path={path.DANG_NHAP}
+									element={<LoginPage />}
+								/>
+								<Route
+									path={path.TIN_TUC}
+									element={<NewsPage />}
+								/>
+								<Route
+									path={path.CHI_TIET_TIN_TUC}
+									element={<DetailNews />}
+								/>
+								<Route
+									path={path.DANH_SACH_ITEM_TIM_KIEM}
+									element={<ListProductAndPost />}
+								/>
+							</Route>
 
-						<Route
-							path={path.ADMIN_LOGIN}
-							element={<AdminLoginPage />}
+							<Route
+								path={path.ADMIN_LOGIN}
+								element={<AdminLoginPage />}
+							/>
+
+							<Route
+								path={path.ADMIN}
+								element={
+									<ProtectedRoute role="admin">
+										<AdminPage />
+									</ProtectedRoute>
+								}
+							>
+								<Route
+									index
+									element={
+										<DefaultAdminIndex model="brands" />
+									}
+								/>
+
+								{adminModels.map(
+									({
+										model,
+										list: ListComponent,
+										create: CreateComponent,
+										detail: DetailComponent,
+										update: UpdateComponent,
+									}) => (
+										<React.Fragment key={model}>
+											<Route
+												path={model}
+												element={
+													<RenderWithProps
+														component={
+															ListComponent
+														}
+														model={model}
+													/>
+												}
+											/>
+											<Route
+												path={adminPath.detail(
+													model,
+													":id"
+												)}
+												element={
+													<RenderWithProps
+														component={
+															DetailComponent
+														}
+														model={model}
+													/>
+												}
+											/>
+											<Route
+												path={adminPath.create(model)}
+												element={
+													<RenderWithProps
+														component={
+															CreateComponent
+														}
+														model={model}
+													/>
+												}
+											/>
+
+											<Route
+												path={adminPath.edit(
+													model,
+													":id"
+												)}
+												element={
+													<RenderWithProps
+														component={
+															UpdateComponent
+														}
+														model={model}
+													/>
+												}
+											/>
+										</React.Fragment>
+									)
+								)}
+							</Route>
+						</Routes>
+						<ToastContainer
+							position="top-right"
+							autoClose={2000}
+							hideProgressBar={false}
+							newestOnTop={false}
+							closeOnClick
+							rtl={false}
+							pauseOnFocusLoss
+							draggable
+							pauseOnHover
+							theme="light"
 						/>
-
-						<Route
-							path={path.ADMIN}
-							element={
-								<ProtectedRoute role="admin">
-									<AdminPage />
-								</ProtectedRoute>
-							}
-						>
-							<Route
-								index
-								element={<DefaultAdminIndex model="brands" />}
-							/>
-
-							{adminModels.map(
-								({
-									model,
-									list: ListComponent,
-									create: CreateComponent,
-									detail: DetailComponent,
-									update: UpdateComponent,
-								}) => (
-									<React.Fragment key={model}>
-										<Route
-											path={model}
-											element={
-												<RenderWithProps
-													component={ListComponent}
-													model={model}
-												/>
-											}
-										/>
-										<Route
-											path={adminPath.detail(
-												model,
-												":id"
-											)}
-											element={
-												<RenderWithProps
-													component={DetailComponent}
-													model={model}
-												/>
-											}
-										/>
-										<Route
-											path={adminPath.create(model)}
-											element={
-												<RenderWithProps
-													component={CreateComponent}
-													model={model}
-												/>
-											}
-										/>
-
-										<Route
-											path={adminPath.edit(model, ":id")}
-											element={
-												<RenderWithProps
-													component={UpdateComponent}
-													model={model}
-												/>
-											}
-										/>
-									</React.Fragment>
-								)
-							)}
-						</Route>
-					</Routes>
-					<ToastContainer
-						position="top-right"
-						autoClose={2000}
-						hideProgressBar={false}
-						newestOnTop={false}
-						closeOnClick
-						rtl={false}
-						pauseOnFocusLoss
-						draggable
-						pauseOnHover
-						theme="light"
-					/>
-				</BrowserRouter>
+					</BrowserRouter>
+				</CartProvider>
 			</AuthProvider>
 		</Provider>
 	</StrictMode>

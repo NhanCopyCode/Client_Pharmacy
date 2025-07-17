@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { slugify } from "../../utils/slugify";
 
 function NavbarHeaderItem({ category }) {
-	console.log('category:', category)
 	
 	return (
 		<div className="col-span-3 p-[10px] flex flex-col">
