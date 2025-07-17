@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Tippy from "@tippyjs/react/headless";
-
+import { toast } from "react-toastify";
 import { IoLocationOutline } from "react-icons/io5";
 import { IoIosHeartEmpty } from "react-icons/io";
 import { BsCart } from "react-icons/bs";
@@ -11,8 +11,16 @@ import formatPriceVND from "../../utils/formatPriceVND";
 import { useCart } from "../../context/CartContext";
 
 function HeaderCart() {
-	const { cartItems } = useCart();
+	const { cartItems, setCartItems } = useCart();
 	const total = cartItems.reduce((acc, item) => acc + item.finalPrice, 0);
+
+	const handleDeleteCartItem = (itemId) => {
+		const updatedCart = cartItems.filter((item) => item.id !== itemId);
+		setCartItems(updatedCart);
+		toast.info("🗑️ Đã xoá sản phẩm khỏi giỏ hàng!", {
+			position: "top-right",
+		});
+	};
 
 	return (
 		<div className="flex items-center gap-2">
@@ -46,7 +54,14 @@ function HeaderCart() {
 						>
 							{cartItems.length > 0 ? (
 								cartItems.map((item) => (
-									<CartItem key={item.id} item={item} />
+									<CartItem
+										key={item.id}
+										productId={item.productId}
+										cartItem={item}
+										handleDeleteCartItem={() =>
+											handleDeleteCartItem(item.id)
+										}
+									/>
 								))
 							) : (
 								<div className="flex flex-col gap-4 items-center justify-center text-black text-sm">

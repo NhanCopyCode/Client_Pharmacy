@@ -13,6 +13,11 @@ export const CartProvider = ({ children }) => {
 		localStorage.setItem("cart_items", JSON.stringify(items));
 	};
 
+	const updateCartStorage = (items) => {
+		setCartItems(items);
+		localStorage.setItem("cart_items", JSON.stringify(items));
+	};
+
 	const addToCart = (newItem) => {
 		setCartItems((prev) => {
 			const existingIndex = prev.findIndex(
@@ -37,7 +42,9 @@ export const CartProvider = ({ children }) => {
 	};
 
 	return (
-		<CartContext.Provider value={{ cartItems, addToCart }}>
+		<CartContext.Provider
+			value={{ cartItems, addToCart, setCartItems: updateCartStorage }}
+		>
 			{children}
 		</CartContext.Provider>
 	);

@@ -1,21 +1,56 @@
 import Button from "./Button";
+import productService from "../../services/ProductService";
+import { useEffect, useState } from "react";
+import formatPriceVND from "../../utils/formatPriceVND";
 
-function CartItem() {
+function CartItem({ productId, cartItem, handleDeleteCartItem }) {
+	const [product, setProduct] = useState(null);
+	const [quantity, setQuantity] = useState(cartItem.quantity || 1);
+	const [totalPrice, setTotalPrice] = useState(
+		cartItem.price * cartItem.quantity
+	);
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const res = await productService.getById(productId);
+				setProduct(res.data.data);
+			} catch (error) {
+				console.log("error: ", error);
+			}
+		};
+
+		fetchData();
+	}, [productId]);
+
+	useEffect(() => {
+		setTotalPrice(cartItem.price * quantity);
+	}, [quantity, cartItem.price]);
+
+	const handleUpdateQuantity = (action) => {
+		if (action === "up") {
+			setQuantity((prev) => prev + 1);
+		} else if (action === "down" && quantity > 1) {
+			setQuantity((prev) => prev - 1);
+		}
+	};
 	return (
 		<div className="flex items-center gap-4 py-2 text-black hover:text-darkBlue cursor-pointer">
 			<div className="w-[75px]">
 				<img
-					src="https://bizweb.dktcdn.net/thumb/compact/100/491/197/products/00031920-top-grow-jpanwell-10-ch-3f81b1a4-df3b-41f3-869d-c64cb90506fa.png"
-					alt=""
+					src={product.main_image}
+					alt={product.title}
 					className="w-full object-cover"
 				/>
 			</div>
-			<div className="flex items-start flex-col">
+			<div className="flex items-start flex-col flex-[1]">
 				<h3 className=" text-[13px] font-bold mb-1">
-					Demo sản phẩm có thuộc tính
+					{product?.title}
 				</h3>
 				<span className="text-darkBlue text-[12px]">Nhỏ</span>
-				<span className="text-redColor font-bold text-[13px] cursor-pointer">
+				<span
+					className="text-redColor font-bold text-[13px] cursor-pointer"
+					onClick={handleDeleteCartItem}
+				>
 					Xóa
 				</span>
 
@@ -25,22 +60,47 @@ function CartItem() {
 							Số lượng
 						</span>
 						<span className="text-sm text-darkBlue font-bold">
-							890.000đ
+							{formatPriceVND(totalPrice)}
 						</span>
 					</div>
 				</div>
-				<div className="flex items-center justify-between w-[85px] h-[30px] p-[2px] gap-1 rounded-md border border-darkBlue">
+				<div className="flex items-center justify-between w-[85px] h-[30px] p-[2px] gap-1 rounded-md border border-darkBlue mt-1">
 					<Button
 						buttonSize="w-[25px] h-[25px]"
 						color="text-white"
 						hoverEffect="hover:bg-primary"
 						fontSize="text-[20px]"
 						background="bg-darkBlue"
+						onClick={() => handleUpdateQuantity("down")}
 					>
 						-
 					</Button>
 					<span className="text-primary text-[12px] font-medium">
-						3
+						<input
+							type="text"
+							value={quantity}
+							className="w-full text-center border-0 outline-0"
+							onChange={(e) => {
+								const value = e.target.value;
+
+								if (/^\d*$/.test(value)) {
+									const numericValue = parseInt(value, 10);
+
+									if (!value) {
+										setQuantity("");
+									} else if (numericValue >= 1) {
+										setQuantity(numericValue);
+									} else {
+										setQuantity(1);
+									}
+								}
+							}}
+							onBlur={() => {
+								if (!quantity || quantity < 1) {
+									setQuantity(1);
+								}
+							}}
+						/>
 					</span>
 					<Button
 						buttonSize="w-[25px] h-[25px]"
@@ -48,6 +108,7 @@ function CartItem() {
 						fontSize="text-[20px]"
 						background="bg-darkBlue"
 						hoverEffect="hover:bg-primary"
+						onClick={() => handleUpdateQuantity("up")}
 					>
 						+
 					</Button>
