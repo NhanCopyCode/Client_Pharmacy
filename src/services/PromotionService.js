@@ -7,6 +7,12 @@ const promotionService = { ...createApiService("promotions"),
     },
     getAllPromoNoPagination: () => {
         return axiosInstance.get('/promotions/all')
+    },
+    getPromotionAvailable: () => {
+        return axiosInstance.get('/promotions/available')
+    },
+    syncProducts: (formData) => {
+        return axiosInstance.post('/promotions/sync-products', formData);
     }
  };
 

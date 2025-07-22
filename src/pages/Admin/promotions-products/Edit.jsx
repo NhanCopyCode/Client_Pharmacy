@@ -3,8 +3,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import { adminPath } from "../../../utils/constants";
 import Swal from "sweetalert2";
 import Form from "./Form";
-import videoService from "../../../services/VideoService";
 import { TailSpin } from "react-loader-spinner"; 
+import promotionProductService from "../../../services/PromotionProductService";
+
+
 function Edit({ model }) {
 	const { id } = useParams();
 	const navigate = useNavigate();
@@ -15,7 +17,8 @@ function Edit({ model }) {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const response = await videoService.getById(id);
+				const response = await promotionProductService.getById(id);
+				console.log('response:', response)
 				setInitialData(response.data.data);
 			} catch (error) {
 				if (error) {
@@ -32,7 +35,7 @@ function Edit({ model }) {
 
 	const handleSubmit = async (formData) => {
 		try {
-			await videoService.update(id, formData);
+			await promotionProductService.update(id, formData);
 			await Swal.fire({
 				icon: "success",
 				title: "Thành công!",

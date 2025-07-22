@@ -11,7 +11,7 @@ import formatPriceVND from "../../utils/formatPriceVND";
 import { useCart } from "../../context/CartContext";
 
 function HeaderCart() {
-	const { cartItems, setCartItems } = useCart();
+	const { cartItems, setCartItems, cartItemQuantity } = useCart();
 	const total = cartItems.reduce((acc, item) => acc + item.finalPrice, 0);
 
 	const handleDeleteCartItem = (itemId) => {
@@ -109,9 +109,11 @@ function HeaderCart() {
 					</span>
 					<div className="w-[30px] h-[30px] relative">
 						<BsCart className="w-full h-full" />
-						<span className="absolute top-[-2px] right-[-3px] rounded-[50%] text-white w-[15px] h-[15px] text-center flex items-center justify-center bg-success text-[12px]">
-							3
-						</span>
+						{cartItemQuantity > 0 && (
+							<span className="absolute top-[-2px] right-[-3px] rounded-[50%] text-white w-[15px] h-[15px] text-center flex items-center justify-center bg-success text-[12px]">
+								{cartItemQuantity > 0 ? cartItemQuantity : ""}
+							</span>
+						)}
 					</div>
 				</Link>
 			</Tippy>

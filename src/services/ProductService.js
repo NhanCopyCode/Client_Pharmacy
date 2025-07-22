@@ -34,6 +34,8 @@ const productService = {
 	getAllProductsNoPagination() {
 		return axios.get("/products/all");
 	},
+
+	
 	
 };
 

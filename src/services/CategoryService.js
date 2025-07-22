@@ -30,6 +30,9 @@ const categoryService = {
 	getListParentAndChild: () => {
 		return axios.get("/categories/getCategoryParentAndChild");
 	},
+	getCategoryAvailable: () => {
+		return axios.get("/categories/available");
+	},
 };
 
 export default categoryService;

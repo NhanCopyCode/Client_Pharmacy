@@ -390,6 +390,44 @@ export const TABLE_COLUMNS = {
 		{ key: "applies_to", label: "Áp dụng cho", type: "badge" }, // 	enum('product', 'category', 'order')
 		{ key: "approved", label: "Duyệt", type: "boolean" },
 	],
+	promotions_products: [
+		{ key: "", label: "", type: "checkbox", style: "text-center" },
+		{ key: "id", label: "ID" },
+		{ key: "title", label: "Tên khuyến mãi" },
+		{ key: "discount_type", label: "Loại giảm giá", type: "badge" },
+		{
+			key: "discount_value",
+			label: "Giá trị giảm",
+			style: "text-green-600 font-bold",
+			render: (value, row) => {
+				if (row.discount_type === "percent") return `${value}%`;
+				if (row.discount_type === "fixed")
+					return `${Number(value).toLocaleString()}₫`;
+				return value;
+			},
+		},
+		{
+			key: "products",
+			label: "Sản phẩm áp dụng",
+			render: (value) => {
+				if (!value || value.length === 0)
+					return "Không có sản phẩm nào được áp dụng";
+				return value;
+			},
+		},
+		{
+			key: "categories",
+			label: "Danh mục áp dụng",
+			render: (value) => {
+				if (!value || value.length === 0)
+					return "Không có danh mục nào được áp dụng";
+				return value;
+			},
+		},
+		{ key: "start_date", label: "Ngày bắt đầu", type: "date" },
+		{ key: "end_date", label: "Ngày kết thúc", type: "date" },
+		{ key: "approved", label: "Trạng thái duyệt", type: "boolean" },
+	],
 	vouchers: [
 		{ key: "", label: "", type: "checkbox", style: "text-center" },
 		{ key: "id", label: "ID" },

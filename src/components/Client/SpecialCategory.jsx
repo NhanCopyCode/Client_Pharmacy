@@ -23,7 +23,6 @@ function SpecialCategory() {
 			try {
 				const res = await categoryService.getListOutstanding();
 				setCategories(res.data);
-				console.log('danh muc noi bat: ', res.data);
 			} catch (error) {
 				console.error("Lỗi khi load danh mục nổi bật:", error);
 			}

@@ -6,8 +6,8 @@ import { IoIosSearch } from "react-icons/io";
 import { TableList, TitleHeader } from "../../../components/Admin";
 import { adminPath, TABLE_COLUMNS } from "../../../utils/constants";
 import { Pagination } from "../../../components";
-import videoService from "../../../services/VideoService";
 import { TailSpin } from "react-loader-spinner";
+import promotionProductService from "../../../services/PromotionProductService";
 
 function Table() {
 	const [listData, setListData] = useState([]);
@@ -18,10 +18,17 @@ function Table() {
 	const fetchListData = async (params = {}) => {
 		setLoading(true);
 		try {
-			const response = await videoService.getAll(params);
+			const response = await promotionProductService.getAll(params);
 
-			setListData(response.data.data);
+			const dataWithRelations = response.data.data.map((promotion) => ({
+				...promotion,
+				products: promotion.products?.map((p) => p.title).join(", "),
+				categories: promotion.categories
+					?.map((c) => c.title)
+					.join(", "),
+			}));
 
+			setListData(dataWithRelations);
 			setMeta(response.data.meta);
 		} catch (error) {
 			console.error("Error: ", error);
@@ -29,6 +36,7 @@ function Table() {
 			setLoading(false);
 		}
 	};
+
 	useEffect(() => {
 		fetchListData();
 	}, []);
@@ -49,22 +57,19 @@ function Table() {
 	return (
 		<>
 			<TitleHeader
-				title={"Thêm mới"}
+				title={"Thêm khuyến mãi"}
 				buttonIcon={<IoMdAddCircle />}
 				titleButton={"Thêm mới"}
-				to={adminPath.create("videos")}
+				to={adminPath.create("promotions-products")}
 			/>
 			<div className="flex items-center justify-end w-full p-3 gap-2 flex-wrap">
 				<input
-					className="h-[38px] px-3 outline-0 border 
-					border-gray-200 rounded-md text-sm w-[180px]"
+					className="h-[38px] px-3 outline-0 border border-gray-200 rounded-md text-sm w-[180px]"
 					placeholder="Tìm kiếm..."
 					value={searchInput}
 					onChange={(e) => setSearchInput(e.target.value)}
 					onKeyDown={(e) => {
-						if (e.key === "Enter") {
-							handleSearch();
-						}
+						if (e.key === "Enter") handleSearch();
 					}}
 				/>
 				<Button
@@ -96,11 +101,11 @@ function Table() {
 				) : (
 					<>
 						<TableList
-							columns={TABLE_COLUMNS.videos}
+							columns={TABLE_COLUMNS.promotions_products}
 							tableBody={listData}
-							model={"videos"}
+							model={"promotions-products"}
 							onDeleteSuccess={fetchListData}
-							service={videoService}
+							service={promotionProductService}
 						/>
 						<Pagination
 							meta={meta}

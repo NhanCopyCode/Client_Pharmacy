@@ -71,6 +71,9 @@ import {
 	DetailPolicy,
 	EditPolicy,
 	AddNewPromoProduct,
+	ShowTablePromotionProduct,
+	DetailPromotionProduct,
+	EditPromotionProduct,
 } from "./pages/Admin/index.js";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -171,8 +174,12 @@ export const adminModels = [
 	},
 	{
 		model: "promotions-products",
+		list: ShowTablePromotionProduct,
 		create: AddNewPromoProduct,
+		detail: DetailPromotionProduct,
+		update: EditPromotionProduct,
 	},
+
 ];
 const DefaultAdminIndex = adminModels[0].list;
 createRoot(document.getElementById("root")).render(

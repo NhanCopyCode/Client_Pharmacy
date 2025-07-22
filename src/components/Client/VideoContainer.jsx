@@ -16,7 +16,6 @@ function VideoContainer() {
 		const fetchData = async () => {
 			try {
 				const res = await videoService.getAll();
-				console.log('res:', res)
 				setVideos(res.data.data);
 			} catch (error) {
 				console.log('error: ', error);

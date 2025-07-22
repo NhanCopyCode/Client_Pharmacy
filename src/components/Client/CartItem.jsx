@@ -2,6 +2,7 @@ import Button from "./Button";
 import productService from "../../services/ProductService";
 import { useEffect, useState } from "react";
 import formatPriceVND from "../../utils/formatPriceVND";
+import { TailSpin } from "react-loader-spinner";
 
 function CartItem({ productId, cartItem, handleDeleteCartItem }) {
 	const [product, setProduct] = useState(null);
@@ -9,13 +10,18 @@ function CartItem({ productId, cartItem, handleDeleteCartItem }) {
 	const [totalPrice, setTotalPrice] = useState(
 		cartItem.price * cartItem.quantity
 	);
+	const [loading, setLoading] = useState(true);
+	
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
+				setLoading(true);
 				const res = await productService.getById(productId);
 				setProduct(res.data.data);
 			} catch (error) {
 				console.log("error: ", error);
+			} finally {
+				setLoading(false);
 			}
 		};
 
@@ -33,12 +39,21 @@ function CartItem({ productId, cartItem, handleDeleteCartItem }) {
 			setQuantity((prev) => prev - 1);
 		}
 	};
+
+	if (loading) {
+		return (
+			<div className="flex items-center justify-center py-4">
+				<TailSpin height={24} width={24} color="#1d4ed8" />
+			</div>
+		);
+	}
+
 	return (
 		<div className="flex items-center gap-4 py-2 text-black hover:text-darkBlue cursor-pointer">
 			<div className="w-[75px]">
 				<img
-					src={product.main_image}
-					alt={product.title}
+					src={product?.main_image}
+					alt={product?.title}
 					className="w-full object-cover"
 				/>
 			</div>

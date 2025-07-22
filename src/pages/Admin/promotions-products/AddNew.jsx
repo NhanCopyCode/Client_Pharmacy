@@ -11,7 +11,7 @@ function AddNew({ model }) {
 	const navigate = useNavigate();
 	const handleSubmit = async (formData) => {
 		try {
-			await promotionService.create(formData);
+			await promotionService.syncProducts(formData);
 
 			await Swal.fire({
 				icon: "success",
