@@ -3,14 +3,27 @@ import Button from "./Button";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import NavbarHeaderItem from "./NavbarHeaderItem";
-
+import PostCategoryService from "../../services/PostCategoryService";
 import categoryService from "../../services/CategoryService";
+import { slugify } from "../../utils/slugify";
 
 function NavBar() {
 	const [isShowCategory, setShowCategory] = useState(false);
 	const [isShowPost, setShowPost] = useState(false);
 	const [listCategories, setListCategories] = useState([]);
+	const [postCategories, setPostCategories] = useState([]);
 
+	useEffect(() => {
+		const fetchPostCategories = async () => {
+			try {
+				const response = await PostCategoryService.getAll();
+				setPostCategories(response.data.data);
+			} catch (error) {
+				console.error("Error fetching post categories:", error);
+			}
+		};
+		fetchPostCategories();
+	}, []);
 	useEffect(() => {
 		try {
 			const fetchData = async () => {
@@ -76,7 +89,6 @@ function NavBar() {
 										/>
 									);
 								})}
-						
 						</div>
 					</div>
 				)}
@@ -114,12 +126,17 @@ function NavBar() {
 				{isShowPost && (
 					<div className="absolute z-20 top-[112%] left-0 bg-white shadow-md rounded-md w-[220px] ">
 						<div className="flex flex-col w-full">
-							<Link className="text-sm text-black hover:text-primary px-5 py-[6px] font-light">
-								Góc dinh dưỡng
-							</Link>
-							<Link className="text-sm text-black hover:text-primary px-5 py-[6px] font-light">
-								Góc trẻ đẹp
-							</Link>
+							{postCategories.length > 0 &&
+								postCategories.map((category) => (
+									<Link
+										to={"/" + slugify(category.title)}
+										className="text-sm text-black hover:text-primary px-5 py-[6px] font-light"
+										key={category.id}
+									>
+										{category.title}
+									</Link>
+								))}
+							
 						</div>
 					</div>
 				)}

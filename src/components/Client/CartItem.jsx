@@ -61,7 +61,7 @@ function CartItem({ productId, cartItem, handleDeleteCartItem }) {
 				<h3 className=" text-[13px] font-bold mb-1">
 					{product?.title}
 				</h3>
-				<span className="text-darkBlue text-[12px]">Nhỏ</span>
+				{/* <span className="text-darkBlue text-[12px]">Nhỏ</span> */}
 				<span
 					className="text-redColor font-bold text-[13px] cursor-pointer"
 					onClick={handleDeleteCartItem}

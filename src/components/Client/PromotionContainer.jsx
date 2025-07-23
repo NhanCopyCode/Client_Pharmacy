@@ -20,7 +20,6 @@ function PromotionContainer() {
 			try {
 				const response =
 					await promotionProductService.getPromotionShowOnFrontend();
-				console.log("res promotion contai: ", response.data);
 				setPromotions(response.data.data); // assuming response.data.data is array of promotions with products
 			} catch (error) {
 				console.log("error promotion container: ", error);

@@ -196,7 +196,7 @@ function DetailProduct() {
 									</Button>
 								</div>
 							</div>
-							<div className="flex items-center gap-3 mt-2 overflow-hidden">
+							<div className="flex items-center gap-1 mt-2 overflow-hidden">
 								<div className="hover:bg-success cursor-pointer hover:border-success group border-2 border-primary rounded-md bg-primary h-[50px] text-white w-[88%] flex items-center">
 									<div dir="ltr" className=" h-[100%]">
 										<div className="bg-white h-[100%] rounded-s-md w-[60px] flex items-center justify-center">

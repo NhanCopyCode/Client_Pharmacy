@@ -2,10 +2,25 @@ import { Link } from "react-router-dom";
 import Logo from "../../assets/images/logo.png";
 import { Button } from "../Client";
 import { FiPlus } from "react-icons/fi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LuMinus } from "react-icons/lu";
+import PostCategoryService from "../../services/PostCategoryService";
+import { slugify } from "../../utils/slugify";
 
 function HeaderSidebar() {
+	const [postCategories, setPostCategories] = useState([]);
+
+	useEffect(() => {
+		const fetchPostCategories = async () => {
+			try {
+				const response = await PostCategoryService.getAll();
+				setPostCategories(response.data.data);
+			} catch (error) {
+				console.error("Error fetching post categories:", error);
+			}
+		};
+		fetchPostCategories();
+	}, []);
 	const [isShowPost, setShowPost] = useState(false);
 	const [isShowProduct, setShowProduct] = useState(false);
 	return (
@@ -122,12 +137,14 @@ function HeaderSidebar() {
 				</div>
 				{isShowPost && (
 					<div className="px-[10px] text-black font-bold text-[16px] flex items-start flex-col gap-3">
-						<Link className="text-[16px] text-black font-bold">
-							Góc dinh dưỡng
-						</Link>
-						<Link className="text-[16px] text-black font-bold">
-							Góc trẻ đẹp
-						</Link>
+						{postCategories.length > 0 &&
+							postCategories.map((category) => (
+								<Link to={'/' + slugify(category.title)} className="text-[16px] text-black font-bold" key={category.id}>
+									{category.title}
+								</Link>
+							))}
+
+						
 					</div>
 				)}
 				<Link className="text-[16px] text-black font-bold">Video</Link>
