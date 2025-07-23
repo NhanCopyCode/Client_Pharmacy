@@ -29,13 +29,12 @@ function DiscountItem({ voucher }) {
 	};
 	return (
 		<>
-			<div className="flex items-stretch w-full flex-1 mt-8">
+			<div className="flex items-stretch w-full flex-1 mt-8 h-[88px]">
 				{/* This div below */}
 				<div className="border-2 border-primary border-r-0 rounded-md w-[75px] p-2 shrink-0 flex items-center justify-center after:content-['']">
 					<img
 						className="w-full object-cover"
 						src={voucher.image}
-						alt={voucher.title}
 					/>
 				</div>
 				<div className="border-2 border-primary rounded-md p-[5px] flex-1 border-l-1">
@@ -54,7 +53,7 @@ function DiscountItem({ voucher }) {
 						</Button>
 					</div>
 					<span className="text-[12px]">{title}</span>
-					<div className="flex items-center justify-between">
+					<div className="flex">
 						<span className="text-primary text-[12px]">
 							HSD: {end_date}
 						</span>

@@ -8,6 +8,11 @@ const promotionProductService = {
 			"/promotions-products/get-promotions-and-products"
 		);
 	},
+	getPromotionShowOnFrontend: () => {
+		return axiosInstance.get(
+			"/promotions-products/get-promotions-and-products-show-on-frontend"
+		);
+	}
 };
 
 export default promotionProductService;

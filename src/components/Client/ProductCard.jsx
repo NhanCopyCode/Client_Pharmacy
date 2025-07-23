@@ -52,9 +52,9 @@ function ProductCard({
 						<span className="text-[18px] font-bold text-success">
 							{formatPriceVND(price)}
 						</span>
-						<span className="text-[12px] font-bold text-[#666] line-through">
-							1.000.000đ
-						</span>
+							{/* <span className="text-[12px] font-bold text-[#666] line-through">
+								1.000.000đ
+							</span> */}
 					</div>
 					<Button
 						rounded="rounded-[50%]"
