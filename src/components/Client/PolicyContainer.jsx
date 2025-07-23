@@ -15,7 +15,7 @@ function PolicyContainer() {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const res = await policyService.getAll();
+				const res = await policyService.getAllPolicies();
 				setPolicies(res.data.data);
 			} catch (error) {
 				console.log("error: ", error);

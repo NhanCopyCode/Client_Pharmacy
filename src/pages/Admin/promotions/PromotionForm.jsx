@@ -37,6 +37,7 @@ function PromotionForm({
 	const [startDate, setStartDate] = useState("");
 	const [endDate, setEndDate] = useState("");
 	const [approved, setApproved] = useState(false);
+	const [show_on_frontend, setShowOnFrontend] = useState(false);
 
 	useEffect(() => {
 		if (initialData && !initialized) {
@@ -58,6 +59,7 @@ function PromotionForm({
 			setStartDate(initialData.start_date?.slice(0, 16) || ""); // for datetime-local input
 			setEndDate(initialData.end_date?.slice(0, 16) || "");
 			setApproved(Boolean(initialData.approved));
+			setShowOnFrontend(Boolean(initialData.show_on_frontend));
 
 			setInitialized(true);
 		}
@@ -79,6 +81,7 @@ function PromotionForm({
 		formData.append("min_order_value", minOrderValue);
 		formData.append("applies_to", appliesTo?.value || "");
 		formData.append("approved", approved ? 1 : 0);
+		formData.append("show_on_frontend", show_on_frontend ? 1 : 0);
 		formData.append("start_date", startDate);
 		formData.append("end_date", endDate);
 		if (mode === "edit") {
@@ -269,6 +272,22 @@ function PromotionForm({
 								/>
 								<span className="text-redColor">
 									{errors.end_date}
+								</span>
+							</td>
+						</tr>
+						<tr className="grid grid-cols-12 gap-2">
+							<td className="col-span-3 p-2">Hiển thị trên frontend</td>
+							<td className="col-span-9 p-2">
+								<input
+									type="checkbox"
+									checked={show_on_frontend}
+									onChange={(e) =>
+										setShowOnFrontend(e.target.checked)
+									}
+									className="w-5 h-5 accent-blue-600"
+								/>
+								<span className="text-redColor">
+									{errors.show_on_frontend}
 								</span>
 							</td>
 						</tr>

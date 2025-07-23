@@ -388,6 +388,7 @@ export const TABLE_COLUMNS = {
 			type: "currency",
 		},
 		{ key: "applies_to", label: "Áp dụng cho", type: "badge" }, // 	enum('product', 'category', 'order')
+		{ key: "show_on_frontend", label: "Hiển thị trên frontend", type: "boolean" },
 		{ key: "approved", label: "Duyệt", type: "boolean" },
 	],
 	promotions_products: [
@@ -426,7 +427,6 @@ export const TABLE_COLUMNS = {
 		},
 		{ key: "start_date", label: "Ngày bắt đầu", type: "date" },
 		{ key: "end_date", label: "Ngày kết thúc", type: "date" },
-		{ key: "approved", label: "Trạng thái duyệt", type: "boolean" },
 	],
 	vouchers: [
 		{ key: "", label: "", type: "checkbox", style: "text-center" },
@@ -496,7 +496,7 @@ export const TABLE_COLUMNS = {
 		{ key: "", label: "", type: "checkbox", style: "text-center" },
 		{ key: "id", label: "ID" },
 		{ key: "title", label: "Tên chính sách" },
-		{ key: "content", label: "Nội dung chính sách" },
+		{ key: "content", label: "Nội dung chính sách", type: "html" },
 		{
 			key: "image",
 			label: "Ảnh",

@@ -47,8 +47,8 @@ function Form({
 	return (
 		<>
 			<TitleHeader
-				to={adminPath.list("videos")}
-				title={"Thêm mới"}
+				to={adminPath.list("policies")}
+				title={mode === "edit" ? "Cập nhật" : "Thêm mới"}
 				buttonIcon={<FaArrowLeftLong />}
 				titleButton={"Danh sách"}
 			/>

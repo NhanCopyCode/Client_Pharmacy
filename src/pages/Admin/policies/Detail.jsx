@@ -25,7 +25,7 @@ function Detail({ model }) {
 
 	if (!data) return <div className="p-3 overflow-y-scroll">Đang tải...</div>;
 
-	const { title, image, active } = data;
+	const { title, image, approved } = data;
 
 	return (
 		<>
@@ -60,7 +60,7 @@ function Detail({ model }) {
 
 				<div className="col-span-3 font-semibold">Duyệt:</div>
 				<div className="col-span-9">
-					{active ? (
+					{approved ? (
 						<p className="text-green-600">Đã duyệt</p>
 					) : (
 						<p className="text-red-500">Chưa duyệt</p>

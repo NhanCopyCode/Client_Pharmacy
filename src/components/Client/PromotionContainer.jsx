@@ -8,8 +8,24 @@ import flash from "../../assets/images/flash.svg";
 import ProductCard from "./ProductCard";
 import { Link } from "react-router-dom";
 import Button from "./Button";
+import promotionProductService from "../../services/PromotionProductService"
+import { useEffect, useState } from "react";
 
 function PromotionContainer() {
+	const [products, setProducts] = useState([]);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const response = await promotionProductService.getPromotionAndProducts();
+				setProducts(response.data);
+
+			} catch (error) {
+				console.log("error promotion container: ", error);
+			}
+		}
+		fetchData();
+	}, [])
 	return (
 		<div className="mt-8 rounded-md bg-gradient-to-r from-darkBlue to-primary min-h-40 p-[10px]">
 			<div className="flex items-center justify-between">
@@ -26,6 +42,7 @@ function PromotionContainer() {
 					</Link>
 				</div>
 				<div className="text-sm text-white">
+					
 					<span>
 						Chương trình đã kết thúc, hẹn gặp lại trong thời gian
 						sớm nhất!
@@ -54,21 +71,15 @@ function PromotionContainer() {
 						},
 					}}
 				>
-					<SwiperSlide>
-						<ProductCard displayNumProductSold={true} />
-					</SwiperSlide>
-					<SwiperSlide>
-						<ProductCard displayNumProductSold={true} />
-					</SwiperSlide>
-					<SwiperSlide>
-						<ProductCard displayNumProductSold={true} />
-					</SwiperSlide>
-					<SwiperSlide>
-						<ProductCard displayNumProductSold={true} />
-					</SwiperSlide>
-					<SwiperSlide>
-						<ProductCard displayNumProductSold={true} />
-					</SwiperSlide>
+					{products.length > 0 && products.map((product) => {
+						return (
+							<SwiperSlide key={product.id}>
+								<ProductCard displayNumProductSold={true} product={product} />
+							</SwiperSlide>
+						);
+					})}
+				
+					
 				</Swiper>
 			</div>
 			<div className="flex items-center justify-center mt-6">
