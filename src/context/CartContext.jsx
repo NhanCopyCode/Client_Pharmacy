@@ -1,5 +1,6 @@
 // src/contexts/CartContext.js
 import { createContext, useContext, useEffect, useState } from "react";
+import productService from "../services/ProductService";
 
 const CartContext = createContext();
 
@@ -8,6 +9,8 @@ export const CartProvider = ({ children }) => {
 		const stored = localStorage.getItem("cart_items");
 		return stored ? JSON.parse(stored) : [];
 	});
+	const [totalPrice, setTotalPrice] = useState(0);
+	const [products, setProducts] = useState([]);
 
 	const [cartItemQuantity, setCartItemQuantity] = useState(() => {
 		const stored = localStorage.getItem("cart_items");
@@ -24,10 +27,65 @@ export const CartProvider = ({ children }) => {
 		setCartItems(items);
 		localStorage.setItem("cart_items", JSON.stringify(items));
 	};
+
+	// Quantity and total price calculation
 	useEffect(() => {
-		
-		setCartItemQuantity(cartItems.length);
-	}, [cartItems]);
+		if (!cartItems || cartItems.length === 0) {
+			setCartItemQuantity(0);
+			setTotalPrice(0);
+			return;
+		}
+
+		const quantity = cartItems.length;
+		setCartItemQuantity(quantity);
+
+		const total = cartItems.reduce((sum, item) => sum + item.finalPrice, 0);
+		setTotalPrice(total);
+	}, [JSON.stringify(cartItems)]);
+
+	useEffect(() => {
+		if (cartItems.length === 0) return;
+
+		const fetchProducts = async () => {
+			try {
+				const uniqueIds = [
+					...new Set(cartItems.map((item) => item.productId)),
+				];
+				const res = await productService.getAllProductsByIds(uniqueIds);
+				setProducts(res.data.data);
+			} catch (error) {
+				console.error("Failed to fetch products:", error);
+			}
+		};
+
+		fetchProducts();
+	}, [JSON.stringify(cartItems)]); // ✅ Only triggers if content really changes
+
+	const deleteCartItem = (cartItemId) => {
+		setCartItems((prev) => {
+			const updated = prev.filter((item) => item.id !== cartItemId);
+			updateLocalStorage(updated);
+			return updated;
+		});
+	};
+
+	const updateCartItemQuantity = (productId, quantity) => {
+		if(quantity === 0) {
+			setCartItems((prev) => {
+				return prev.filter((item) => item.productId !== productId);
+			})
+		}
+		setCartItems((prev) => {
+			const updated = prev.map((item) => {
+				if (item.productId === productId) {
+					return { ...item, quantity };
+				}
+				return item;
+			});
+			updateLocalStorage(updated);
+			return updated;
+		});
+	};
 
 	const addToCart = (newItem) => {
 		setCartItems((prev) => {
@@ -56,9 +114,13 @@ export const CartProvider = ({ children }) => {
 		<CartContext.Provider
 			value={{
 				cartItems,
+				cartItemQuantity,
+				products,
+				totalPrice,
 				addToCart,
 				setCartItems: updateCartStorage,
-				cartItemQuantity,
+				deleteCartItem,
+				updateCartItemQuantity,
 			}}
 		>
 			{children}

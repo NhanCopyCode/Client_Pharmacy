@@ -219,6 +219,10 @@ createRoot(document.getElementById("root")).render(
 									path={path.DANH_SACH_ITEM_TIM_KIEM}
 									element={<ListProductAndPost />}
 								/>
+								<Route
+									path={path.SAN_PHAM_KHUYEN_MAI}
+									element={<ListProductAndPost />}
+								/>
 							</Route>
 
 							<Route

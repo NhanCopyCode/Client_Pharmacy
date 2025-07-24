@@ -6,6 +6,7 @@ import { customStylesModal } from "../../utils/constants";
 import formatPriceVND from "../../utils/formatPriceVND";
 import { toast } from "react-toastify"; 
 import Modal from "react-modal";
+import formatDate from "../../utils/formatDate";
 Modal.setAppElement("#root");
 function DiscountItem({ voucher }) {
 	const [modalIsOpen, setIsOpen] = useState(false);
@@ -53,7 +54,7 @@ function DiscountItem({ voucher }) {
 						</Button>
 					</div>
 					<span className="text-[12px]">{title}</span>
-					<div className="flex">
+					<div className="flex items-center justify-between">
 						<span className="text-primary text-[12px]">
 							HSD: {end_date}
 						</span>

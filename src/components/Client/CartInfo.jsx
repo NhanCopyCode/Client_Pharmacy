@@ -3,7 +3,11 @@ import Button from "../../components/Client/Button";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
+import { useCart } from "../../context/CartContext";
+import formatPriceVND from "../../utils/formatPriceVND";
 function CartInfo() {
+	const { products, cartItems, totalPrice, updateCartItemQuantity } =
+		useCart();
 	const [selectedDate, setSelectedDate] = useState(null);
 	const [selectedTime, setSelectedTime] = useState(null);
 	const [showForm, setShowForm] = useState(false);
@@ -53,210 +57,127 @@ function CartInfo() {
 							</tr>
 						</thead>
 						<tbody>
-							<tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-								<th
-									scope="row"
-									className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-white"
-								>
-									<div className="flex items-center gap-4">
-										<div className="w-[110px] h-[110px]">
-											<img
-												src="https://bizweb.dktcdn.net/thumb/compact/100/491/197/products/00031920-top-grow-jpanwell-10-ch-3f81b1a4-df3b-41f3-869d-c64cb90506fa.png"
-												className="max-w-full max-h-full object-cover"
-											/>
-										</div>
-										<div className="flex gap-1 flex-col">
-											<Link
-												to={"/san-pham/123"}
-												className="text-sm font-bold hover:text-primary"
-											>
-												Demo sản phẩm có thuộc tính
-											</Link>
-											<span className="text-gray text-[12px]">
-												Nhỏ
-											</span>
-											<Button
-												subClassName="inline-block"
-												background="bg-transparent"
-												border="border-0"
-												color="text-darkBlue"
-												fontWeight="font-bold"
-												padding="p-0"
-												hoverEffect=""
-											>
-												Xóa
-											</Button>
-										</div>
-									</div>
-								</th>
-								<td className="px-6 py-4 text-sm font-bold text-success">
-									890.000₫
-								</td>
-								<td className="px-6 py-4">
-									<div className="inline-flex w-fit items-center justify-between  p-[2px] gap-1 rounded-md border border-darkBlue">
-										<Button
-											buttonSize="w-[25px] h-[25px]"
-											color="text-white"
-											hoverEffect="hover:bg-primary"
-											fontSize="text-[20px]"
-											background="bg-darkBlue"
+							{products.length > 0 ? (
+								products.map((product) => (
+									<tr
+										key={product.id}
+										className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
+									>
+										<th
+											scope="row"
+											className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-white"
 										>
-											-
-										</Button>
-										<input
-											className="text-primary font-medium border-0 outline-0 inline-block w-[30px] h-[25px] text-center text-[15px]"
-											value={3}
-										/>
+											<div className="flex items-center gap-4">
+												<div className="w-[110px] h-[110px]">
+													<img
+														src={
+															product.main_image ||
+															"https://bizweb.dktcdn.net/thumb/compact/100/491/197/products/00031920-top-grow-jpanwell-10-ch-3f81b1a4-df3b-41f3-869d-c64cb90506fa.png"
+														}
+														className="max-w-full max-h-full object-cover"
+													/>
+												</div>
+												<div className="flex gap-1 flex-col items-start">
+													<Link
+														to={`/san-pham/${product.id}`}
+														className="text-sm font-bold hover:text-primary"
+													>
+														{product.title}
+													</Link>
 
-										<Button
-											buttonSize="w-[25px] h-[25px]"
-											color="text-white"
-											fontSize="text-[20px]"
-											background="bg-darkBlue"
-											hoverEffect="hover:bg-primary"
-										>
-											+
-										</Button>
-									</div>
-								</td>
-								<td className="px-6 py-4 text-sm text-success font-bold">
-									2.670.000₫
-								</td>
-							</tr>
-							<tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-								<th
-									scope="row"
-									className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-white"
-								>
-									<div className="flex items-center gap-4">
-										<div className="w-[110px] h-[110px]">
-											<img
-												src="https://bizweb.dktcdn.net/thumb/compact/100/491/197/products/00031920-top-grow-jpanwell-10-ch-3f81b1a4-df3b-41f3-869d-c64cb90506fa.png"
-												className="max-w-full max-h-full object-cover"
-											/>
-										</div>
-										<div className="flex gap-1 flex-col">
-											<h3 className="text-sm font-bold ">
-												Demo sản phẩm có thuộc tính
-											</h3>
-											<span className="text-gray text-[12px]">
-												Nhỏ
-											</span>
-											<Button
-												subClassName="inline-block"
-												background="bg-transparent"
-												border="border-0"
-												color="text-darkBlue"
-												fontWeight="font-bold"
-												padding="p-0"
-												hoverEffect=""
-											>
-												Xóa
-											</Button>
-										</div>
-									</div>
-								</th>
-								<td className="px-6 py-4 text-sm font-bold text-success">
-									890.000₫
-								</td>
-								<td className="px-6 py-4">
-									<div className="inline-flex w-fit items-center justify-between  p-[2px] gap-1 rounded-md border border-darkBlue">
-										<Button
-											buttonSize="w-[25px] h-[25px]"
-											color="text-white"
-											hoverEffect="hover:bg-primary"
-											fontSize="text-[20px]"
-											background="bg-darkBlue"
-										>
-											-
-										</Button>
-										<input
-											className="text-primary font-medium border-0 outline-0 inline-block w-[30px] h-[25px] text-center text-[15px]"
-											value={3}
-										/>
+													<Button
+														subClassName="inline-block"
+														background="bg-transparent"
+														border="border-0"
+														color="text-darkBlue"
+														fontWeight="font-bold"
+														padding="p-0"
+														hoverEffect=""
+													>
+														Xóa
+													</Button>
+												</div>
+											</div>
+										</th>
+										<td className="px-6 py-4 text-sm font-bold text-success">
+											{formatPriceVND(product.price)}
+										</td>
+										<td className="px-6 py-4">
+											<div className="inline-flex w-fit items-center justify-between  p-[2px] gap-1 rounded-md border border-darkBlue">
+												<Button
+													buttonSize="w-[25px] h-[25px]"
+													color="text-white"
+													hoverEffect="hover:bg-primary"
+													fontSize="text-[20px]"
+													background="bg-darkBlue"
+													onClick={() =>
+														updateCartItemQuantity(
+															product.id,
+															cartItems.find(
+																(item) =>
+																	item.productId ===
+																	product.id
+															)?.quantity - 1
+														)
+													}
+												>
+													-
+												</Button>
+												<input
+													className="text-primary font-medium border-0 outline-0 inline-block w-[30px] h-[25px] text-center text-[15px]"
+													value={
+														cartItems.find(
+															(item) =>
+																item.productId ===
+																product.id
+														)?.quantity || 1
+													}
+													readOnly
+												/>
 
-										<Button
-											buttonSize="w-[25px] h-[25px]"
-											color="text-white"
-											fontSize="text-[20px]"
-											background="bg-darkBlue"
-											hoverEffect="hover:bg-primary"
-										>
-											+
-										</Button>
-									</div>
-								</td>
-								<td className="px-6 py-4 text-sm text-success font-bold">
-									2.670.000₫
-								</td>
-							</tr>
-							<tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-								<th
-									scope="row"
-									className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-white"
-								>
-									<div className="flex items-center gap-4">
-										<div className="w-[110px] h-[110px]">
-											<img
-												src="https://bizweb.dktcdn.net/thumb/compact/100/491/197/products/00031920-top-grow-jpanwell-10-ch-3f81b1a4-df3b-41f3-869d-c64cb90506fa.png"
-												className="max-w-full max-h-full object-cover"
-											/>
-										</div>
-										<div className="flex gap-1 flex-col">
-											<h3 className="text-sm font-bold ">
-												Demo sản phẩm có thuộc tính
-											</h3>
-											<span className="text-gray text-[12px]">
-												Nhỏ
-											</span>
-											<Button
-												subClassName="inline-block"
-												background="bg-transparent"
-												border="border-0"
-												color="text-darkBlue"
-												fontWeight="font-bold"
-												padding="p-0"
-												hoverEffect=""
-											>
-												Xóa
-											</Button>
-										</div>
-									</div>
-								</th>
-								<td className="px-6 py-4 text-sm font-bold text-success">
-									890.000₫
-								</td>
-								<td className="px-6 py-4">
-									<div className="inline-flex w-fit items-center justify-between  p-[2px] gap-1 rounded-md border border-darkBlue">
-										<Button
-											buttonSize="w-[25px] h-[25px]"
-											color="text-white"
-											hoverEffect="hover:bg-primary"
-											fontSize="text-[20px]"
-											background="bg-darkBlue"
-										>
-											-
-										</Button>
-										<input
-											className="text-primary font-medium border-0 outline-0 inline-block w-[30px] h-[25px] text-center text-[15px]"
-											value={3}
-										/>
-
-										<Button
-											buttonSize="w-[25px] h-[25px]"
-											color="text-white"
-											fontSize="text-[20px]"
-											background="bg-darkBlue"
-											hoverEffect="hover:bg-primary"
-										>
-											+
-										</Button>
-									</div>
-								</td>
-								<td className="px-6 py-4 text-sm text-success font-bold">
-									2.670.000₫
-								</td>
-							</tr>
+												<Button
+													buttonSize="w-[25px] h-[25px]"
+													color="text-white"
+													fontSize="text-[20px]"
+													background="bg-darkBlue"
+													hoverEffect="hover:bg-primary"
+													onClick={() =>
+														updateCartItemQuantity(
+															product.id,
+															cartItems.find(
+																(item) =>
+																	item.productId ===
+																	product.id
+															)?.quantity + 1
+														)
+													}
+												>
+													+
+												</Button>
+											</div>
+										</td>
+										<td className="px-6 py-4 text-sm text-success font-bold">
+											{formatPriceVND(
+												product.price *
+													cartItems.find(
+														(item) =>
+															item.productId ===
+															product.id
+													)?.quantity
+											)}
+										</td>
+									</tr>
+								))
+							) : (
+								<tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+									<td
+										colSpan="4"
+										className="px-6 py-4 text-center"
+									>
+										Không có sản phẩm nào trong giỏ hàng
+									</td>
+								</tr>
+							)}
 						</tbody>
 					</table>
 					<div className="flex justify-end mt-8">
@@ -266,7 +187,7 @@ function CartInfo() {
 									Tổng tiền:
 								</span>
 								<span className="text-[15px] text-success font-bold">
-									25.873.000₫
+									{formatPriceVND(totalPrice)}
 								</span>
 							</div>
 							<Button

@@ -94,6 +94,7 @@ function PromotionContainer() {
 					border="border-2 border-primary"
 					hoverEffect="hover:bg-primary hover:text-white"
 					fontWeight="font-medium"
+					to={'/san-pham-khuyen-mai'}
 				>
 					Xem tất cả
 				</Button>

@@ -12,6 +12,7 @@ export const path = {
 	CHI_TIET_TIN_TUC: "tin-tuc/:id",
 	DANH_SACH_ITEM_TIM_KIEM: "tim-kiem",
 	GIO_HANG: "gio-hang",
+	SAN_PHAM_KHUYEN_MAI: "san-pham-khuyen-mai",
 };
 
 // src/utils/roles.js
