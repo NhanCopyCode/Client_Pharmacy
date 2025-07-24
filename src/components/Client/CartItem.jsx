@@ -3,15 +3,18 @@ import productService from "../../services/ProductService";
 import { useEffect, useState } from "react";
 import formatPriceVND from "../../utils/formatPriceVND";
 import { TailSpin } from "react-loader-spinner";
+import { useCart } from "../../context/CartContext";
 
 function CartItem({ productId, cartItem, handleDeleteCartItem }) {
+	const { updateCartItemQuantity } = useCart();
 	const [product, setProduct] = useState(null);
 	const [quantity, setQuantity] = useState(cartItem.quantity || 1);
 	const [totalPrice, setTotalPrice] = useState(
 		cartItem.price * cartItem.quantity
 	);
 	const [loading, setLoading] = useState(true);
-	
+
+	// Fetch product info
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -28,16 +31,49 @@ function CartItem({ productId, cartItem, handleDeleteCartItem }) {
 		fetchData();
 	}, [productId]);
 
+	// Update total price when quantity changes
 	useEffect(() => {
 		setTotalPrice(cartItem.price * quantity);
 	}, [quantity, cartItem.price]);
 
-	const handleUpdateQuantity = (action) => {
-		if (action === "up") {
-			setQuantity((prev) => prev + 1);
-		} else if (action === "down" && quantity > 1) {
-			setQuantity((prev) => prev - 1);
+	// Sync quantity from external updates
+	useEffect(() => {
+		setQuantity(cartItem.quantity || 1);
+	}, [cartItem.quantity]);
+
+	// Change quantity handlers
+	const handleDecrease = () => {
+		if (quantity > 1) {
+			const newQuantity = quantity - 1;
+			setQuantity(newQuantity);
+			updateCartItemQuantity(productId, newQuantity);
 		}
+	};
+
+	const handleIncrease = () => {
+		const newQuantity = quantity + 1;
+		setQuantity(newQuantity);
+		updateCartItemQuantity(productId, newQuantity);
+	};
+
+	const handleManualChange = (e) => {
+		const value = e.target.value;
+		if (/^\d*$/.test(value)) {
+			if (!value) {
+				setQuantity(""); // allow empty temporarily
+			} else {
+				setQuantity(parseInt(value, 10));
+			}
+		}
+	};
+
+	const handleBlur = () => {
+		let safeQuantity = quantity;
+		if (!quantity || quantity < 1) {
+			safeQuantity = 1;
+			setQuantity(1);
+		}
+		updateCartItemQuantity(productId, safeQuantity);
 	};
 
 	if (loading) {
@@ -58,10 +94,8 @@ function CartItem({ productId, cartItem, handleDeleteCartItem }) {
 				/>
 			</div>
 			<div className="flex items-start flex-col flex-[1]">
-				<h3 className=" text-[13px] font-bold mb-1">
-					{product?.title}
-				</h3>
-				{/* <span className="text-darkBlue text-[12px]">Nhỏ</span> */}
+				<h3 className="text-[13px] font-bold mb-1">{product?.title}</h3>
+
 				<span
 					className="text-redColor font-bold text-[13px] cursor-pointer"
 					onClick={handleDeleteCartItem}
@@ -69,7 +103,7 @@ function CartItem({ productId, cartItem, handleDeleteCartItem }) {
 					Xóa
 				</span>
 
-				<div className="flex flex-col w-full ">
+				<div className="flex flex-col w-full">
 					<div className="flex items-center justify-between">
 						<span className="text-[12px] text-[#333] font-light mt-2">
 							Số lượng
@@ -79,6 +113,7 @@ function CartItem({ productId, cartItem, handleDeleteCartItem }) {
 						</span>
 					</div>
 				</div>
+
 				<div className="flex items-center justify-between w-[85px] h-[30px] p-[2px] gap-1 rounded-md border border-darkBlue mt-1">
 					<Button
 						buttonSize="w-[25px] h-[25px]"
@@ -86,44 +121,24 @@ function CartItem({ productId, cartItem, handleDeleteCartItem }) {
 						hoverEffect="hover:bg-primary"
 						fontSize="text-[20px]"
 						background="bg-darkBlue"
-						onClick={() => handleUpdateQuantity("down")}
+						onClick={handleDecrease}
 					>
 						-
 					</Button>
-					<span className="text-primary text-[12px] font-medium">
-						<input
-							type="text"
-							value={quantity}
-							className="w-full text-center border-0 outline-0"
-							onChange={(e) => {
-								const value = e.target.value;
-
-								if (/^\d*$/.test(value)) {
-									const numericValue = parseInt(value, 10);
-
-									if (!value) {
-										setQuantity("");
-									} else if (numericValue >= 1) {
-										setQuantity(numericValue);
-									} else {
-										setQuantity(1);
-									}
-								}
-							}}
-							onBlur={() => {
-								if (!quantity || quantity < 1) {
-									setQuantity(1);
-								}
-							}}
-						/>
-					</span>
+					<input
+						type="text"
+						value={quantity}
+						className="w-full text-center border-0 outline-0 text-primary text-[12px] font-medium"
+						onChange={handleManualChange}
+						onBlur={handleBlur}
+					/>
 					<Button
 						buttonSize="w-[25px] h-[25px]"
 						color="text-white"
 						fontSize="text-[20px]"
 						background="bg-darkBlue"
 						hoverEffect="hover:bg-primary"
-						onClick={() => handleUpdateQuantity("up")}
+						onClick={handleIncrease}
 					>
 						+
 					</Button>

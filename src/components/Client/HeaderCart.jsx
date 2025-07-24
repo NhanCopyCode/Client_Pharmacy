@@ -11,8 +11,7 @@ import formatPriceVND from "../../utils/formatPriceVND";
 import { useCart } from "../../context/CartContext";
 
 function HeaderCart() {
-	const { cartItems, setCartItems, cartItemQuantity } = useCart();
-	const total = cartItems.reduce((acc, item) => acc + item.finalPrice, 0);
+	const { cartItems, setCartItems, cartItemQuantity, totalPrice } = useCart();
 
 	const handleDeleteCartItem = (itemId) => {
 		const updatedCart = cartItems.filter((item) => item.id !== itemId);
@@ -81,7 +80,7 @@ function HeaderCart() {
 										Tổng tiền:
 									</span>
 									<span className="text-[15px] text-darkBlue font-bold">
-										{formatPriceVND(total)}
+										{formatPriceVND(totalPrice)}
 									</span>
 								</div>
 								<Button

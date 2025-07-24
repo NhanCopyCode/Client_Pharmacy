@@ -20,6 +20,8 @@ import { TailSpin } from "react-loader-spinner";
 import productService from "../../services/ProductService";
 import formatPriceVND from "../../utils/formatPriceVND";
 import { useCart } from "../../context/CartContext";
+import { ScrollToTopOnRouteChange } from "../../components/Client";
+
 
 function DetailProduct() {
 	const [product, setProduct] = useState({});
@@ -102,6 +104,7 @@ function DetailProduct() {
 
 	return (
 		<Container>
+			<ScrollToTopOnRouteChange />
 			<div className="grid grid-cols-12 gap-8">
 				{loading ? (
 					<div className="col-span-9 flex justify-center items-center min-h-[300px]">

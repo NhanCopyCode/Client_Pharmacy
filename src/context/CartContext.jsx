@@ -5,6 +5,7 @@ import productService from "../services/ProductService";
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
+	const [loading, setLoading] = useState(true);
 	const [cartItems, setCartItems] = useState(() => {
 		const stored = localStorage.getItem("cart_items");
 		return stored ? JSON.parse(stored) : [];
@@ -39,15 +40,20 @@ export const CartProvider = ({ children }) => {
 		const quantity = cartItems.length;
 		setCartItemQuantity(quantity);
 
-		const total = cartItems.reduce((sum, item) => sum + item.finalPrice, 0);
+		const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 		setTotalPrice(total);
 	}, [JSON.stringify(cartItems)]);
 
 	useEffect(() => {
-		if (cartItems.length === 0) return;
+		if (cartItems.length === 0) {
+			setProducts([]);
+			setLoading(false);
+			return;
+		}
 
 		const fetchProducts = async () => {
 			try {
+				setLoading(true);
 				const uniqueIds = [
 					...new Set(cartItems.map((item) => item.productId)),
 				];
@@ -55,12 +61,13 @@ export const CartProvider = ({ children }) => {
 				setProducts(res.data.data);
 			} catch (error) {
 				console.error("Failed to fetch products:", error);
+			} finally {
+				setLoading(false);
 			}
 		};
 
 		fetchProducts();
 	}, [JSON.stringify(cartItems)]); // ✅ Only triggers if content really changes
-
 	const deleteCartItem = (cartItemId) => {
 		setCartItems((prev) => {
 			const updated = prev.filter((item) => item.id !== cartItemId);
@@ -70,10 +77,10 @@ export const CartProvider = ({ children }) => {
 	};
 
 	const updateCartItemQuantity = (productId, quantity) => {
-		if(quantity === 0) {
+		if (quantity === 0) {
 			setCartItems((prev) => {
 				return prev.filter((item) => item.productId !== productId);
-			})
+			});
 		}
 		setCartItems((prev) => {
 			const updated = prev.map((item) => {
@@ -117,6 +124,7 @@ export const CartProvider = ({ children }) => {
 				cartItemQuantity,
 				products,
 				totalPrice,
+				loading,
 				addToCart,
 				setCartItems: updateCartStorage,
 				deleteCartItem,
