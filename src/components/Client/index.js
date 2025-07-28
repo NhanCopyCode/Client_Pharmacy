@@ -58,3 +58,5 @@ export { default as ModalGenerateText } from "./ModalGenerateText";
 export { default as PostCard } from "./PostCard";
 export { default as CountdownTimer } from "./CountDownTimer";
 export { default as ScrollToTopOnRouteChange } from "./ScrollToTopOnRouteChange";
+export { default as CheckoutForm } from "./CheckoutForm";
+export { default as CartItemInCheckoutPage } from "./CartItemInCheckoutPage";

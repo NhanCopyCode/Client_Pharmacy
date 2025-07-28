@@ -17,6 +17,7 @@ import {
 	DetailNews,
 	AdminPage,
 	ListProductAndPost,
+	CheckoutPage,
 } from "./pages/Client";
 import {
 	AddNewBrand,
@@ -189,6 +190,8 @@ createRoot(document.getElementById("root")).render(
 				<CartProvider>
 					<BrowserRouter>
 						<Routes>
+							<Route path={path.CHECK_OUT} element={<CheckoutPage />} />
+
 							<Route path={path.HOME} element={<Homepage />}>
 								<Route path="*" element={<Home />} />
 								<Route

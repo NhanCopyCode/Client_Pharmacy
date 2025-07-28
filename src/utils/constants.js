@@ -13,6 +13,7 @@ export const path = {
 	DANH_SACH_ITEM_TIM_KIEM: "tim-kiem",
 	GIO_HANG: "gio-hang",
 	SAN_PHAM_KHUYEN_MAI: "san-pham-khuyen-mai",
+	CHECK_OUT: "checkout/:id",
 };
 
 // src/utils/roles.js
