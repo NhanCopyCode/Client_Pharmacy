@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "./Button";
 import { RiLogoutBoxLine } from "react-icons/ri";
+import { FaChevronLeft } from "react-icons/fa";
 
 function CheckoutForm() {
 	const [selectedPayment, setSelectedPayment] = useState("bank");
@@ -141,6 +142,15 @@ function CheckoutForm() {
 									Thu hộ (COD)
 								</label>
 							</div>
+						</div>
+					</div>
+					<div className="block xl:hidden">
+						<div className="bg-[#357ebd] hover:bg-[#2a6395] py-3 px-6 cursor-pointer uppercase text-white text-xl rounded-sm text-center">
+							Đặt hàng
+						</div>
+						<div className="flex items-center justify-center gap-2 text-sm text-[#2a6395]">
+							<FaChevronLeft />
+							<span className="font-bold">Quay về giỏ hàng</span>
 						</div>
 					</div>
 				</div>
