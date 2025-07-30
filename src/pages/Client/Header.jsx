@@ -42,7 +42,7 @@ function Header() {
 
 	useEffect(() => {
 		if (
-			categories.length > 0 &&
+			categories?.length > 0 &&
 			isShowCategory &&
 			selectedParentId === null
 		) {
@@ -53,8 +53,8 @@ function Header() {
 	useEffect(() => {
 		const fetchDataCategories = async () => {
 			try {
-				const res = await categoryService.getAll();
-				setCategories(res.data.data);
+				const res = await categoryService.getCategoryParentAndChildHeader();
+				setCategories(res.data);
 			} catch (error) {
 				console.log("error: ", error);
 			}

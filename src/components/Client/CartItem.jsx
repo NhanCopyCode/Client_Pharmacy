@@ -20,9 +20,10 @@ function CartItem({ productId, cartItem, handleDeleteCartItem }) {
 			try {
 				setLoading(true);
 				const res = await productService.getById(productId);
+				console.log('res cartitem jsx:', res)
 				setProduct(res.data.data);
 			} catch (error) {
-				console.log("error: ", error);
+				console.log("error cartItem jsx: ", error);
 			} finally {
 				setLoading(false);
 			}
@@ -31,17 +32,14 @@ function CartItem({ productId, cartItem, handleDeleteCartItem }) {
 		fetchData();
 	}, [productId]);
 
-	// Update total price when quantity changes
 	useEffect(() => {
 		setTotalPrice(cartItem.price * quantity);
 	}, [quantity, cartItem.price]);
 
-	// Sync quantity from external updates
 	useEffect(() => {
 		setQuantity(cartItem.quantity || 1);
 	}, [cartItem.quantity]);
 
-	// Change quantity handlers
 	const handleDecrease = () => {
 		if (quantity > 1) {
 			const newQuantity = quantity - 1;

@@ -242,6 +242,7 @@ export const TABLE_COLUMNS = {
 		},
 
 		{ key: "parentName", label: "Danh mục cha", type: "parent" },
+		{ key: "positions", label: "Vị trí hiển thị" },
 		{
 			key: "outstanding",
 			label: "Nổi bật",
@@ -390,7 +391,11 @@ export const TABLE_COLUMNS = {
 			type: "currency",
 		},
 		{ key: "applies_to", label: "Áp dụng cho", type: "badge" }, // 	enum('product', 'category', 'order')
-		{ key: "show_on_frontend", label: "Hiển thị trên frontend", type: "boolean" },
+		{
+			key: "show_on_frontend",
+			label: "Hiển thị trên frontend",
+			type: "boolean",
+		},
 		{ key: "approved", label: "Duyệt", type: "boolean" },
 	],
 	promotions_products: [

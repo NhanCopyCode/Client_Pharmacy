@@ -5,18 +5,14 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
-
 import ProductCard from "./ProductCard";
-import productService from "../../services/ProductService";
 
-function NewProductContainer() {
+function NewProductContainer({ newProducts }) {
 	const [products, setProducts] = useState([]);
 
 	useEffect(() => {
-		productService.getLatest().then((res) => {
-			setProducts(res.data.data);
-		});
-	}, []);
+		setProducts(newProducts);
+	}, [newProducts]);
 	return (
 		<div className="mt-8">
 			<h2 className="text-[30px] text-black font-bold">Sản phẩm mới</h2>

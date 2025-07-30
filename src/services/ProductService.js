@@ -39,7 +39,8 @@ const productService = {
 		return axios.get("/products/getAllProductsByIds", {
 			params: { ids: ids.join(",") },
 		});
-	}
+	},
+	
 };
 
 export default productService;

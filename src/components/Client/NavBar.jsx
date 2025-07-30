@@ -27,7 +27,8 @@ function NavBar() {
 	useEffect(() => {
 		try {
 			const fetchData = async () => {
-				const res = await categoryService.getListParentAndChild();
+				const res =
+					await categoryService.getCategoryParentAndChildHeader();
 				setListCategories(res.data);
 			};
 
@@ -136,7 +137,6 @@ function NavBar() {
 										{category.title}
 									</Link>
 								))}
-							
 						</div>
 					</div>
 				)}

@@ -9,24 +9,14 @@ import flash from "../../assets/images/flash.svg";
 import ProductCard from "./ProductCard";
 import { Link } from "react-router-dom";
 import Button from "./Button";
-import promotionProductService from "../../services/PromotionProductService";
 import { useEffect, useState } from "react";
-import  CountdownTimer  from "./CountDownTimer";
-function PromotionContainer() {
-	const [promotions, setPromotions] = useState([]);
+import CountdownTimer from "./CountDownTimer";
+function PromotionContainer({ promotions }) {
+	const [promotionsState, setPromotionsState] = useState([]);
 
 	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const response =
-					await promotionProductService.getPromotionShowOnFrontend();
-				setPromotions(response.data.data); // assuming response.data.data is array of promotions with products
-			} catch (error) {
-				console.log("error promotion container: ", error);
-			}
-		};
-		fetchData();
-	}, []);
+		setPromotionsState(promotions);
+	}, [promotions]);
 
 	return (
 		<div className="mt-8 rounded-md bg-gradient-to-r from-darkBlue to-primary min-h-40 p-[10px]">
@@ -42,16 +32,16 @@ function PromotionContainer() {
 						Khuyến mãi hấp dẫn
 					</Link>
 				</div>
-				<div className="text-sm text-white">
+				{/* <div className="text-sm text-white">
 					<span>
 						Chương trình đã kết thúc, hẹn gặp lại trong thời gian
 						sớm nhất!
 					</span>
-				</div>
+				</div> */}
 			</div>
 
-			{promotions.length > 0 &&
-				promotions.map((promotion) => (
+			{promotionsState.length > 0 &&
+				promotionsState.map((promotion) => (
 					<div key={promotion.id} className="mt-8">
 						<div className="flex items-center justify-between">
 							<h3 className="text-xl font-semibold text-white mb-4">
@@ -94,7 +84,7 @@ function PromotionContainer() {
 					border="border-2 border-primary"
 					hoverEffect="hover:bg-primary hover:text-white"
 					fontWeight="font-medium"
-					to={'/san-pham-khuyen-mai'}
+					to={"/san-pham-khuyen-mai"}
 				>
 					Xem tất cả
 				</Button>

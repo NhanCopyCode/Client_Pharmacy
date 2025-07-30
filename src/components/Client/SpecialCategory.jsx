@@ -12,23 +12,14 @@ import SpecialCategoryItem from "./SpecialCategoryItem";
 import SwiperNextButton from "./SwiperNextButton";
 import SwiperPrevButton from "./SwiperPrevButton";
 
-import categoryService from "../../services/CategoryService";
 import { useEffect, useState } from "react";
 
-function SpecialCategory() {
-	const [categories, setCategories] = useState([]);
+function SpecialCategory({ categories }) {
+		const [categoryList, setCategoryList] = useState([]);
 
 	useEffect(() => {
-		const fetchOutstandingCategories = async () => {
-			try {
-				const res = await categoryService.getListOutstanding();
-				setCategories(res.data);
-			} catch (error) {
-				console.error("Lỗi khi load danh mục nổi bật:", error);
-			}
-		};
-		fetchOutstandingCategories();
-	}, []);
+		setCategoryList(categories);
+	}, [categories]);
 
 	return (
 		<div className="mt-8">
@@ -65,7 +56,7 @@ function SpecialCategory() {
 						prevEl: ".special-prev",
 					}}
 				>
-					{categories.map((category) => (
+					{categoryList.map((category) => (
 						<SwiperSlide key={category.id}>
 							<SpecialCategoryItem category={category} />
 						</SwiperSlide>

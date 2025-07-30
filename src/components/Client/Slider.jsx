@@ -6,34 +6,24 @@ import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 import "swiper/css";
 
-import bannerService from "../../services/BannerService";
 import { useEffect, useState } from "react";
 
-function Slider() {
+function Slider({ sliders }) {
 	const [homePageSlider, setHomePageSlider] = useState([]);
 	useEffect(() => {
-		try {
-			const fetchData = async() => {
-				const res = await bannerService.getBannerHomePage();
-				setHomePageSlider(res.data);
-			}
-
-			fetchData();
-		} catch (error) {
-			console.log("Error at Slider component: ", error);
-		}
-	}, [])
+		setHomePageSlider(sliders);
+	}, [sliders]);
 	return (
 		<div className="mt-6 relative z-0">
+
 			<Swiper
 				slidesPerView={1}
 				effect="fade"
 				modules={[Pagination, EffectFade]}
 				pagination={{ clickable: true }}
 			>
-				{
-					homePageSlider.length > 0 &&
-					homePageSlider.map(slide => {
+				{homePageSlider.length > 0 &&
+					homePageSlider.map((slide) => {
 						return (
 							<SwiperSlide>
 								<img
@@ -43,10 +33,7 @@ function Slider() {
 								/>
 							</SwiperSlide>
 						);
-					})
-				}
-				
-				
+					})}
 			</Swiper>
 		</div>
 	);

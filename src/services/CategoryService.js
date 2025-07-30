@@ -27,8 +27,8 @@ const categoryService = {
 	getListOutstanding: () => {
 		return axios.get("/categories/getListOutstanding");
 	},
-	getListParentAndChild: () => {
-		return axios.get("/categories/getCategoryParentAndChild");
+	getCategoryParentAndChildHeader: () => {
+		return axios.get("/categories/getCategoryParentAndChildHeader");
 	},
 	getCategoryAvailable: () => {
 		return axios.get("/categories/available");
