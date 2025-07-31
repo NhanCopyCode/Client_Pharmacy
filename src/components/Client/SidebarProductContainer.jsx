@@ -5,18 +5,18 @@ import productService from "../../services/ProductService";
 function SidebarProductContainer() {
 	const [products, setProducts] = useState([]);
 
-	useEffect(() => {
-		const fetchData = async() => {
-			try {
-				const res = await productService.getProductSameSegment();
-				console.log('res', res);
-			} catch (error) {
-				console.log("error: ", error);
-			}
-		}
+	// useEffect(() => {
+	// 	const fetchData = async() => {
+	// 		try {
+	// 			const res = await productService.getProductSameSegment();
+	// 			console.log('res', res);
+	// 		} catch (error) {
+	// 			console.log("error: ", error);
+	// 		}
+	// 	}
 
-		fetchData();
-	}, [])
+	// 	fetchData();
+	// }, [])
     return (
 		<div className="border border-darkBlue rounded-md overflow-hidden">
 			<div className="text-xl text-white text-left py-[5px] px-[10px] bg-darkBlue font-bold">

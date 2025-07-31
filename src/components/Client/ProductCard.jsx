@@ -3,6 +3,9 @@ import { FaRegHeart } from "react-icons/fa";
 import { BsMinecart } from "react-icons/bs";
 import formatPriceVND from "../../utils/formatPriceVND";
 import { Link } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
+import { useCart } from "../../context/CartContext";
+import { toast } from "react-toastify";
 
 function ProductCard({
 	product,
@@ -10,7 +13,26 @@ function ProductCard({
 	displayNumProductSold = false,
 	numProductSold,
 }) {
-	// const { id, title, price, main_image } = product;
+	const { addToCart } = useCart();
+	const handleAddProductToCart = (e) => {
+		e.preventDefault?.();
+		e.stopPropagation?.();
+
+		const item = {
+			id: crypto.randomUUID(),
+			orderId: null,
+			productId: product.id,
+			quantity: 1,
+			price,
+			discount: 0,
+			finalPrice: product?.price,
+		};
+
+		addToCart(item);
+		toast.success("🛒 Đã thêm vào giỏ hàng!", {
+			position: "top-right",
+		});
+	};
 	const {
 		id = 0,
 		title = "Không có tiêu đề",
@@ -52,7 +74,7 @@ function ProductCard({
 						<span className="text-[18px] font-bold text-success">
 							{formatPriceVND(price)}
 						</span>
-							{/* <span className="text-[12px] font-bold text-[#666] line-through">
+						{/* <span className="text-[12px] font-bold text-[#666] line-through">
 								1.000.000đ
 							</span> */}
 					</div>
@@ -62,6 +84,7 @@ function ProductCard({
 						buttonWidth="h-[35px]"
 						background="bg-darkBlue"
 						hoverEffect="transition transform hover:-translate-y-[4px]"
+						onClick={(e) => handleAddProductToCart(e)}
 					>
 						<BsMinecart className="w-[18px] h-[18px]" />
 					</Button>

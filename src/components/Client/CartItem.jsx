@@ -20,7 +20,6 @@ function CartItem({ productId, cartItem, handleDeleteCartItem }) {
 			try {
 				setLoading(true);
 				const res = await productService.getById(productId);
-				console.log('res cartitem jsx:', res)
 				setProduct(res.data.data);
 			} catch (error) {
 				console.log("error cartItem jsx: ", error);

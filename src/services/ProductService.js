@@ -1,5 +1,6 @@
 import { createApiService } from "./api/apiService";
 import axios from "./api/axiosInstance";
+import publicAxios from "./api/publicAxios";
 
 const productService = {
 	...createApiService("products"),
@@ -36,11 +37,12 @@ const productService = {
 	},
 
 	getAllProductsByIds: (ids) => {
-		return axios.get("/products/getAllProductsByIds", {
+		return publicAxios.get("/products/getAllProductsByIds", {
 			params: { ids: ids.join(",") },
 		});
 	},
 	
 };
+
 
 export default productService;

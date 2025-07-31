@@ -40,7 +40,10 @@ export const CartProvider = ({ children }) => {
 		const quantity = cartItems.length;
 		setCartItemQuantity(quantity);
 
-		const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+		const total = cartItems.reduce(
+			(sum, item) => sum + item.price * item.quantity,
+			0
+		);
 		setTotalPrice(total);
 	}, [JSON.stringify(cartItems)]);
 
@@ -95,6 +98,7 @@ export const CartProvider = ({ children }) => {
 	};
 
 	const addToCart = (newItem) => {
+		console.log("new item in cart context: ", newItem);
 		setCartItems((prev) => {
 			const existingIndex = prev.findIndex(
 				(item) => item.productId === newItem.productId
@@ -102,20 +106,25 @@ export const CartProvider = ({ children }) => {
 			let updated;
 
 			if (existingIndex > -1) {
+				const existingItem = { ...prev[existingIndex] };
+				existingItem.quantity += newItem.quantity;
+				existingItem.finalPrice =
+					(existingItem.price - existingItem.discount) *
+					existingItem.quantity;
+
 				updated = [...prev];
-				updated[existingIndex].quantity += newItem.quantity;
-				updated[existingIndex].finalPrice =
-					(updated[existingIndex].price -
-						updated[existingIndex].discount) *
-					updated[existingIndex].quantity;
+				updated[existingIndex] = existingItem;
 			} else {
 				updated = [...prev, newItem];
 			}
+
+			console.log("updated cart item: ", updated);
 
 			updateLocalStorage(updated);
 			return updated;
 		});
 	};
+
 
 	return (
 		<CartContext.Provider

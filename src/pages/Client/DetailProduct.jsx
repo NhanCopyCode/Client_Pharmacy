@@ -17,11 +17,10 @@ import chinhsach_1 from "../../assets/images/chinhsach_1.png";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { TailSpin } from "react-loader-spinner";
-import productService from "../../services/ProductService";
 import formatPriceVND from "../../utils/formatPriceVND";
 import { useCart } from "../../context/CartContext";
 import { ScrollToTopOnRouteChange } from "../../components/Client";
-
+import publicProductService from "../../services/publicApi/PublicProductService";
 
 function DetailProduct() {
 	const [product, setProduct] = useState({});
@@ -38,9 +37,9 @@ function DetailProduct() {
 		const fetchData = async () => {
 			try {
 				setLoading(true);
-				const res = await productService.getById(id);
-
-				setProduct(res.data.data);
+				const res = await publicProductService.getById(id);
+				console.log("res detail product: ", res);
+				setProduct(res.data.data[0]);
 			} catch (error) {
 				console.log("error: ", error);
 			} finally {
