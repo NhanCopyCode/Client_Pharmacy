@@ -39,7 +39,6 @@ function HomePage() {
 				setNewProducts(response.data.new_products);
 				setBannerOutstanding(response.data.banner_outstanding);
 				setProductsTrend(response.data.products_trending);
-
 			} catch (error) {
 				console.log("error: ", error);
 			}
@@ -50,13 +49,16 @@ function HomePage() {
 
 	return (
 		<Container>
-			<Slider sliders={sliders}/>
-			<SpecialCategory categories={categories}/>
-			<DiscountContainer vouchers={vouchers}/>
-			<PromotionContainer promotions={promotions} />
-			<NewProductContainer newProducts={newProducts}/>
+			<Slider sliders={sliders} />
+			<SpecialCategory categories={categories} />
+			<DiscountContainer vouchersProps={vouchers} />
+			<PromotionContainer promotionsProps={promotions} />
+			<NewProductContainer newProducts={newProducts} />
 			<BannerPromotion />
-			<SpecialProductContainer bannerOutstanding={bannerOutstanding} productsTrending={productsTrending}/>
+			<SpecialProductContainer
+				bannerOutstanding={bannerOutstanding}
+				productsTrending={productsTrending}
+			/>
 			<IntroduceComponent />
 			<ListProduct />
 			<InformationContainer />

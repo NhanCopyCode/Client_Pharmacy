@@ -1,5 +1,6 @@
 import { createApiService } from "./api/apiService";
 import axios from "./api/axiosInstance";
+import publicAxios from "./api/publicAxios";
 
 const categoryService = {
 	...createApiService("categories"),
@@ -13,25 +14,25 @@ const categoryService = {
 		});
 	},
 	getListParents: () => {
-		return axios.get("/categories/parents");
+		return publicAxios.get("/categories/parents");
 	},
 	getListChild: () => {
-		return axios.get("/categories/child");
+		return publicAxios.get("/categories/child");
 	},
 	getListChildNotDeleted: () => {
-		return axios.get("/categories/childNotDeleted");
+		return publicAxios.get("/categories/childNotDeleted");
 	},
 	getListApproved: () => {
-		return axios.get("/categories/getListApproved");
+		return publicAxios.get("/categories/getListApproved");
 	},
 	getListOutstanding: () => {
-		return axios.get("/categories/getListOutstanding");
+		return publicAxios.get("/categories/getListOutstanding");
 	},
 	getCategoryParentAndChildHeader: () => {
-		return axios.get("/categories/getCategoryParentAndChildHeader");
+		return publicAxios.get("/categories/getCategoryParentAndChildHeader");
 	},
 	getCategoryAvailable: () => {
-		return axios.get("/categories/available");
+		return publicAxios.get("/categories/available");
 	},
 };
 

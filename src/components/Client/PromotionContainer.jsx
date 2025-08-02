@@ -11,14 +11,14 @@ import { Link } from "react-router-dom";
 import Button from "./Button";
 import { useEffect, useState } from "react";
 import CountdownTimer from "./CountDownTimer";
-function PromotionContainer({ promotions }) {
+function PromotionContainer({ promotionsProps }) {
 	const [promotionsState, setPromotionsState] = useState([]);
-
+	console.log("promotions Props: ", promotionsProps);
 	useEffect(() => {
-		setPromotionsState(promotions);
-	}, [promotions]);
+		setPromotionsState(promotionsProps);
+	}, [promotionsProps]);
 
-	return (
+	return promotionsState.length > 0 ? (
 		<div className="mt-8 rounded-md bg-gradient-to-r from-darkBlue to-primary min-h-40 p-[10px]">
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-1">
@@ -90,7 +90,7 @@ function PromotionContainer({ promotions }) {
 				</Button>
 			</div>
 		</div>
-	);
+	) : null;
 }
 
 export default PromotionContainer;

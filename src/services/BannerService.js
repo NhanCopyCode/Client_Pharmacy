@@ -1,18 +1,19 @@
 import axiosInstance from "./api/axiosInstance";
 import { createApiService } from "./api/apiService";
+import publicAxios from "./api/publicAxios";
 
 const bannerService = {
 	...createApiService("banners"),
 
-	getBannerHomePage: () => axiosInstance.get("/banners/get-banner-homepage"),
+	getBannerHomePage: () => publicAxios.get("/banners/get-banner-homepage"),
 
-	getBannerTop: () => axiosInstance.get("/banners/get-banner-top"),
+	getBannerTop: () => publicAxios.get("/banners/get-banner-top"),
 
 	getBannerProductLatest: () =>
-		axiosInstance.get("/banners/get-banner-product-latest"),
+		publicAxios.get("/banners/get-banner-product-latest"),
 
 	getBannerProductOutstanding: () =>
-		axiosInstance.get("/banners/get-banner-product-outstanding"),
+		publicAxios.get("/banners/get-banner-product-outstanding"),
 
 	getBannerPositionSelect: () =>
 		axiosInstance.get("/banner-positions/select"),

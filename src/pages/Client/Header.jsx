@@ -22,7 +22,7 @@ import { FaAngleRight } from "react-icons/fa6";
 import { path } from "../../utils/constants";
 import categoryService from "../../services/CategoryService";
 
-function Header() {
+function Header({ categoriesProps }) {
 	const [categories, setCategories] = useState([]);
 	const [isShowCategory, setShowCategory] = useState(false);
 	const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
@@ -50,18 +50,21 @@ function Header() {
 		}
 	}, [categories, isShowCategory, selectedParentId]);
 
-	useEffect(() => {
-		const fetchDataCategories = async () => {
-			try {
-				const res = await categoryService.getCategoryParentAndChildHeader();
-				setCategories(res.data);
-			} catch (error) {
-				console.log("error: ", error);
-			}
-		};
+	// useEffect(() => {
+	// 	const fetchDataCategories = async () => {
+	// 		try {
+	// 			const res = await categoryService.getCategoryParentAndChildHeader();
+	// 			setCategories(res.data);
+	// 		} catch (error) {
+	// 			console.log("error: ", error);
+	// 		}
+	// 	};
 
-		fetchDataCategories();
-	}, []);
+	// 	fetchDataCategories();
+	// }, []);
+	useEffect(() => {
+		setCategories(categoriesProps);
+	}, [categoriesProps]);
 
 	const handleShowCategory = () => {
 		setShowCategory((prev) => !prev);
@@ -267,7 +270,6 @@ function Header() {
 											<FaAngleRight className="w-5 h-5" />
 										</div>
 									))}
-									
 								</div>
 								<div className="col-span-9 flex flex-wrap gap-2 p-[10px]">
 									<div className="grid grid-cols-12 gap-3">
@@ -286,7 +288,6 @@ function Header() {
 													/>
 												</div>
 											))}
-									
 									</div>
 								</div>
 							</div>

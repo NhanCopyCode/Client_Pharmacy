@@ -8,22 +8,12 @@ import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 import "swiper/css";
 import { useEffect, useState } from "react";
-function BannerTopHeader() {
+function BannerTopHeader({ bannersTopProps }) {
 	const [bannersTop, setBannersTop] = useState([]);
 
 	useEffect(() => {
-		try {
-			const fetchData = async () => {
-				const response = await bannerService.getBannerTop();
-
-				setBannersTop(response.data);
-			};
-
-			fetchData();
-		} catch (error) {
-			console.log("error at Banner top header component: ", error);
-		}
-	}, []);
+		setBannersTop(bannersTopProps);
+	}, [bannersTopProps]);
 	return (
 		<div className="relative">
 			<Swiper

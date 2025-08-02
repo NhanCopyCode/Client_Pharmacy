@@ -500,7 +500,7 @@ function DetailProduct() {
 											expanded ? "max-h-full" : ""
 										}`}
 									>
-										<div class="flex flex-col gap-4 h-full">
+										<div className="flex flex-col gap-4 h-full">
 											<p>
 												<strong>Bước 1:</strong>
 												&nbsp;Truy cập website và lựa
