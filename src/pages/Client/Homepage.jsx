@@ -44,7 +44,7 @@ function HomePage() {
 	useEffect(() => {
 		dispatch(fetchHeaderData());
 	}, [dispatch]);
-	if (loading)
+		if (loading)
 		return (
 			<div className="w-full h-screen flex items-center justify-center">
 				<TailSpin

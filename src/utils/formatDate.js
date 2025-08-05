@@ -12,4 +12,15 @@ const formatDate = (date) => {
 	return formatted;
 };
 
+export const formatVietnameseDate = (dateString) => {
+	const date = new Date(dateString);
+
+	const day = date.getDate();
+	const month = date.getMonth() + 1;
+
+	return `${day} tháng ${month}`
+}
+
+
 export default formatDate;
+

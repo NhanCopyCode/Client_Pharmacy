@@ -295,6 +295,11 @@ export const TABLE_COLUMNS = {
 		},
 		{ key: "description", label: "Nội dung", type: "html" },
 		{ key: "category_name", label: "Thể loại" },
+		{
+			key: "created_at",
+			label: "Ngày đăng",
+			type: 'date'
+		},
 		{ key: "approved", label: "Duyệt", type: "boolean" },
 	],
 	post_categories: [

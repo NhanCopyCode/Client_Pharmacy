@@ -4,9 +4,10 @@ import Tippy from "@tippyjs/react/headless";
 import { IoNotificationsOutline } from "react-icons/io5";
 import NotificationItemHeader from "./NotificationItemHeader";
 import Button from "./Button";
+import { useDispatch, useSelector } from "react-redux";
 
 function NotificationContainer() {
-
+	const { postsHeader } = useSelector((state) => state.headerData);
 	return (
 		<Tippy
 			interactive
@@ -18,9 +19,11 @@ function NotificationContainer() {
 					{...attrs}
 				>
 					<div className="flex flex-col w-full gap-3">
-						<NotificationItemHeader />
-						<NotificationItemHeader />
-						<NotificationItemHeader />
+						{postsHeader.length > 0 &&
+							postsHeader.map((post) => {
+								return  <NotificationItemHeader key={post.id} post={post}/>;
+							})}
+						
 						<Button>Xem tất cả</Button>
 					</div>
 				</div>

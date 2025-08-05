@@ -212,7 +212,7 @@ function Header({ categoriesProps, postCategoryProps, postsHeaderProps }) {
 							</Link>
 						</div>
 						<div className="col-span-4 flex items-center justify-end md:col-span-3">
-							<HeaderCart postsHeaderCart={postsHeaderProps} />
+							<HeaderCart  />
 						</div>
 						<div className="col-span-12 flex flex-col md:hidden mt-2 gap-2">
 							<Button

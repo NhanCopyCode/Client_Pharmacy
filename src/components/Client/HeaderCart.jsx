@@ -32,7 +32,7 @@ function HeaderCart() {
 			<Link className="w-[30px] h-[30px] relative hidden md:inline-block">
 				<IoIosHeartEmpty className="w-full h-full" />
 				<span className="absolute top-[-2px] right-[-3px] rounded-[50%] text-white w-[15px] h-[15px] text-center flex items-center justify-center bg-success text-[12px]">
-					3
+					5
 				</span>
 			</Link>
 			{/* Notification here */}
