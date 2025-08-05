@@ -390,6 +390,11 @@ export const TABLE_COLUMNS = {
 			label: "Giá trị tối thiểu",
 			type: "currency",
 		},
+		{
+			key: "end_date",
+			label: "Ngày kết thúc",
+			type: "end_date"
+		},
 		{ key: "applies_to", label: "Áp dụng cho", type: "badge" }, // 	enum('product', 'category', 'order')
 		{
 			key: "show_on_frontend",

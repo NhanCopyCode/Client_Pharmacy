@@ -13,7 +13,6 @@ import { useEffect, useState } from "react";
 import CountdownTimer from "./CountDownTimer";
 function PromotionContainer({ promotionsProps }) {
 	const [promotionsState, setPromotionsState] = useState([]);
-	console.log("promotions Props: ", promotionsProps);
 	useEffect(() => {
 		setPromotionsState(promotionsProps);
 	}, [promotionsProps]);

@@ -206,13 +206,12 @@ function renderCell(
 		const ampm = hours >= 12 ? "PM" : "AM";
 
 		hours = hours % 12;
-		hours = hours ? hours : 12;	
+		hours = hours ? hours : 12;
 
 		const hourStr = String(hours).padStart(2, "0");
 
 		return `${day}-${month}-${year} ${hourStr}:${minutes} ${ampm}`;
 	}
-	
 
 	if (type === "html") {
 		return (
@@ -301,6 +300,31 @@ function renderCell(
 
 	if (typeof col.render === "function") {
 		return col.render(value, rowData);
+	}
+
+	if (type === "end_date") {
+		const now = new Date();
+		const endDate = new Date(value);
+
+		if (isNaN(endDate.getTime())) {
+			return (
+				<span className="text-gray-400 italic">Ngày không hợp lệ</span>
+			);
+		}
+
+		const isExpired = now > endDate;
+
+		return (
+			<span
+				className={`font-semibold px-2 py-1 rounded ${
+					isExpired
+						? "text-red-600 bg-red-100"
+						: "text-green-600 bg-green-100"
+				}`}
+			>
+				{isExpired ? "Hết chương trình" : "Còn hiệu lực"}
+			</span>
+		);
 	}
 
 	return value != null ? value : "";

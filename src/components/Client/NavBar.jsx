@@ -7,23 +7,15 @@ import PostCategoryService from "../../services/PostCategoryService";
 import categoryService from "../../services/CategoryService";
 import { slugify } from "../../utils/slugify";
 
-function NavBar() {
+function NavBar({ navPostCategory }) {
 	const [isShowCategory, setShowCategory] = useState(false);
 	const [isShowPost, setShowPost] = useState(false);
 	const [listCategories, setListCategories] = useState([]);
 	const [postCategories, setPostCategories] = useState([]);
 
 	useEffect(() => {
-		const fetchPostCategories = async () => {
-			try {
-				const response = await PostCategoryService.getAll();
-				setPostCategories(response.data.data);
-			} catch (error) {
-				console.error("Error fetching post categories:", error);
-			}
-		};
-		fetchPostCategories();
-	}, []);
+		setPostCategories(navPostCategory);
+	}, [navPostCategory]);
 	useEffect(() => {
 		try {
 			const fetchData = async () => {

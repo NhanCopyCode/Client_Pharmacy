@@ -27,11 +27,14 @@ function HomePage() {
 	const [newProducts, setNewProducts] = useState([]);
 	const [bannerOutstanding, setBannerOutstanding] = useState([]);
 	const [productsTrending, setProductsTrend] = useState([]);
+	const [policies, setPolicies] = useState([]);
+	const [videos, setVideos] = useState([]);
+	const [postsNutrition, setPostsNutrition] = useState([]);
+	const [postsBeautifyYoung, setPostsBeautifulYoung] = useState([]);
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
 				const response = await homeService.getApiHomePage();
-				console.log("response api homepage:", response);
 				setSliders(response.data.banners_homepage);
 				setCategories(response.data.categories_outstanding);
 				setVouchers(response.data.vouchers);
@@ -39,6 +42,10 @@ function HomePage() {
 				setNewProducts(response.data.new_products);
 				setBannerOutstanding(response.data.banner_outstanding);
 				setProductsTrend(response.data.products_trending);
+				setPolicies(response.data.policies);
+				setVideos(response.data.videos);
+				setPostsNutrition(response.data.posts_nutrition);
+				setPostsBeautifulYoung(response.data.post_beautiful_young);
 			} catch (error) {
 				console.log("error: ", error);
 			}
@@ -63,8 +70,8 @@ function HomePage() {
 			<ListProduct />
 			<InformationContainer />
 			<ProductTrending />
-			<VideoContainer />
-			<PolicyContainer />
+			<VideoContainer videosProps={videos}/>
+			<PolicyContainer policiesProps={policies}/>
 		</Container>
 	);
 }

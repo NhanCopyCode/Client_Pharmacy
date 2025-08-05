@@ -8,7 +8,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
 	(config) => {
-		const token = localStorage.getItem("token");
+		const token = localStorage.getItem("access_token");
 		if (token) {
 			config.headers = config.headers || {};
 			config.headers.Authorization = `Bearer ${token}`;
@@ -44,8 +44,7 @@ axiosInstance.interceptors.response.use(
 				return axiosInstance(originalRequest);
 			} catch (err) {
 				console.error("Refresh token failed");
-				localStorage.clear();
-				window.location.href = "/admin/login";
+				// localStorage.cld
 			}
 		}
 

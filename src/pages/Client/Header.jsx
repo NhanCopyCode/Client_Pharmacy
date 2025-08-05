@@ -22,12 +22,13 @@ import { FaAngleRight } from "react-icons/fa6";
 import { path } from "../../utils/constants";
 import categoryService from "../../services/CategoryService";
 
-function Header({ categoriesProps }) {
+function Header({ categoriesProps, postCategoryProps, postsHeaderProps }) {
 	const [categories, setCategories] = useState([]);
 	const [isShowCategory, setShowCategory] = useState(false);
 	const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
 	const [isShowHeaderSidebar, setShowHeaderSidebar] = useState(false);
 	const [selectedParentId, setSelectedParentId] = useState(null);
+
 	useEffect(() => {
 		const mediaQuery = window.matchMedia("(max-width: 960px)"); // 4xl in Tailwind is 1536px
 
@@ -50,18 +51,7 @@ function Header({ categoriesProps }) {
 		}
 	}, [categories, isShowCategory, selectedParentId]);
 
-	// useEffect(() => {
-	// 	const fetchDataCategories = async () => {
-	// 		try {
-	// 			const res = await categoryService.getCategoryParentAndChildHeader();
-	// 			setCategories(res.data);
-	// 		} catch (error) {
-	// 			console.log("error: ", error);
-	// 		}
-	// 	};
-
-	// 	fetchDataCategories();
-	// }, []);
+	
 	useEffect(() => {
 		setCategories(categoriesProps);
 	}, [categoriesProps]);
@@ -222,7 +212,7 @@ function Header({ categoriesProps }) {
 							</Link>
 						</div>
 						<div className="col-span-4 flex items-center justify-end md:col-span-3">
-							<HeaderCart />
+							<HeaderCart postsHeaderCart={postsHeaderProps} />
 						</div>
 						<div className="col-span-12 flex flex-col md:hidden mt-2 gap-2">
 							<Button
@@ -294,7 +284,7 @@ function Header({ categoriesProps }) {
 						</div>
 					)}
 
-					<NavBar />
+					<NavBar navPostCategory={postCategoryProps} />
 				</div>
 			</div>
 

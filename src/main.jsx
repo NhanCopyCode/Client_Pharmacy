@@ -2,7 +2,6 @@ import React, { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { Provider } from "react-redux";
-import { store } from "./app/store.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { path } from "./utils/constants.js";
 import { adminPath } from "./utils/constants.js";
@@ -82,6 +81,7 @@ import RenderWithProps from "./utils/RenderWithProps.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CartProvider } from "./context/CartContext.jsx";
+import store from "./store/index.js";
 
 export const adminModels = [
 	{

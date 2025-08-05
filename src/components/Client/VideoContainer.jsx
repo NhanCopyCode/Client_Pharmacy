@@ -7,22 +7,13 @@ import SwiperPrevButton from "./SwiperPrevButton";
 import SwiperNextButton from "./SwiperNextButton";
 import VideoItem from "./VideoItem";
 import Button from "./Button";
-import videoService from '../../services/VideoService';
 import { useEffect, useState } from "react";
 
-function VideoContainer() {
+function VideoContainer({ videosProps }) {
 	const [videos, setVideos] = useState([]);
 	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const res = await videoService.getAll();
-				setVideos(res.data.data);
-			} catch (error) {
-				console.log('error: ', error);
-			}
-		}
-		fetchData();
-	}, [])
+		setVideos(videosProps);
+	}, [videosProps]);
 	return (
 		<div className="mt-8">
 			<h2 className="text-[30px] text-black font-bold ">
@@ -58,14 +49,10 @@ function VideoContainer() {
 								<VideoItem
 									title={video.name}
 									image={video.image}
-									url={
-										video.src
-									}
+									url={video.src}
 								/>
 							</SwiperSlide>
 						))}
-
-					
 				</Swiper>
 			</div>
 

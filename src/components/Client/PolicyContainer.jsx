@@ -6,23 +6,14 @@ import "swiper/css";
 import SwiperNextButton from "./SwiperNextButton";
 import SwiperPrevButton from "./SwiperPrevButton";
 import PolicyItem from "./PolicyItem";
-import policyService from "../../services/PolicyService";
 import { useEffect, useState } from "react";
 
-function PolicyContainer() {
+function PolicyContainer({ policiesProps }) {
 	const [policies, setPolicies] = useState([]);
 
 	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const res = await policyService.getAllPolicies();
-				setPolicies(res.data.data);
-			} catch (error) {
-				console.log("error: ", error);
-			}
-		};
-		fetchData();
-	}, []);
+		setPolicies(policiesProps);
+	}, [policiesProps]);
 	return (
 		<div className="mt-8">
 			<div className="mt-4 relative">
