@@ -18,7 +18,9 @@ function GoogleCallback() {
 		const user = JSON.parse(params.get("user"));
 		console.log('user:', user)
 
-		if (accessToken && refreshToken) {
+		if (accessToken && refreshToken && user) {
+			console.log("i am going here");
+			console.log("user when i am in here: ", user);
 			localStorage.setItem("access_token", accessToken);
 			localStorage.setItem("refresh_token", refreshToken);
 			localStorage.setItem("expires_in", expiresIn);
@@ -31,7 +33,7 @@ function GoogleCallback() {
 		} else {
 			navigate("/dang-nhap");
 		}
-	}, [navigate, searchParams]);
+	}, [navigate, searchParams, dispatch]);
 
 	return (
 		<div className="flex flex-col items-center justify-center h-screen gap-4">

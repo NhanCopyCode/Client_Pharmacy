@@ -1,14 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Container } from "../../components/Client";
 import { FaGoogle } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import { googleLogin, register } from "../../services/authService";
+import { googleLogin, register, login } from "../../services/authService";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function LoginPage() {
 	const [showLogin, setShowLogin] = useState(true);
 	const [showRegister, setShowRegister] = useState(false);
 	const [showForgotPasswordForm, setShowForgotPasswordForm] = useState(false);
+	const [dataRegister, setDataRegister] = useState({
+		surname: "",
+		name: "",
+		email: "",
+		phoneNumber: "",
+		password: "",
+	});
+	const [dataLogin, setDataLogin] = useState({
+		email: "",
+		password: "",
+	});
+
+	const [errorsRegister, setErrorsRegister] = useState({});
+	const [errorsLogin, setErrorsLogin] = useState({});
 	const navigate = useNavigate();
+	const { user } = useSelector((state) => state.auth);
+
+	useEffect(() => {
+		if (user) {
+			navigate('/account');
+		}
+	}, [user, navigate]);
 
 	const handleShowLoginForm = () => {
 		setShowLogin(true);
@@ -24,15 +46,78 @@ function LoginPage() {
 		setShowForgotPasswordForm(!showForgotPasswordForm);
 	};
 
+	const handleChangeRegister = (e) => {
+		const { name, value } = e.target;
+		setDataRegister((prev) => ({ ...prev, [name]: value }));
+	};
+
+	const handleChangeLogin = (e) => {
+		const { name, value } = e.target;
+		setDataLogin((prev) => ({ ...prev, [name]: value }));
+	};
+
+	const handleRegister = async () => {
+		try {
+			const res = await register(dataRegister);
+			if (res?.errors) {
+				setErrorsRegister(res.errors);
+			} else {
+				setErrorsRegister({});
+				console.log("Register success:", res);
+			}
+		} catch (error) {
+			console.error("Register error:", error);
+		}
+	};
+
+	const handleLogin = async () => {
+		try {
+			const res = await login(dataLogin);
+			if (res?.errors) {
+				setErrorsLogin(res.errors);
+			} else {
+				setErrorsLogin({});
+				console.log("Login success:", res);
+			}
+		} catch (error) {
+			console.error("Login error:", error);
+		}
+	};
+
 	const handleGoogleLogin = async () => {
 		try {
 			const res = await googleLogin();
-			const googleLoginUrl = res.url;
-			window.location.href = googleLoginUrl;
+			window.location.href = res.url;
 		} catch (error) {
-			console.log("error: ", error);
+			console.error("Google login error: ", error);
 		}
 	};
+
+	const renderInput = ({
+		name,
+		type = "text",
+		placeholder,
+		value,
+		onChange,
+		error,
+	}) => (
+		<div className="flex flex-col">
+			<input
+				type={type}
+				name={name}
+				value={value}
+				onChange={onChange}
+				placeholder={placeholder}
+				className={`border-b-2 outline-0 bg-white py-[4px] px-[10px] rounded-sm ${
+					error ? "border-b-red-500" : "border-b-lightBlue"
+				}`}
+			/>
+			{error && (
+				<span className="text-red-500 text-sm mt-1">{error}</span>
+			)}
+		</div>
+	);
+
 	return (
 		<Container>
 			<div className="w-[50%] border border-gray-100 shadow-md rounded-md py-[10px] px-[24px] mx-auto bg-gray-100">
@@ -65,32 +150,48 @@ function LoginPage() {
 							Đăng ký
 						</div>
 						<div className="flex flex-col gap-3">
-							<input
-								className="border-b-2 border-b-lightBlue outline-0 bg-white py-[4px] px-[10px] rounded-sm"
-								placeholder="Họ"
-							/>
-							<input
-								className="border-b-2 border-b-lightBlue outline-0 bg-white py-[4px] px-[10px] rounded-sm"
-								placeholder="Tên"
-							/>
-							<input
-								type="email"
-								className="border-b-2 border-b-lightBlue outline-0 bg-white py-[4px] px-[10px] rounded-sm"
-								placeholder="Email"
-							/>
-							<input
-								className="border-b-2 border-b-lightBlue outline-0 bg-white py-[4px] px-[10px] rounded-sm"
-								placeholder="Số điện thoại"
-							/>
-							<input
-								type="password"
-								className="border-b-2 border-b-lightBlue outline-0 bg-white py-[4px] px-[10px] rounded-sm"
-								placeholder="Mật khẩu"
-							/>
+							{renderInput({
+								name: "surname",
+								placeholder: "Họ",
+								value: dataRegister.surname,
+								onChange: handleChangeRegister,
+								error: errorsRegister.surname,
+							})}
+							{renderInput({
+								name: "name",
+								placeholder: "Tên",
+								value: dataRegister.name,
+								onChange: handleChangeRegister,
+								error: errorsRegister.name,
+							})}
+							{renderInput({
+								name: "email",
+								type: "email",
+								placeholder: "Email",
+								value: dataRegister.email,
+								onChange: handleChangeRegister,
+								error: errorsRegister.email,
+							})}
+							{renderInput({
+								name: "phoneNumber",
+								placeholder: "Số điện thoại",
+								value: dataRegister.phoneNumber,
+								onChange: handleChangeRegister,
+								error: errorsRegister.phoneNumber,
+							})}
+							{renderInput({
+								name: "password",
+								type: "password",
+								placeholder: "Mật khẩu",
+								value: dataRegister.password,
+								onChange: handleChangeRegister,
+								error: errorsRegister.password,
+							})}
 							<Button
 								buttonHeight="h-[45px]"
 								background="bg-darkBlue"
 								hoverEffect="hover:bg-primary"
+								onClick={handleRegister}
 							>
 								Đăng ký
 							</Button>
@@ -116,20 +217,27 @@ function LoginPage() {
 							Đăng nhập
 						</div>
 						<div className="flex flex-col gap-3">
-							<input
-								type="email"
-								className="border-b-2 border-b-lightBlue outline-0 bg-white py-[4px] px-[10px] rounded-sm"
-								placeholder="Email"
-							/>
-							<input
-								type="password"
-								className="border-b-2 border-b-lightBlue outline-0 bg-white py-[4px] px-[10px] rounded-sm"
-								placeholder="Mật khẩu"
-							/>
+							{renderInput({
+								name: "email",
+								type: "email",
+								placeholder: "Email",
+								value: dataLogin.email,
+								onChange: handleChangeLogin,
+								error: errorsLogin.email,
+							})}
+							{renderInput({
+								name: "password",
+								type: "password",
+								placeholder: "Mật khẩu",
+								value: dataLogin.password,
+								onChange: handleChangeLogin,
+								error: errorsLogin.password,
+							})}
 							<Button
 								buttonHeight="h-[45px]"
 								background="bg-darkBlue"
 								hoverEffect="hover:bg-primary"
+								onClick={handleLogin}
 							>
 								Đăng nhập
 							</Button>

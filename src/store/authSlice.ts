@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { clearAuthStorage } from "../utils/storage";
+import { addAuthStorage } from "../utils/storage";
 
 const savedUser = JSON.parse(localStorage.getItem("user") || "null");
 const savedAccessToken = localStorage.getItem("access_token");
@@ -26,6 +27,7 @@ const authSlice = createSlice({
 			state.user = action.payload.user;
 			state.accessToken = action.payload.accessToken;
 			state.refreshToken = action.payload.refreshToken;
+			addAuthStorage(action.payload);
 		},
 		loginFail: (state, action) => {
 			state.loading = false;

@@ -2,8 +2,8 @@ import axios from "./api/axiosInstance";
 import publicAxios from "./api/publicAxios";
 import { clientAxios } from "./api/publicAxios";
 
-export const login = async (email, password) => {
-	const response = await publicAxios.post(`/login`, { email, password });
+export const login = async (data) => {
+	const response = await publicAxios.post(`/login`, { ...data });
 	return response.data;
 };
 
@@ -15,7 +15,7 @@ export const getProfile = async (token) => {
 };
 
 export const register = async (data) => {
-	const res = await publicAxios.post("/register", { data });
+	const res = await publicAxios.post("/register", { ...data });
 	return res?.data;
 };
 

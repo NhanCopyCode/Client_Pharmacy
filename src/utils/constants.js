@@ -14,6 +14,7 @@ export const path = {
 	GIO_HANG: "gio-hang",
 	SAN_PHAM_KHUYEN_MAI: "san-pham-khuyen-mai",
 	CHECK_OUT: "checkout/:id",
+	ACCOUNT: "/account"
 };
 
 // src/utils/roles.js
