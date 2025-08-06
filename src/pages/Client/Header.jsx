@@ -20,7 +20,8 @@ import { SearchHeader } from "../../components/Client";
 import { IoIosMenu } from "react-icons/io";
 import { FaAngleRight } from "react-icons/fa6";
 import { path } from "../../utils/constants";
-import categoryService from "../../services/CategoryService";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../store/authSlice";
 
 function Header({ categoriesProps, postCategoryProps, postsHeaderProps }) {
 	const [categories, setCategories] = useState([]);
@@ -28,6 +29,8 @@ function Header({ categoriesProps, postCategoryProps, postsHeaderProps }) {
 	const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
 	const [isShowHeaderSidebar, setShowHeaderSidebar] = useState(false);
 	const [selectedParentId, setSelectedParentId] = useState(null);
+	const { user } = useSelector((state) => state.auth);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		const mediaQuery = window.matchMedia("(max-width: 960px)"); // 4xl in Tailwind is 1536px
@@ -73,6 +76,11 @@ function Header({ categoriesProps, postCategoryProps, postsHeaderProps }) {
 		setIsMobileOrTablet(true);
 		setShowHeaderSidebar(true);
 	};
+
+	const handleLogout = () => {
+		dispatch(logout());
+	}
+
 	return (
 		<>
 			<div className=" bg-linear-to-bl from-lightBlue to-darkBlue font-bold text-white ">
@@ -110,28 +118,54 @@ function Header({ categoriesProps, postCategoryProps, postsHeaderProps }) {
 						</div>
 						<div className="hidden flex-wrap items-center divide-x divide-white/40 gap-y-2 md:flex">
 							<div className="px-2">
-								<Button
-									to={"/" + path.DANG_NHAP}
-									background="bg-none"
-									fontWeight="font-bold"
-									fontSize="text-sm"
-									padding="p-none"
-									hoverEffect="hover:text-primary"
-								>
-									Đăng ký
-								</Button>
+								{user ? (
+									<Button
+										to={"/" + path.DANG_NHAP}
+										background="bg-none"
+										fontWeight="font-bold"
+										fontSize="text-sm"
+										padding="p-none"
+										hoverEffect="hover:text-primary"
+									>
+										Tài khoản
+									</Button>
+								) : (
+									<Button
+										to={"/" + path.DANG_NHAP}
+										background="bg-none"
+										fontWeight="font-bold"
+										fontSize="text-sm"
+										padding="p-none"
+										hoverEffect="hover:text-primary"
+									>
+										Đăng ký
+									</Button>
+								)}
 							</div>
 							<div className="px-2">
-								<Button
-									to={"/" + path.DANG_NHAP}
-									background="bg-none"
-									fontWeight="font-bold"
-									fontSize="text-sm"
-									padding="p-none"
-									hoverEffect="hover:text-primary"
-								>
-									Đăng nhập
-								</Button>
+								{user ? (
+									<Button
+										background="bg-none"
+										fontWeight="font-bold"
+										fontSize="text-sm"
+										padding="p-none"
+										hoverEffect="hover:text-primary"
+										onClick={handleLogout}
+									>
+										Đăng xuất
+									</Button>
+								) : (
+									<Button
+										to={"/" + path.DANG_NHAP}
+										background="bg-none"
+										fontWeight="font-bold"
+										fontSize="text-sm"
+										padding="p-none"
+										hoverEffect="hover:text-primary"
+									>
+										Đăng nhập
+									</Button>
+								)}
 							</div>
 							<div className="px-2 flex items-center gap-1">
 								<Button
@@ -212,7 +246,7 @@ function Header({ categoriesProps, postCategoryProps, postsHeaderProps }) {
 							</Link>
 						</div>
 						<div className="col-span-4 flex items-center justify-end md:col-span-3">
-							<HeaderCart  />
+							<HeaderCart />
 						</div>
 						<div className="col-span-12 flex flex-col md:hidden mt-2 gap-2">
 							<Button

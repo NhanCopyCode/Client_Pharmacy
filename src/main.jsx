@@ -82,6 +82,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CartProvider } from "./context/CartContext.jsx";
 import store from "./store/index.js";
+import GoogleCallback from "./components/Client/GoogleCallback.jsx";
 
 export const adminModels = [
 	{
@@ -180,7 +181,6 @@ export const adminModels = [
 		detail: DetailPromotionProduct,
 		update: EditPromotionProduct,
 	},
-
 ];
 const DefaultAdminIndex = adminModels[0].list;
 createRoot(document.getElementById("root")).render(
@@ -190,7 +190,15 @@ createRoot(document.getElementById("root")).render(
 				<CartProvider>
 					<BrowserRouter>
 						<Routes>
-							<Route path={path.CHECK_OUT} element={<CheckoutPage />} />
+							<Route
+								path={path.CHECK_OUT}
+								element={<CheckoutPage />}
+							/>
+
+							<Route
+								path="/oauth/callback"
+								element={<GoogleCallback />}
+							/>
 
 							<Route path={path.HOME} element={<Homepage />}>
 								<Route path="*" element={<Home />} />

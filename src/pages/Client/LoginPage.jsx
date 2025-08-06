@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { Button, Container } from "../../components/Client";
 import { FaGoogle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { googleLogin, register } from "../../services/authService";
+
 function LoginPage() {
 	const [showLogin, setShowLogin] = useState(true);
 	const [showRegister, setShowRegister] = useState(false);
 	const [showForgotPasswordForm, setShowForgotPasswordForm] = useState(false);
+	const navigate = useNavigate();
 
 	const handleShowLoginForm = () => {
 		setShowLogin(true);
@@ -16,9 +20,19 @@ function LoginPage() {
 		setShowRegister(true);
 	};
 
-    const handleShowForgotPasswordForm = () => {
-        setShowForgotPasswordForm(!showForgotPasswordForm);
-    }
+	const handleShowForgotPasswordForm = () => {
+		setShowForgotPasswordForm(!showForgotPasswordForm);
+	};
+
+	const handleGoogleLogin = async () => {
+		try {
+			const res = await googleLogin();
+			const googleLoginUrl = res.url;
+			window.location.href = googleLoginUrl;
+		} catch (error) {
+			console.log("error: ", error);
+		}
+	};
 	return (
 		<Container>
 			<div className="w-[50%] border border-gray-100 shadow-md rounded-md py-[10px] px-[24px] mx-auto bg-gray-100">
@@ -89,6 +103,7 @@ function LoginPage() {
 							background="bg-lightRed"
 							hoverEffect="hover:bg-redColor"
 							buttonHeight="h-[45px]"
+							onClick={handleGoogleLogin}
 						>
 							Google
 						</Button>
@@ -149,6 +164,7 @@ function LoginPage() {
 								background="bg-lightRed"
 								hoverEffect="hover:bg-redColor"
 								buttonHeight="h-[45px]"
+								onClick={handleGoogleLogin}
 							>
 								Google
 							</Button>

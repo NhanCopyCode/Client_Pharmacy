@@ -6,33 +6,12 @@ import {
 	ContactButton,
 	ScrollToTop,
 } from "../../components/Client";
-import homeService from "../../services/HomeService";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { fetchHeaderData } from "../../store/headerDataAction";
 import { TailSpin } from "react-loader-spinner";
 
 function HomePage() {
 	const dispatch = useDispatch();
-	// const [bannersTop, setBannersTop] = useState([]);
-	// const [categories, setCategories] = useState([]);
-	// const [postCategory, setPostCategory] = useState([]);
-	// const [postsHeader, setPostsHeader] = useState([]);
-	// useEffect(() => {
-	// 	const fetchData = async () => {
-	// 		try {
-	// 			const res = await homeService.getHeaderFooterApi();
-	// 			console.log("res home page:", res);
-	// 			setBannersTop(res.data.banners_top);
-	// 			setCategories(res.data.categories);
-	// 			setPostCategory(res.data.post_category);
-	// 			setPostsHeader(res.data.posts_header);
-	// 		} catch (error) {
-	// 			console.log("error: ", error);
-	// 		}
-	// 	};
-
-	// 	fetchData();
-	// }, []);
 
 	const {
 		bannersTop,

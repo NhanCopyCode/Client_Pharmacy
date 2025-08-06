@@ -4,7 +4,7 @@ import Tippy from "@tippyjs/react/headless";
 import { IoNotificationsOutline } from "react-icons/io5";
 import NotificationItemHeader from "./NotificationItemHeader";
 import Button from "./Button";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 function NotificationContainer() {
 	const { postsHeader } = useSelector((state) => state.headerData);
@@ -33,7 +33,7 @@ function NotificationContainer() {
 				<Link className="w-full h-full relative">
 					<IoNotificationsOutline className="w-full h-full" />
 					<span className="absolute top-[-2px] right-[-3px] rounded-[50%] text-white w-[15px] h-[15px] text-center flex items-center justify-center bg-success text-[12px]">
-						3
+						{postsHeader.length}
 					</span>
 				</Link>
 			</div>
