@@ -20,7 +20,7 @@ function LoginPage() {
 	});
 	const [dataLogin, setDataLogin] = useState({
 		email: "",
-		password: "",	
+		password: "",
 	});
 
 	const [errorsRegister, setErrorsRegister] = useState({});
@@ -31,15 +31,9 @@ function LoginPage() {
 	const location = useLocation();
 
 	useEffect(() => {
-		console.log(location.pathname);
 		if (user && location.pathname === "/" + path.DANG_NHAP) {
 			navigate("/account");
 		}
-		console.log(location.pathname);
-		if(location.pathname === "/" + path.ACCOUNT) {
-			console.log('có account');
-		}
-	
 	}, [user, navigate, location]);
 
 	const handleShowLoginForm = () => {
@@ -83,9 +77,8 @@ function LoginPage() {
 
 		try {
 			const res = await login(dataLogin);
-			console.log('res login:', res)
+			console.log("res login:", res);
 			dispatch(loginSuccess(res));
-
 		} catch (error) {
 			console.error("Login error:", error);
 			setErrorsLogin(error.response.data.errors);
@@ -225,6 +218,7 @@ function LoginPage() {
 							Đăng nhập
 						</div>
 						<div className="flex flex-col gap-3">
+							
 							{renderInput({
 								name: "email",
 								type: "email",
