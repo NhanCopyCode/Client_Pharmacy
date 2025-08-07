@@ -17,6 +17,7 @@ import {
 	AdminPage,
 	ListProductAndPost,
 	CheckoutPage,
+	AccountDetailPage,
 } from "./pages/Client";
 import {
 	AddNewBrand,
@@ -83,6 +84,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { CartProvider } from "./context/CartContext.jsx";
 import store from "./store/index.js";
 import GoogleCallback from "./components/Client/GoogleCallback.jsx";
+import PrivateRoute from "./components/Client/PrivateRoute.jsx";
 
 export const adminModels = [
 	{
@@ -202,6 +204,15 @@ createRoot(document.getElementById("root")).render(
 
 							<Route path={path.HOME} element={<Homepage />}>
 								<Route path="*" element={<Home />} />
+								<Route
+									path={path.ACCOUNT}
+									element={
+										<PrivateRoute>
+											<AccountDetailPage />
+										</PrivateRoute>
+									}
+								/>
+
 								<Route
 									path="khuyen-mai-hot"
 									element={<DetailCategoryPage />}

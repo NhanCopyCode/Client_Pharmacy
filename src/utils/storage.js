@@ -1,7 +1,7 @@
 export const clearAuthStorage = () => {
 	localStorage.removeItem("user");
-	localStorage.removeItem("accessToken");
-	localStorage.removeItem("refreshToken");
+	localStorage.removeItem("access_token");
+	localStorage.removeItem("refresh_token");
 };
 
 export const addAuthStorage = ({ user, accessToken, refreshToken }) => {

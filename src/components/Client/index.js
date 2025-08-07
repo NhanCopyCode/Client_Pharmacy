@@ -61,3 +61,7 @@ export { default as ScrollToTopOnRouteChange } from "./ScrollToTopOnRouteChange"
 export { default as CheckoutForm } from "./CheckoutForm";
 export { default as CartItemInCheckoutPage } from "./CartItemInCheckoutPage";
 export { default as GoogleCallback } from "./GoogleCallback";
+export { default as InforAccountDetail } from "./InforAccountDetail";
+export { default as CartInfoAccountDetail } from "./CartInfoAccountDetail";
+export { default as AccountDetailChangePass } from "./AccountDetailChangePass";
+export { default as AccountDetailAddress } from "./AccountDetailAddress";

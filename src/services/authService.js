@@ -4,6 +4,7 @@ import { clientAxios } from "./api/publicAxios";
 
 export const login = async (data) => {
 	const response = await publicAxios.post(`/login`, { ...data });
+	
 	return response.data;
 };
 
@@ -15,8 +16,15 @@ export const getProfile = async (token) => {
 };
 
 export const register = async (data) => {
-	const res = await publicAxios.post("/register", { ...data });
-	return res?.data;
+	try {
+		const res = await publicAxios.post("/register", { ...data });
+		return res?.data;
+	} catch (error) {
+		if (error.response && error.response.status === 442) {
+			return { error: error.response.data.errors };
+		}
+		throw error;
+	}
 };
 
 export const googleLogin = async () => {

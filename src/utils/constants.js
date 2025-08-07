@@ -14,7 +14,7 @@ export const path = {
 	GIO_HANG: "gio-hang",
 	SAN_PHAM_KHUYEN_MAI: "san-pham-khuyen-mai",
 	CHECK_OUT: "checkout/:id",
-	ACCOUNT: "/account"
+	ACCOUNT: "account"
 };
 
 // src/utils/roles.js
@@ -36,6 +36,27 @@ export const customStylesModal = {
 		bottom: "auto",
 		padding: "0",
 		width: "434px",
+		maxHeight: "90vh",
+		borderRadius: "4px",
+		border: "none",
+		background: "#fff",
+		boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)",
+		transform: "translate(-50%, -50%)",
+	},
+};
+
+export const customStyleModalAddAddress = {
+	overlay: {
+		backgroundColor: "rgba(0, 0, 0, 0.3)",
+		zIndex: 1000,
+	},
+	content: {
+		top: "50%",
+		left: "50%",
+		right: "auto",
+		bottom: "auto",
+		padding: "0",
+		width: "705px",
 		maxHeight: "90vh",
 		borderRadius: "4px",
 		border: "none",

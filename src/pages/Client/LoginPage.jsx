@@ -3,7 +3,9 @@ import { Button, Container } from "../../components/Client";
 import { FaGoogle } from "react-icons/fa";
 import { googleLogin, register, login } from "../../services/authService";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { loginSuccess } from "../../store/authSlice";
+import { path } from "../../utils/constants";
 
 function LoginPage() {
 	const [showLogin, setShowLogin] = useState(true);
@@ -18,19 +20,27 @@ function LoginPage() {
 	});
 	const [dataLogin, setDataLogin] = useState({
 		email: "",
-		password: "",
+		password: "",	
 	});
 
 	const [errorsRegister, setErrorsRegister] = useState({});
 	const [errorsLogin, setErrorsLogin] = useState({});
 	const navigate = useNavigate();
 	const { user } = useSelector((state) => state.auth);
+	const dispatch = useDispatch();
+	const location = useLocation();
 
 	useEffect(() => {
-		if (user) {
-			navigate('/account');
+		console.log(location.pathname);
+		if (user && location.pathname === "/" + path.DANG_NHAP) {
+			navigate("/account");
 		}
-	}, [user, navigate]);
+		console.log(location.pathname);
+		if(location.pathname === "/" + path.ACCOUNT) {
+			console.log('có account');
+		}
+	
+	}, [user, navigate, location]);
 
 	const handleShowLoginForm = () => {
 		setShowLogin(true);
@@ -57,30 +67,28 @@ function LoginPage() {
 	};
 
 	const handleRegister = async () => {
+		setErrorsRegister({});
+
 		try {
 			const res = await register(dataRegister);
-			if (res?.errors) {
-				setErrorsRegister(res.errors);
-			} else {
-				setErrorsRegister({});
-				console.log("Register success:", res);
-			}
+			dispatch(loginSuccess(res));
 		} catch (error) {
 			console.error("Register error:", error);
+			setErrorsRegister(error.response.data.errors);
 		}
 	};
 
 	const handleLogin = async () => {
+		setErrorsLogin({});
+
 		try {
 			const res = await login(dataLogin);
-			if (res?.errors) {
-				setErrorsLogin(res.errors);
-			} else {
-				setErrorsLogin({});
-				console.log("Login success:", res);
-			}
+			console.log('res login:', res)
+			dispatch(loginSuccess(res));
+
 		} catch (error) {
 			console.error("Login error:", error);
+			setErrorsLogin(error.response.data.errors);
 		}
 	};
 

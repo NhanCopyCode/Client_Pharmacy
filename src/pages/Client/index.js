@@ -12,3 +12,4 @@ export { default as DetailNews } from "./DetailNews";
 export { default as AdminPage } from "./AdminPage";
 export { default as ListProductAndPost } from "./ListProductAndPost";
 export { default as CheckoutPage } from "./CheckoutPage";
+export { default as AccountDetailPage } from "./AccountDetailPage";

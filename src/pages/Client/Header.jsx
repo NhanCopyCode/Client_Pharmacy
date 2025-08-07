@@ -15,7 +15,7 @@ import {
 } from "../../components/Client";
 import { IoCallOutline } from "react-icons/io5";
 import Logo from "../../assets/images/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SearchHeader } from "../../components/Client";
 import { IoIosMenu } from "react-icons/io";
 import { FaAngleRight } from "react-icons/fa6";
@@ -30,10 +30,12 @@ function Header({ categoriesProps, postCategoryProps, postsHeaderProps }) {
 	const [isShowHeaderSidebar, setShowHeaderSidebar] = useState(false);
 	const [selectedParentId, setSelectedParentId] = useState(null);
 	const { user } = useSelector((state) => state.auth);
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	
 
 	useEffect(() => {
-		const mediaQuery = window.matchMedia("(max-width: 960px)"); // 4xl in Tailwind is 1536px
+		const mediaQuery = window.matchMedia("(max-width: 960px)");
 
 		const handleMediaChange = (e) => {
 			setIsMobileOrTablet(e.matches);
@@ -78,7 +80,9 @@ function Header({ categoriesProps, postCategoryProps, postsHeaderProps }) {
 	};
 
 	const handleLogout = () => {
+		console.log("click logo");
 		dispatch(logout());
+		navigate("/");
 	}
 
 	return (
@@ -120,7 +124,7 @@ function Header({ categoriesProps, postCategoryProps, postsHeaderProps }) {
 							<div className="px-2">
 								{user ? (
 									<Button
-										to={"/" + path.DANG_NHAP}
+										to={"/" + path.ACCOUNT}
 										background="bg-none"
 										fontWeight="font-bold"
 										fontSize="text-sm"

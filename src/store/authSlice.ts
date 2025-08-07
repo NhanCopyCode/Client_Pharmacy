@@ -23,6 +23,7 @@ const authSlice = createSlice({
 			state.error = null;
 		},
 		loginSuccess: (state, action) => {
+			console.log("action authSlice: ", action);
 			state.loading = false;
 			state.user = action.payload.user;
 			state.accessToken = action.payload.accessToken;
