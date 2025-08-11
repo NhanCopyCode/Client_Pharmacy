@@ -81,7 +81,13 @@ function LoginPage() {
 			dispatch(loginSuccess(res));
 		} catch (error) {
 			console.error("Login error:", error);
-			setErrorsLogin(error.response.data.errors);
+			if (error.response?.data?.errors) {
+				setErrorsLogin(error.response.data.errors);
+			} else {
+				setErrorsLogin({
+					general: "Đăng nhập thất bại",
+				});
+			}
 		}
 	};
 
@@ -113,8 +119,10 @@ function LoginPage() {
 					error ? "border-b-red-500" : "border-b-lightBlue"
 				}`}
 			/>
-			{error && (
-				<span className="text-red-500 text-sm mt-1">{error}</span>
+			{errorsLogin.general && (
+				<span className="text-red-500 text-sm mt-1">
+					{errorsLogin.general}
+				</span>
 			)}
 		</div>
 	);
@@ -218,7 +226,6 @@ function LoginPage() {
 							Đăng nhập
 						</div>
 						<div className="flex flex-col gap-3">
-							
 							{renderInput({
 								name: "email",
 								type: "email",
@@ -243,7 +250,7 @@ function LoginPage() {
 							>
 								Đăng nhập
 							</Button>
-							<div	
+							<div
 								onClick={handleShowForgotPasswordForm}
 								className="flex items-center justify-center text-sm hover:text-primary cursor-pointer font-bold mt-4"
 							>

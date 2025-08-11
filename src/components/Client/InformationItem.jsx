@@ -1,7 +1,7 @@
 function InformationItem({ post }) {
 	if (!post) return null; // defensive check
 
-	const { image, title, description, created_at } = post;
+	const { image, title, description } = post;
 
 	return (
 		<div className="flex flex-1 items-start gap-4">
@@ -18,15 +18,8 @@ function InformationItem({ post }) {
 					{title}
 				</h3>
 
-				<span className="text-xs text-gray-500 font-medium mt-1">
-					Ngày đăng:{" "}
-					{created_at
-						? new Date(created_at).toLocaleDateString("vi-VN")
-						: "Không rõ"}
-				</span>
-
 				<p
-					className="text-sm text-black font-medium xl:line-clamp-3 line-clamp-4 mt-1"
+					className="text-sm text-black font-medium xl:line-clamp-2 line-clamp-4 mt-1"
 					title={description}
 				>
 					{description}
