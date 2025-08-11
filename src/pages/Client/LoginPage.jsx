@@ -243,7 +243,7 @@ function LoginPage() {
 							>
 								Đăng nhập
 							</Button>
-							<div
+							<div	
 								onClick={handleShowForgotPasswordForm}
 								className="flex items-center justify-center text-sm hover:text-primary cursor-pointer font-bold mt-4"
 							>

@@ -40,12 +40,12 @@ function HomePage() {
 				setVouchers(response.data.vouchers);
 				setPromotions(response.data.promotions_show_on_frontend);
 				setNewProducts(response.data.new_products);
-				setBannerOutstanding(response.data.banner_outstanding);
+				setBannerOutstanding(response.data.banners_outstanding);
 				setProductsTrend(response.data.products_trending);
 				setPolicies(response.data.policies);
 				setVideos(response.data.videos);
 				setPostsNutrition(response.data.posts_nutrition);
-				setPostsBeautifulYoung(response.data.post_beautiful_young);
+				setPostsBeautifulYoung(response.data.posts_beautiful_young);
 			} catch (error) {
 				console.log("error: ", error);
 			}
@@ -68,7 +68,7 @@ function HomePage() {
 			/>
 			<IntroduceComponent />
 			<ListProduct />
-			<InformationContainer />
+			<InformationContainer postsNutritionProps={postsNutrition} postsBeautifyYoungProps={postsBeautifyYoung} />
 			<ProductTrending />
 			<VideoContainer videosProps={videos}/>
 			<PolicyContainer policiesProps={policies}/>

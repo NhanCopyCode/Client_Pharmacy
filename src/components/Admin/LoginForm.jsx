@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 function LoginForm({ onSubmit, loading, error }) {
-	const [form, setForm] = useState({ username: "", password: "" });
+	const [form, setForm] = useState({ email: "", password: "" });
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -21,8 +21,8 @@ function LoginForm({ onSubmit, loading, error }) {
 				</label>
 				<input
 					type="email"
-					name="username"
-					value={form.username}
+					name="email"
+					value={form.email}
 					onChange={handleChange}
 					className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
 				/>

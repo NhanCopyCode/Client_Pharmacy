@@ -13,14 +13,14 @@ function LoginPage() {
 
 	const handleLogin = async (form) => {
 		setError("");
-		if (!form.username || !form.password) {
-			setError("Username and Password are required.");
+		if (!form.email || !form.password) {
+			setError("email and Password are required.");
 			return;
 		}
 
 		setLoading(true);
 		try {
-			const data = await login(form.username, form.password);
+			const data = await login({email: form.email, password:form.password});
 			loginUser(data);	
 
 			navigate("/admin");

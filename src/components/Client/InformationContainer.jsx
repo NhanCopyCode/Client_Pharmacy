@@ -1,51 +1,61 @@
 import Button from "./Button";
 import InformationItem from "./InformationItem";
 
-function InformationContainer() {
+function InformationContainer({
+	postsNutritionProps = [],
+	postsBeautifyYoungProps = [],
+}) {
+	console.log('post young: ', postsBeautifyYoungProps);
 	return (
 		<div className="mt-8">
 			<div className="grid grid-cols-12 gap-4">
+				{/* Góc dinh dưỡng */}
 				<div className="xl:col-span-8 col-span-12">
-					<h2 className="text-[30px] text-black font-bold ">
+					<h2 className="text-[30px] text-black font-bold">
 						Góc dinh dưỡng
 					</h2>
 					<div className="grid grid-cols-12 gap-4 mt-2">
-						<div className="xl:col-span-6 col-span-12">
-							<img
-								src="https://bizweb.dktcdn.net/100/491/197/articles/7.png?v=1689667252690"
-								className="w-full object-cover rounded-md"
-							/>
-							<div className="flex flex-col items-start gap-2">
-								<h3
-									className="text-[20px] text-black font-bold line-clamp-1 mt-2"
-									title="Trẻ uống kẽm có bị táo bón không? Cần có những lưu ý gì khi bổ sung kẽm cho bé?"
-								>
-									Trẻ uống kẽm có bị táo bón không? Cần có
-									những lưu ý gì khi bổ sung kẽm cho bé?
-								</h3>
-								<span className="text-sm text-primary font-medium">
-									Ngày đăng: 18/07/2024
-								</span>
-								<p
-									className="text-sm text-black font-medium line-clamp-4"
-									title="Tại Việt Nam, tỷ lệ trẻ em bị thiếu kẽm lên đến 40% khiến bé chậm lớn, biếng ăn, thiếu sức đề kháng. Mặc dù vậy, việc bổ sung kẽm cho bé thông qua các loại thực phẩm chức năng, thuốc uống cũng mang đến nhiều băn khoăn. Bài viết này...
-		"
-								>
-									Tại Việt Nam, tỷ lệ trẻ em bị thiếu kẽm lên
-									đến 40% khiến bé chậm lớn, biếng ăn, thiếu
-									sức đề kháng. Mặc dù vậy, việc bổ sung kẽm
-									cho bé thông qua các loại thực phẩm chức
-									năng, thuốc uống cũng mang đến nhiều băn
-									khoăn. Bài viết này...
-								</p>
+						{/* Featured post */}
+						{postsNutritionProps.length > 0 && (
+							<div className="xl:col-span-6 col-span-12">
+								<img
+									src={
+										postsNutritionProps[0].image ||
+										"https://via.placeholder.com/600x400"
+									}
+									className="w-full object-cover rounded-md"
+									alt={postsNutritionProps[0].title}
+								/>
+								<div className="flex flex-col items-start gap-2">
+									<h3
+										className="text-[20px] text-black font-bold line-clamp-1 mt-2"
+										title={postsNutritionProps[0].title}
+									>
+										{postsNutritionProps[0].title}
+									</h3>
+									<span className="text-sm text-primary font-medium">
+										Ngày đăng:{" "}
+										{new Date(
+											postsNutritionProps[0].created_at
+										).toLocaleDateString("vi-VN")}
+									</span>
+									<p
+										className="text-sm text-black font-medium line-clamp-4"
+										title={
+											postsNutritionProps[0].description
+										}
+									>
+										{postsNutritionProps[0].description}
+									</p>
+								</div>
 							</div>
-						</div>
+						)}
 
+						{/* Remaining posts */}
 						<div className="xl:col-span-6 col-span-12 mt-4 xl:mt-0 flex flex-col gap-4">
-							<InformationItem />
-							<InformationItem />
-							<InformationItem />
-							<InformationItem />
+							{postsNutritionProps.slice(1, 5).map((post) => (
+								<InformationItem key={post.id} post={post} />
+							))}
 						</div>
 					</div>
 
@@ -64,15 +74,15 @@ function InformationContainer() {
 					</div>
 				</div>
 
+				{/* Góc trẻ đẹp */}
 				<div className="xl:col-span-4 col-span-12">
-					<h2 className="text-[30px] text-black font-bold ">
+					<h2 className="text-[30px] text-black font-bold">
 						Góc trẻ đẹp
 					</h2>
-					<div className=" flex flex-col gap-4 mt-2">
-						<InformationItem />
-						<InformationItem />
-						<InformationItem />
-						<InformationItem />
+					<div className="flex flex-col gap-4 mt-2">
+						{postsBeautifyYoungProps.slice(0, 4).map((post) => (
+							<InformationItem key={post.id} post={post} />
+						))}
 					</div>
 
 					<div className="flex items-center justify-center mt-4">

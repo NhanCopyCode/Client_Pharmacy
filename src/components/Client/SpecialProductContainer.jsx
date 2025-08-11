@@ -9,28 +9,14 @@ import Button from "./Button";
 import bannerService from "../../services/BannerService";
 import productService from "../../services/ProductService";
 
-function SpecialProductContainer() {
+function SpecialProductContainer({ productsTrending, bannerOutstanding }) {
 	const [banners, setBanners] = useState([]);
 	const [products, setProducts] = useState([]);
 
 	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const resBanner =
-					await bannerService.getBannerProductOutstanding();
-				const resProduct = await productService.getProductTrending();
-				setBanners(resBanner.data);
-				setProducts(resProduct.data.data);
-			} catch (error) {
-				console.log(
-					"Error at special product container component:",
-					error
-				);
-			}
-		};
-
-		fetchData();
-	}, []);
+		setBanners(bannerOutstanding);
+		setProducts(productsTrending);
+	}, [productsTrending, bannerOutstanding]);
 
 	return (
 		<div className="mt-8">

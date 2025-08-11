@@ -2,6 +2,8 @@ export const clearAuthStorage = () => {
 	localStorage.removeItem("user");
 	localStorage.removeItem("access_token");
 	localStorage.removeItem("refresh_token");
+	localStorage.removeItem("cart_items");
+	localStorage.removeItem("expires_in");
 };
 
 export const addAuthStorage = ({ user, accessToken, refreshToken }) => {

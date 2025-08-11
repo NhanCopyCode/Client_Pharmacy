@@ -47,6 +47,10 @@ function Header({ categoriesProps, postCategoryProps, postsHeaderProps }) {
 	}, []);
 
 	useEffect(() => {
+		
+	}, [user])
+
+	useEffect(() => {
 		if (
 			categories?.length > 0 &&
 			isShowCategory &&
@@ -80,7 +84,6 @@ function Header({ categoriesProps, postCategoryProps, postsHeaderProps }) {
 	};
 
 	const handleLogout = () => {
-		console.log("click logo");
 		dispatch(logout());
 		navigate("/");
 	}
