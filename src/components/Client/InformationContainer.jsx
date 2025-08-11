@@ -6,6 +6,7 @@ function InformationContainer({
 	postsBeautifyYoungProps = [],
 }) {
 	console.log('post young: ', postsBeautifyYoungProps);
+	console.log('post nutrition: ', postsNutritionProps);
 	return (
 		<div className="mt-8">
 			<div className="grid grid-cols-12 gap-4">

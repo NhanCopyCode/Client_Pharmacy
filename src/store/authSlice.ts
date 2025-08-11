@@ -26,8 +26,8 @@ const authSlice = createSlice({
 			console.log("action authSlice: ", action);
 			state.loading = false;
 			state.user = action.payload.user;
-			state.accessToken = action.payload.accessToken;
-			state.refreshToken = action.payload.refreshToken;
+			state.accessToken = action.payload.access_token;
+			state.refreshToken = action.payload.refresh_token;
 			addAuthStorage(action.payload);
 		},
 		loginFail: (state, action) => {
