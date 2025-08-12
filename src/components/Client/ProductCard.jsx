@@ -11,24 +11,14 @@ function ProductCard({
 	product,
 	hoverEffect,
 	displayNumProductSold = false,
-	numProductSold,
+	
 }) {
 	const { addToCart } = useCart();
 	const handleAddProductToCart = (e) => {
 		e.preventDefault?.();
 		e.stopPropagation?.();
-
-		const item = {
-			id: crypto.randomUUID(),
-			orderId: null,
-			productId: product.id,
-			quantity: 1,
-			price,
-			discount: 0,
-			finalPrice: product?.price,
-		};
-
-		addToCart(item);
+		
+		addToCart(product);
 		toast.success("🛒 Đã thêm vào giỏ hàng!", {
 			position: "top-right",
 		});

@@ -23,7 +23,6 @@ const authSlice = createSlice({
 			state.error = null;
 		},
 		loginSuccess: (state, action) => {
-			console.log("action authSlice: ", action);
 			state.loading = false;
 			state.user = action.payload.user;
 			state.accessToken = action.payload.access_token;
@@ -35,8 +34,10 @@ const authSlice = createSlice({
 			state.error = action.payload;
 		},
 		logout: (state) => {
+			state.user = null;
+			state.accessToken = null;
+			state.refreshToken = null;
 			clearAuthStorage();
-			return initialState;
 		},
 	},
 });

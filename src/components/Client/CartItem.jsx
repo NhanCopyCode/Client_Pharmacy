@@ -1,11 +1,10 @@
 import Button from "./Button";
-import productService from "../../services/ProductService";
 import { useEffect, useState } from "react";
 import formatPriceVND from "../../utils/formatPriceVND";
 import { TailSpin } from "react-loader-spinner";
 import { useCart } from "../../context/CartContext";
 
-function CartItem({ productId, cartItem, handleDeleteCartItem }) {
+function CartItem({ productCart, cartItem, handleDeleteCartItem }) {
 	const { updateCartItemQuantity } = useCart();
 	const [product, setProduct] = useState(null);
 	const [quantity, setQuantity] = useState(cartItem.quantity || 1);
@@ -13,23 +12,10 @@ function CartItem({ productId, cartItem, handleDeleteCartItem }) {
 		cartItem.price * cartItem.quantity
 	);
 	const [loading, setLoading] = useState(true);
-
-	// Fetch product info
 	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				setLoading(true);
-				const res = await productService.getById(productId);
-				setProduct(res.data.data);
-			} catch (error) {
-				console.log("error cartItem jsx: ", error);
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		fetchData();
-	}, [productId]);
+		setProduct(productCart || null);
+		setLoading(false);
+	}, [productCart]);
 
 	useEffect(() => {
 		setTotalPrice(cartItem.price * quantity);
@@ -43,14 +29,14 @@ function CartItem({ productId, cartItem, handleDeleteCartItem }) {
 		if (quantity > 1) {
 			const newQuantity = quantity - 1;
 			setQuantity(newQuantity);
-			updateCartItemQuantity(productId, newQuantity);
+			updateCartItemQuantity(productCart.id, newQuantity);
 		}
 	};
 
 	const handleIncrease = () => {
 		const newQuantity = quantity + 1;
 		setQuantity(newQuantity);
-		updateCartItemQuantity(productId, newQuantity);
+		updateCartItemQuantity(productCart.id, newQuantity);
 	};
 
 	const handleManualChange = (e) => {
@@ -70,7 +56,7 @@ function CartItem({ productId, cartItem, handleDeleteCartItem }) {
 			safeQuantity = 1;
 			setQuantity(1);
 		}
-		updateCartItemQuantity(productId, safeQuantity);
+		updateCartItemQuantity(productCart.id, safeQuantity);
 	};
 
 	if (loading) {

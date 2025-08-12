@@ -1,5 +1,11 @@
 // src/contexts/CartContext.js
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+	createContext,
+	useContext,
+	useEffect,
+	useState,
+	useCallback,
+} from "react";
 import productService from "../services/ProductService";
 
 const CartContext = createContext();
@@ -12,43 +18,97 @@ export const CartProvider = ({ children }) => {
 	});
 	const [totalPrice, setTotalPrice] = useState(0);
 	const [products, setProducts] = useState([]);
+	const [cartItemQuantity, setCartItemQuantity] = useState(0);
 
-	const [cartItemQuantity, setCartItemQuantity] = useState(() => {
-		const stored = localStorage.getItem("cart_items");
-		if (!stored) return 0;
-		const parsed = JSON.parse(stored);
-		return parsed.reduce((sum, item) => sum + item.quantity, 0);
+	/** Create a consistent cart item shape */
+	const createCartItem = (product, quantity = 1) => ({
+		id: crypto.randomUUID(),
+		orderId: null,
+		productId: product.id,
+		quantity,
+		price: product.price,
+		discount: product.discount || 0,
+		finalPrice: (product.price - (product.discount || 0)) * quantity,
 	});
 
-	const updateLocalStorage = (items) => {
-		localStorage.setItem("cart_items", JSON.stringify(items));
-	};
-
-	const updateCartStorage = (items) => {
+	const updateCart = useCallback((items) => {
 		setCartItems(items);
 		localStorage.setItem("cart_items", JSON.stringify(items));
+	}, []);
+
+	const addToCart = (product, quantity = 1) => {
+		setCartItems((prev) => {
+			const existingIndex = prev.findIndex(
+				(item) => item.productId === product.id
+			);
+			let updated;
+
+			if (existingIndex > -1) {
+				const existingItem = { ...prev[existingIndex] };
+				existingItem.quantity += quantity;
+				existingItem.finalPrice =
+					(existingItem.price - existingItem.discount) *
+					existingItem.quantity;
+
+				updated = [...prev];
+				updated[existingIndex] = existingItem;
+			} else {
+				updated = [...prev, createCartItem(product, quantity)];
+			}
+
+			localStorage.setItem("cart_items", JSON.stringify(updated));
+			return updated;
+		});
 	};
 
-	// Quantity and total price calculation
+	/** Delete an item from cart */
+	const deleteCartItem = (cartItemId) => {
+		const updated = cartItems.filter((item) => item.id !== cartItemId);
+		updateCart(updated);
+	};
+
+	/** Update quantity of an existing cart item */
+	const updateCartItemQuantity = (productId, quantity) => {
+		if (quantity <= 0) {
+			updateCart(
+				cartItems.filter((item) => item.productId !== productId)
+			);
+			return;
+		}
+
+		const updated = cartItems.map((item) =>
+			item.productId === productId
+				? {
+						...item,
+						quantity,
+						finalPrice: (item.price - item.discount) * quantity,
+				  }
+				: item
+		);
+		updateCart(updated);
+	};
+
+	/** Calculate total price & total quantity whenever cart changes */
 	useEffect(() => {
-		if (!cartItems || cartItems.length === 0) {
+		if (!cartItems.length) {
 			setCartItemQuantity(0);
 			setTotalPrice(0);
 			return;
 		}
 
-		const quantity = cartItems.length;
-		setCartItemQuantity(quantity);
-
-		const total = cartItems.reduce(
-			(sum, item) => sum + item.price * item.quantity,
+		const quantitySum = cartItems.reduce(
+			(sum, item) => sum + item.quantity,
 			0
 		);
-		setTotalPrice(total);
-	}, [JSON.stringify(cartItems)]);
+		setCartItemQuantity(quantitySum);
 
+		const total = cartItems.reduce((sum, item) => sum + item.finalPrice, 0);
+		setTotalPrice(total);
+	}, [cartItems]);
+
+	/** Fetch product details for all items in cart */
 	useEffect(() => {
-		if (cartItems.length === 0) {
+		if (!cartItems.length) {
 			setProducts([]);
 			setLoading(false);
 			return;
@@ -70,61 +130,7 @@ export const CartProvider = ({ children }) => {
 		};
 
 		fetchProducts();
-	}, [JSON.stringify(cartItems)]); // ✅ Only triggers if content really changes
-	const deleteCartItem = (cartItemId) => {
-		setCartItems((prev) => {
-			const updated = prev.filter((item) => item.id !== cartItemId);
-			updateLocalStorage(updated);
-			return updated;
-		});
-	};
-
-	const updateCartItemQuantity = (productId, quantity) => {
-		if (quantity === 0) {
-			setCartItems((prev) => {
-				return prev.filter((item) => item.productId !== productId);
-			});
-		}
-		setCartItems((prev) => {
-			const updated = prev.map((item) => {
-				if (item.productId === productId) {
-					return { ...item, quantity };
-				}
-				return item;
-			});
-			updateLocalStorage(updated);
-			return updated;
-		});
-	};
-
-	const addToCart = (newItem) => {
-		console.log("new item in cart context: ", newItem);
-		setCartItems((prev) => {
-			const existingIndex = prev.findIndex(
-				(item) => item.productId === newItem.productId
-			);
-			let updated;
-
-			if (existingIndex > -1) {
-				const existingItem = { ...prev[existingIndex] };
-				existingItem.quantity += newItem.quantity;
-				existingItem.finalPrice =
-					(existingItem.price - existingItem.discount) *
-					existingItem.quantity;
-
-				updated = [...prev];
-				updated[existingIndex] = existingItem;
-			} else {
-				updated = [...prev, newItem];
-			}
-
-			console.log("updated cart item: ", updated);
-
-			updateLocalStorage(updated);
-			return updated;
-		});
-	};
-
+	}, [cartItems]);
 
 	return (
 		<CartContext.Provider
@@ -135,9 +141,9 @@ export const CartProvider = ({ children }) => {
 				totalPrice,
 				loading,
 				addToCart,
-				setCartItems: updateCartStorage,
 				deleteCartItem,
 				updateCartItemQuantity,
+				setCartItems: updateCart, // expose for rare full resets
 			}}
 		>
 			{children}

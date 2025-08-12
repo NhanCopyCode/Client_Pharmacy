@@ -9,9 +9,13 @@ import Button from "./Button";
 import NotificationContainer from "./NotificationContainer";
 import formatPriceVND from "../../utils/formatPriceVND";
 import { useCart } from "../../context/CartContext";
+import { useEffect, useState } from "react";
+import productService from "../../services/ProductService";
+
 
 function HeaderCart() {
 	const { cartItems, setCartItems, cartItemQuantity, totalPrice } = useCart();
+	const [productsCart, setProductsCart] = useState([]);
 
 	const handleDeleteCartItem = (itemId) => {
 		const updatedCart = cartItems.filter((item) => item.id !== itemId);
@@ -21,6 +25,20 @@ function HeaderCart() {
 		});
 	};
 
+	useEffect(() => {
+		const productIds = cartItems.map(item => item.productId);
+		const fetchProduct = async () => {
+			try {
+				const res = await productService.getAllProductsByIds(productIds);
+				setProductsCart(res.data.data);
+			} catch (error) {
+				console.log("error header cart: ", error );
+			}
+		}
+
+		fetchProduct();
+
+	}, [cartItems])
 	return (
 		<div className="flex items-center gap-2">
 			<Link className="w-[30px] h-[30px] relative hidden md:inline-block">
@@ -55,7 +73,7 @@ function HeaderCart() {
 								cartItems.map((item) => (
 									<CartItem
 										key={item.id}
-										productId={item.productId}
+										productCart={productsCart.find(product => product.id === item.productId)}
 										cartItem={item}
 										handleDeleteCartItem={() =>
 											handleDeleteCartItem(item.id)

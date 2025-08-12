@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../../store/authSlice";
 import { path } from "../../utils/constants";
+import cartService from "../../services/CartService";
 
 function LoginPage() {
 	const [showLogin, setShowLogin] = useState(true);
@@ -27,9 +28,11 @@ function LoginPage() {
 	const [errorsLogin, setErrorsLogin] = useState({});
 	const navigate = useNavigate();
 	const { user } = useSelector((state) => state.auth);
+	const { cart_items } = useSelector((state) => state.cart);
 	const dispatch = useDispatch();
 	const location = useLocation();
 
+	console.log("cart items in redux: ", cart_items);
 	useEffect(() => {
 		if (user && location.pathname === "/" + path.DANG_NHAP) {
 			navigate("/account");
@@ -77,10 +80,17 @@ function LoginPage() {
 
 		try {
 			const res = await login(dataLogin);
-			console.log("res login:", res);
 			dispatch(loginSuccess(res));
+			if (cart_items.length > 0) {
+				try {
+					await cartService.syncCart(cart_items);
+					console.log("Cart item synced successfully");
+					localStorage.removeItem("cart_items");
+				} catch (error) {
+					console.error("Error syncing cart:", error);
+				}
+			}
 		} catch (error) {
-			console.error("Login error:", error);
 			if (error.response?.data?.errors) {
 				setErrorsLogin(error.response.data.errors);
 			} else {
