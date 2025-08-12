@@ -1,4 +1,3 @@
-import publicAxios from "./api/publicAxios";
 import { default as privateAxios} from "./api/axiosInstance";
 
 const cartService = {

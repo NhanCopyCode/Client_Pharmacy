@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { useCart } from "../../context/CartContext";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { addToCartRedux } from "../../store/cartSlice";
 
 function ProductCard({
 	product,
@@ -14,11 +16,13 @@ function ProductCard({
 	
 }) {
 	const { addToCart } = useCart();
+	const dispatch  = useDispatch();
 	const handleAddProductToCart = (e) => {
 		e.preventDefault?.();
 		e.stopPropagation?.();
 		
 		addToCart(product);
+		dispatch(addToCartRedux({ product }));
 		toast.success("🛒 Đã thêm vào giỏ hàng!", {
 			position: "top-right",
 		});

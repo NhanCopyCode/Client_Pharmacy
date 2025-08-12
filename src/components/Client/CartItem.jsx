@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import formatPriceVND from "../../utils/formatPriceVND";
 import { TailSpin } from "react-loader-spinner";
 import { useCart } from "../../context/CartContext";
+import { useDispatch } from "react-redux";
+import { updateQuantityRedux } from "../../store/cartSlice";
 
 function CartItem({ productCart, cartItem, handleDeleteCartItem }) {
 	const { updateCartItemQuantity } = useCart();
@@ -12,6 +14,12 @@ function CartItem({ productCart, cartItem, handleDeleteCartItem }) {
 		cartItem.price * cartItem.quantity
 	);
 	const [loading, setLoading] = useState(true);
+	const dispatch = useDispatch();
+
+
+
+
+
 	useEffect(() => {
 		setProduct(productCart || null);
 		setLoading(false);
@@ -25,18 +33,30 @@ function CartItem({ productCart, cartItem, handleDeleteCartItem }) {
 		setQuantity(cartItem.quantity || 1);
 	}, [cartItem.quantity]);
 
-	const handleDecrease = () => {
+	const handleDecrease = (product) => {
 		if (quantity > 1) {
 			const newQuantity = quantity - 1;
+			dispatch(
+				updateQuantityRedux({
+					productId: product.id,
+					quantity: newQuantity,
+				})
+			);
 			setQuantity(newQuantity);
-			updateCartItemQuantity(productCart.id, newQuantity);
+			// updateCartItemQuantity(productCart.id, newQuantity);
 		}
 	};
 
-	const handleIncrease = () => {
+	const handleIncrease = (product) => {
 		const newQuantity = quantity + 1;
+		dispatch(
+			updateQuantityRedux({
+				productId: product.id,
+				quantity: newQuantity,
+			})
+		);
 		setQuantity(newQuantity);
-		updateCartItemQuantity(productCart.id, newQuantity);
+		// updateCartItemQuantity(productCart.id, newQuantity);
 	};
 
 	const handleManualChange = (e) => {
@@ -104,7 +124,7 @@ function CartItem({ productCart, cartItem, handleDeleteCartItem }) {
 						hoverEffect="hover:bg-primary"
 						fontSize="text-[20px]"
 						background="bg-darkBlue"
-						onClick={handleDecrease}
+						onClick={() => handleDecrease(productCart)}
 					>
 						-
 					</Button>
@@ -121,7 +141,7 @@ function CartItem({ productCart, cartItem, handleDeleteCartItem }) {
 						fontSize="text-[20px]"
 						background="bg-darkBlue"
 						hoverEffect="hover:bg-primary"
-						onClick={handleIncrease}
+						onClick={() => handleIncrease(productCart)}
 					>
 						+
 					</Button>

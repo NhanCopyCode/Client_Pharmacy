@@ -16,8 +16,8 @@ import {
 	SpecialProductContainer,
 	VideoContainer,
 } from "../../components/Client";
-import Footer from "../../pages/Client/Footer";
 import homeService from "../../services/HomeService";
+import { useSelector } from "react-redux";
 
 function HomePage() {
 	const [sliders, setSliders] = useState([]);
@@ -31,6 +31,10 @@ function HomePage() {
 	const [videos, setVideos] = useState([]);
 	const [postsNutrition, setPostsNutrition] = useState([]);
 	const [postsBeautifyYoung, setPostsBeautifulYoung] = useState([]);
+	// const { items } = useSelector((state) => state.cart);
+	// console.log("cart_items in Home.jsx:", items);
+
+
 	useEffect(() => {
 		const fetchData = async () => {
 			try {

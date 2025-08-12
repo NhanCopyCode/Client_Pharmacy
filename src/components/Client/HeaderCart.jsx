@@ -11,10 +11,13 @@ import formatPriceVND from "../../utils/formatPriceVND";
 import { useCart } from "../../context/CartContext";
 import { useEffect, useState } from "react";
 import productService from "../../services/ProductService";
+import { useSelector } from "react-redux";
 
 
 function HeaderCart() {
 	const { cartItems, setCartItems, cartItemQuantity, totalPrice } = useCart();
+	const { items, cart_quantity } = useSelector((state) => state.cart);
+	console.log('items in HeaderCart:', items)
 	const [productsCart, setProductsCart] = useState([]);
 
 	const handleDeleteCartItem = (itemId) => {
@@ -66,11 +69,11 @@ function HeaderCart() {
 					>
 						<div
 							className={`p-[15px] max-h-[360px] ${
-								cartItems.length > 0 ? "overflow-y-scroll" : ""
+								items.length > 0 ? "overflow-y-scroll" : ""
 							} flex flex-col divide-y divide-gray-200`}
 						>
-							{cartItems.length > 0 ? (
-								cartItems.map((item) => (
+							{items.length > 0 ? (
+								items.map((item) => (
 									<CartItem
 										key={item.id}
 										productCart={productsCart.find(product => product.id === item.productId)}
@@ -126,9 +129,9 @@ function HeaderCart() {
 					</span>
 					<div className="w-[30px] h-[30px] relative">
 						<BsCart className="w-full h-full" />
-						{cartItemQuantity > 0 && (
+						{cart_quantity > 0 && (
 							<span className="absolute top-[-2px] right-[-3px] rounded-[50%] text-white w-[15px] h-[15px] text-center flex items-center justify-center bg-success text-[12px]">
-								{cartItemQuantity > 0 ? cartItemQuantity : ""}
+								{cart_quantity > 0 ? cart_quantity : ""}
 							</span>
 						)}
 					</div>
