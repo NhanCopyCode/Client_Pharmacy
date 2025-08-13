@@ -22,6 +22,7 @@ import { FaAngleRight } from "react-icons/fa6";
 import { path } from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/authSlice";
+import { clearCartRedux } from "../../store/cartSlice";
 
 function Header({ categoriesProps, postCategoryProps, postsHeaderProps }) {
 	const [categories, setCategories] = useState([]);
@@ -85,7 +86,9 @@ function Header({ categoriesProps, postCategoryProps, postsHeaderProps }) {
 
 	const handleLogout = () => {
 		dispatch(logout());
+		dispatch(clearCartRedux());
 		navigate("/");
+		
 	}
 
 	return (

@@ -7,9 +7,13 @@ import { useCart } from "../../context/CartContext";
 import formatPriceVND from "../../utils/formatPriceVND";
 import { TailSpin } from "react-loader-spinner";
 import CartEmptyIcon from "./CartEmptyIcon";
+import { useDispatch, useSelector } from "react-redux";
+import { updateQuantityRedux } from "../../store/cartSlice";
 function CartInfo() {
 	const { products, cartItems, totalPrice, updateCartItemQuantity, loading } =
 		useCart();
+	const { items, total_price } = useSelector((state) => state.cart);
+	const dispatch = useDispatch();
 	const [selectedDate, setSelectedDate] = useState(null);
 	const [selectedTime, setSelectedTime] = useState(null);
 	const [showForm, setShowForm] = useState(false);
@@ -19,26 +23,36 @@ function CartInfo() {
 		address: "",
 		email: "",
 	});
-	const [errors, setErrors] = useState({});
-	const handleShowForm = () => {};
 
-	const validate = () => {
-		const newErrors = {};
-		if (!form.companyName)
-			newErrors.companyName = "Vui lòng nhập tên công ty";
-		if (!form.taxCode) newErrors.taxCode = "Vui lòng nhập mã số thuế";
-		if (!form.address) newErrors.address = "Vui lòng nhập địa chỉ";
-		if (!form.email) newErrors.email = "Vui lòng nhập email";
-		else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
-			newErrors.email = "Email không hợp lệ";
+	// const [errors, setErrors] = useState({});
+	// const validate = () => {
+	// 	const newErrors = {};
+	// 	if (!form.companyName)
+	// 		newErrors.companyName = "Vui lòng nhập tên công ty";
+	// 	if (!form.taxCode) newErrors.taxCode = "Vui lòng nhập mã số thuế";
+	// 	if (!form.address) newErrors.address = "Vui lòng nhập địa chỉ";
+	// 	if (!form.email) newErrors.email = "Vui lòng nhập email";
+	// 	else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
+	// 		newErrors.email = "Email không hợp lệ";
 
-		setErrors(newErrors);
-		return Object.keys(newErrors).length === 0;
+	// 	setErrors(newErrors);
+	// 	return Object.keys(newErrors).length === 0;
+	// };
+	const handleQuantityChange = (productId, newQuantity) => {
+		if (newQuantity > 0) {
+			dispatch(updateQuantityRedux({ productId, quantity: newQuantity }));
+		}
 	};
 	return (
 		<div className="grid grid-cols-12 gap-4 mt-8">
-			<div className={`border border-gray-200 shadow-md rounded-md  p-2 ${products.length === 0 ? "md:col-span-12 col-span-12" : "md:col-span-9 col-span-12"}`}>
-				<div className="relative overflow-x-auto  ">
+			<div
+				className={`border border-gray-200 shadow-md rounded-md  p-2 ${
+					products.length === 0
+						? "md:col-span-12 col-span-12"
+						: "md:col-span-9 col-span-12"
+				}`}
+			>
+				<div className="relative overflow-x-auto">
 					<table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border border-gray-200">
 						<thead className="text-sm text-black bg-gray-50 dark:bg-gray-700 font-bold dark:text-gray-400 border border-gray-200">
 							<tr>
@@ -210,7 +224,7 @@ function CartInfo() {
 											Tổng tiền:
 										</span>
 										<span className="text-[15px] text-success font-bold">
-											{formatPriceVND(totalPrice)}
+											{formatPriceVND(total_price)}
 										</span>
 									</div>
 									<Button

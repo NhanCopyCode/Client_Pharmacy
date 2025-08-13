@@ -24,7 +24,7 @@ export const CartProvider = ({ children }) => {
 	const createCartItem = (product, quantity = 1) => ({
 		id: crypto.randomUUID(),
 		orderId: null,
-		productId: product.id,
+		productId: product.id,	
 		quantity,
 		price: product.price,
 		discount: product.discount || 0,

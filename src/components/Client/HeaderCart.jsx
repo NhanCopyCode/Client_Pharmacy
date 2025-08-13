@@ -16,7 +16,7 @@ import { useSelector } from "react-redux";
 
 function HeaderCart() {
 	const { cartItems, setCartItems, cartItemQuantity, totalPrice } = useCart();
-	const { items, cart_quantity } = useSelector((state) => state.cart);
+	const { items, cart_quantity, total_price } = useSelector((state) => state.cart);
 	console.log('items in HeaderCart:', items)
 	const [productsCart, setProductsCart] = useState([]);
 
@@ -29,7 +29,7 @@ function HeaderCart() {
 	};
 
 	useEffect(() => {
-		const productIds = cartItems.map(item => item.productId);
+		const productIds = items.map((item) => item.productId);
 		const fetchProduct = async () => {
 			try {
 				const res = await productService.getAllProductsByIds(productIds);
@@ -41,7 +41,7 @@ function HeaderCart() {
 
 		fetchProduct();
 
-	}, [cartItems])
+	}, [items])
 	return (
 		<div className="flex items-center gap-2">
 			<Link className="w-[30px] h-[30px] relative hidden md:inline-block">
@@ -94,14 +94,14 @@ function HeaderCart() {
 							)}
 						</div>
 
-						{cartItems.length > 0 ? (
+						{items.length > 0 ? (
 							<div className="p-[10px]">
 								<div className="flex items-center justify-between mb-4">
 									<span className="text-[15px] text-black font-medium">
 										Tổng tiền:
 									</span>
 									<span className="text-[15px] text-darkBlue font-bold">
-										{formatPriceVND(totalPrice)}
+										{formatPriceVND(total_price)}
 									</span>
 								</div>
 								<Button
