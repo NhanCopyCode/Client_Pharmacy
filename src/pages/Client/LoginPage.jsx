@@ -28,11 +28,10 @@ function LoginPage() {
 	const [errorsLogin, setErrorsLogin] = useState({});
 	const navigate = useNavigate();
 	const { user } = useSelector((state) => state.auth);
-	const { cart_items } = useSelector((state) => state.cart);
+	const { items } = useSelector((state) => state.cart);
 	const dispatch = useDispatch();
 	const location = useLocation();
 
-	console.log("cart items in redux: ", cart_items);
 	useEffect(() => {
 		if (user && location.pathname === "/" + path.DANG_NHAP) {
 			navigate("/account");
@@ -81,9 +80,9 @@ function LoginPage() {
 		try {
 			const res = await login(dataLogin);
 			dispatch(loginSuccess(res));
-			if (cart_items.length > 0) {
+			if (items.length > 0) {
 				try {
-					await cartService.syncCart(cart_items);
+					await cartService.syncCart(items);
 					console.log("Cart item synced successfully");
 					localStorage.removeItem("cart_items");
 				} catch (error) {
