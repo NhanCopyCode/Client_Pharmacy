@@ -17,7 +17,6 @@ import { useSelector } from "react-redux";
 function HeaderCart() {
 	const { cartItems, setCartItems, cartItemQuantity, totalPrice } = useCart();
 	const { items, cart_quantity, total_price } = useSelector((state) => state.cart);
-	console.log('items in HeaderCart:', items)
 	const [productsCart, setProductsCart] = useState([]);
 
 	const handleDeleteCartItem = (itemId) => {
