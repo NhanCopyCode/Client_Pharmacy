@@ -10,7 +10,7 @@ export const login = async (data) => {
 		return response.data;
 	} catch (error) {
 		if (error.response && error.response.status === 442) {
-			return { error: error.response.data.errors };
+			return { errors: error.response.data.errors };
 		}
 		throw error;
 	}

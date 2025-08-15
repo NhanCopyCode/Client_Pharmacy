@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useCart } from "../../context/CartContext";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { addToCartRedux } from "../../store/cartSlice";
+import { addToCartRedux } from "../../store/cart/cartSlice";
 
 function ProductCard({
 	product,

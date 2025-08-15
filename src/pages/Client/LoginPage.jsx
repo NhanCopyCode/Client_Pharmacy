@@ -4,9 +4,10 @@ import { FaGoogle } from "react-icons/fa";
 import { googleLogin, register, login } from "../../services/authService";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loginSuccess } from "../../store/authSlice";
+import { loginFail, loginSuccess } from "../../store/authSlice";
 import { path } from "../../utils/constants";
 import cartService from "../../services/CartService";
+import { fetchCartThunk } from "../../store/cart/cartThunk";
 
 function LoginPage() {
 	const [showLogin, setShowLogin] = useState(true);
@@ -27,7 +28,7 @@ function LoginPage() {
 	const [errorsRegister, setErrorsRegister] = useState({});
 	const [errorsLogin, setErrorsLogin] = useState({});
 	const navigate = useNavigate();
-	const { user } = useSelector((state) => state.auth);
+	const { user, error } = useSelector((state) => state.auth);
 	const { items } = useSelector((state) => state.cart);
 	const dispatch = useDispatch();
 	const location = useLocation();
@@ -37,6 +38,10 @@ function LoginPage() {
 			navigate("/account");
 		}
 	}, [user, navigate, location]);
+	useEffect(() => {
+		setErrorsLogin({});
+		setErrorsRegister({});
+	}, []);
 
 	const handleShowLoginForm = () => {
 		setShowLogin(true);
@@ -73,33 +78,39 @@ function LoginPage() {
 			setErrorsRegister(error.response.data.errors);
 		}
 	};
-
+	useEffect(() => {
+		setErrorsLogin({ error: error });
+		console.log("error in redux ?", error);
+	}, [error]);
 	const handleLogin = async () => {
 		setErrorsLogin({});
 
 		try {
 			const res = await login(dataLogin);
+			console.log("res:", res);
+			if (res.errors) {
+				dispatch(loginFail(res.errors));
+				return;
+			}
 			dispatch(loginSuccess(res));
 			if (items.length > 0) {
 				try {
-					await cartService.syncCart(items);
-					console.log("Cart item synced successfully");
-					localStorage.removeItem("cart_items");
+					// await cartService.syncCart(items);
+					// console.log("Cart item synced successfully");
+					// localStorage.removeItem("cart_items");
+					dispatch(fetchCartThunk());
 				} catch (error) {
 					console.error("Error syncing cart:", error);
 				}
 			}
 		} catch (error) {
 			if (error.response?.data?.errors) {
+				console.log("error login: ", error.response.data);
 				setErrorsLogin(error.response.data.errors);
-			} else {
-				setErrorsLogin({
-					general: "Đăng nhập thất bại",
-				});
 			}
 		}
 	};
-
+	console.log("errorsLogin", errorsLogin);
 	const handleGoogleLogin = async () => {
 		try {
 			const res = await googleLogin();
@@ -239,7 +250,7 @@ function LoginPage() {
 								placeholder: "Email",
 								value: dataLogin.email,
 								onChange: handleChangeLogin,
-								error: errorsLogin.email,
+								error: errorsLogin.email || errorsLogin.error,
 							})}
 							{renderInput({
 								name: "password",
@@ -247,7 +258,8 @@ function LoginPage() {
 								placeholder: "Mật khẩu",
 								value: dataLogin.password,
 								onChange: handleChangeLogin,
-								error: errorsLogin.password,
+								error:
+									errorsLogin.password || errorsLogin.error,
 							})}
 							<Button
 								buttonHeight="h-[45px]"

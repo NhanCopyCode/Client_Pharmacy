@@ -4,7 +4,7 @@ import formatPriceVND from "../../utils/formatPriceVND";
 import { TailSpin } from "react-loader-spinner";
 import { useCart } from "../../context/CartContext";
 import { useDispatch } from "react-redux";
-import { updateQuantityRedux } from "../../store/cartSlice";
+import { updateQuantityRedux } from "../../store/cart/cartSlice";
 
 function CartItem({ productCart, cartItem, handleDeleteCartItem }) {
 	const { updateCartItemQuantity } = useCart();

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import formatPriceVND from "../../utils/formatPriceVND";
 import CartEmptyIcon from "./CartEmptyIcon";
 import { useDispatch, useSelector } from "react-redux";
-import { updateQuantityRedux } from "../../store/cartSlice";
+import { updateQuantityRedux } from "../../store/cart/cartSlice";
 
 function CartInfo() {
 	const { items, total_price } = useSelector((state) => state.cart);
