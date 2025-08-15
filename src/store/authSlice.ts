@@ -42,9 +42,12 @@ const authSlice = createSlice({
 			state.refreshToken = null;
 			clearAuthStorage();
 		},
+		clearErrorMessages: (state) => {
+			state.error = null;
+		}
 	},
 });
 
-export const { loginStart, loginSuccess, loginFail, logout } =
+export const { loginStart, loginSuccess, loginFail, logout, clearErrorMessages } =
 	authSlice.actions;
 export default authSlice.reducer;

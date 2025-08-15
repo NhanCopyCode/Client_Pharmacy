@@ -4,7 +4,7 @@ import { FaGoogle } from "react-icons/fa";
 import { googleLogin, register, login } from "../../services/authService";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loginFail, loginSuccess } from "../../store/authSlice";
+import { clearErrorMessages, loginFail, loginSuccess } from "../../store/authSlice";
 import { path } from "../../utils/constants";
 import cartService from "../../services/CartService";
 import { fetchCartThunk } from "../../store/cart/cartThunk";
@@ -38,10 +38,14 @@ function LoginPage() {
 			navigate("/account");
 		}
 	}, [user, navigate, location]);
+
+	//Clear error messages
 	useEffect(() => {
+		dispatch(clearErrorMessages());
 		setErrorsLogin({});
 		setErrorsRegister({});
-	}, []);
+	}, [dispatch]);
+
 
 	const handleShowLoginForm = () => {
 		setShowLogin(true);
@@ -74,20 +78,18 @@ function LoginPage() {
 			const res = await register(dataRegister);
 			dispatch(loginSuccess(res));
 		} catch (error) {
-			console.error("Register error:", error);
 			setErrorsRegister(error.response.data.errors);
 		}
 	};
 	useEffect(() => {
 		setErrorsLogin({ error: error });
-		console.log("error in redux ?", error);
 	}, [error]);
+	
 	const handleLogin = async () => {
 		setErrorsLogin({});
 
 		try {
 			const res = await login(dataLogin);
-			console.log("res:", res);
 			if (res.errors) {
 				dispatch(loginFail(res.errors));
 				return;
@@ -105,12 +107,10 @@ function LoginPage() {
 			}
 		} catch (error) {
 			if (error.response?.data?.errors) {
-				console.log("error login: ", error.response.data);
 				setErrorsLogin(error.response.data.errors);
 			}
 		}
 	};
-	console.log("errorsLogin", errorsLogin);
 	const handleGoogleLogin = async () => {
 		try {
 			const res = await googleLogin();
