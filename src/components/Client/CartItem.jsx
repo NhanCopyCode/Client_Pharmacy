@@ -4,7 +4,7 @@ import formatPriceVND from "../../utils/formatPriceVND";
 import { TailSpin } from "react-loader-spinner";
 import { useCart } from "../../context/CartContext";
 import { useDispatch } from "react-redux";
-import { updateQuantityRedux } from "../../store/cart/cartSlice";
+import { updateQuantityThunk } from "../../store/cart/cartThunk";
 
 function CartItem({ productCart, cartItem, handleDeleteCartItem }) {
 	const { updateCartItemQuantity } = useCart();
@@ -16,18 +16,14 @@ function CartItem({ productCart, cartItem, handleDeleteCartItem }) {
 	const [loading, setLoading] = useState(true);
 	const dispatch = useDispatch();
 
-
-
-
-
 	useEffect(() => {
 		setProduct(productCart || null);
 		setLoading(false);
 	}, [productCart]);
 
 	useEffect(() => {
-		setTotalPrice(cartItem.price * quantity);
-	}, [quantity, cartItem.price]);
+		setTotalPrice(parseInt(cartItem.unit_price) * quantity);
+	}, [quantity, cartItem.unit_price]);
 
 	useEffect(() => {
 		setQuantity(cartItem.quantity || 1);
@@ -37,7 +33,7 @@ function CartItem({ productCart, cartItem, handleDeleteCartItem }) {
 		if (quantity > 1) {
 			const newQuantity = quantity - 1;
 			dispatch(
-				updateQuantityRedux({
+				updateQuantityThunk({
 					productId: product.id,
 					quantity: newQuantity,
 				})
@@ -50,7 +46,7 @@ function CartItem({ productCart, cartItem, handleDeleteCartItem }) {
 	const handleIncrease = (product) => {
 		const newQuantity = quantity + 1;
 		dispatch(
-			updateQuantityRedux({
+			updateQuantityThunk({
 				productId: product.id,
 				quantity: newQuantity,
 			})

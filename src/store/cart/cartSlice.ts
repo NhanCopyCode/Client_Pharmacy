@@ -49,7 +49,7 @@ const cart_items = loadCartFromLocalStorage();
 const initialState = {
 	items: cart_items,
 	cart_quantity: cart_items.reduce((total, item) => total + item.quantity, 0),
-	total_price: cart_items.reduce((total, item) => total + item.finalPrice, 0),
+	total_price: cart_items.reduce((total, item) => total + parseInt(item.final_price), 0),
 };
 
 const cartSlice = createSlice({

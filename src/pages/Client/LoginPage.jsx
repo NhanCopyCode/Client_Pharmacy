@@ -4,7 +4,12 @@ import { FaGoogle } from "react-icons/fa";
 import { googleLogin, register, login } from "../../services/authService";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrorMessages, loginFail, loginSuccess } from "../../store/authSlice";
+import {
+	clearErrorMessages,
+	loginFail,
+	loginStart,
+	loginSuccess,
+} from "../../store/authSlice";
 import { path } from "../../utils/constants";
 import cartService from "../../services/CartService";
 import { fetchCartThunk } from "../../store/cart/cartThunk";
@@ -28,7 +33,7 @@ function LoginPage() {
 	const [errorsRegister, setErrorsRegister] = useState({});
 	const [errorsLogin, setErrorsLogin] = useState({});
 	const navigate = useNavigate();
-	const { user, error } = useSelector((state) => state.auth);
+	const { user, error, loading } = useSelector((state) => state.auth);
 	const { items } = useSelector((state) => state.cart);
 	const dispatch = useDispatch();
 	const location = useLocation();
@@ -45,7 +50,6 @@ function LoginPage() {
 		setErrorsLogin({});
 		setErrorsRegister({});
 	}, [dispatch]);
-
 
 	const handleShowLoginForm = () => {
 		setShowLogin(true);
@@ -84,10 +88,10 @@ function LoginPage() {
 	useEffect(() => {
 		setErrorsLogin({ error: error });
 	}, [error]);
-	
+
 	const handleLogin = async () => {
 		setErrorsLogin({});
-
+		dispatch(loginStart());
 		try {
 			const res = await login(dataLogin);
 			if (res.errors) {
@@ -95,6 +99,7 @@ function LoginPage() {
 				return;
 			}
 			dispatch(loginSuccess(res));
+			dispatch(fetchCartThunk());
 			if (items.length > 0) {
 				try {
 					// await cartService.syncCart(items);
@@ -106,6 +111,7 @@ function LoginPage() {
 				}
 			}
 		} catch (error) {
+			dispatch(loginFail());
 			if (error.response?.data?.errors) {
 				setErrorsLogin(error.response.data.errors);
 			}
@@ -261,14 +267,25 @@ function LoginPage() {
 								error:
 									errorsLogin.password || errorsLogin.error,
 							})}
-							<Button
-								buttonHeight="h-[45px]"
-								background="bg-darkBlue"
-								hoverEffect="hover:bg-primary"
-								onClick={handleLogin}
-							>
-								Đăng nhập
-							</Button>
+							{loading ? (
+								<Button
+									buttonHeight="h-[45px]"
+									background="bg-darkBlue"
+									hoverEffect="hover:bg-primary"
+									onClick={handleLogin}
+								>
+									Đang đăng nhập ... 
+								</Button>
+							) : (
+								<Button
+									buttonHeight="h-[45px]"
+									background="bg-darkBlue"
+									hoverEffect="hover:bg-primary"
+									onClick={handleLogin}
+								>
+									Đăng nhập
+								</Button>
+							)}
 							<div
 								onClick={handleShowForgotPasswordForm}
 								className="flex items-center justify-center text-sm hover:text-primary cursor-pointer font-bold mt-4"

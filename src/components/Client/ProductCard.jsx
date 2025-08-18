@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useCart } from "../../context/CartContext";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { addToCartRedux } from "../../store/cart/cartSlice";
+import { addToCartThunk } from "../../store/cart/cartThunk";
 
 function ProductCard({
 	product,
@@ -22,7 +22,7 @@ function ProductCard({
 		e.stopPropagation?.();
 		
 		addToCart(product);
-		dispatch(addToCartRedux({ product }));
+		dispatch(addToCartThunk({ product }));
 		toast.success("🛒 Đã thêm vào giỏ hàng!", {
 			position: "top-right",
 		});

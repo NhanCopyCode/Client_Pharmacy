@@ -1,5 +1,4 @@
 function InforAccountDetail({ user }) {
-	console.log("user in infoAccountDetail: ", user);
 
 	// Build the full name only if surname exists
 	const fullName = user?.surname

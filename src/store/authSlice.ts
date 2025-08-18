@@ -23,7 +23,6 @@ const authSlice = createSlice({
 			state.error = null;
 		},
 		loginSuccess: (state, action) => {
-			console.log("action: ", action);
 			state.error = null;
 			state.loading = false;
 			state.user = action.payload.user;
@@ -32,7 +31,6 @@ const authSlice = createSlice({
 			addAuthStorage(action.payload);
 		},
 		loginFail: (state, action) => {
-			console.log('action when login fail:', action)
 			state.loading = false;
 			state.error = action.payload;
 		},

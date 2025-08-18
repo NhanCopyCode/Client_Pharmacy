@@ -32,15 +32,17 @@ axiosInstance.interceptors.response.use(
 			originalRequest._retry = true;
 
 			try {
-				const refresh_token = localStorage.getItem("refresh_token");
+				const refresh_token = JSON.parse(localStorage.getItem("refresh_token"));
+				console.log('refresh token in axiosInstance', refresh_token);
 				const refreshResponse = await refreshInstance.post("/refresh", {
 					refresh_token,
 				});
 
 				const newToken = refreshResponse.data.access_token;
-				localStorage.setItem("token", newToken);
+				localStorage.setItem("access_token", newToken);
 
 				originalRequest.headers.Authorization = `Bearer ${newToken}`;
+				console.log('newToken:', newToken)
 				return axiosInstance(originalRequest);
 			} catch (err) {
 				console.error("Refresh token failed");

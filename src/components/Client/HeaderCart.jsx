@@ -15,20 +15,17 @@ import { useSelector } from "react-redux";
 
 
 function HeaderCart() {
-	const { cartItems, setCartItems, cartItemQuantity, totalPrice } = useCart();
 	const { items, cart_quantity, total_price } = useSelector((state) => state.cart);
 	const [productsCart, setProductsCart] = useState([]);
 
-	const handleDeleteCartItem = (itemId) => {
-		const updatedCart = cartItems.filter((item) => item.id !== itemId);
-		setCartItems(updatedCart);
+	const handleDeleteCartItem = () => {
 		toast.info("🗑️ Đã xoá sản phẩm khỏi giỏ hàng!", {
 			position: "top-right",
 		});
 	};
 
 	useEffect(() => {
-		const productIds = items.map((item) => item.productId);
+		const productIds = items.map((item) => item.product_id);
 		const fetchProduct = async () => {
 			try {
 				const res = await productService.getAllProductsByIds(productIds);
@@ -75,7 +72,7 @@ function HeaderCart() {
 								items.map((item) => (
 									<CartItem
 										key={item.id}
-										productCart={productsCart.find(product => product.id === item.productId)}
+										productCart={productsCart.find(product => product.id === item.product_id)}
 										cartItem={item}
 										handleDeleteCartItem={() =>
 											handleDeleteCartItem(item.id)
