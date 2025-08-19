@@ -13,16 +13,25 @@ export const fetchCartThunk = createAsyncThunk(
 	"cart/fetchCart",
 	async (_, { dispatch, rejectWithValue }) => {
 		try {
-			// const refresh	
 			const res = await axiosInstance.get("/cart");
-			console.log('res when fetch cart:', res)
-			if(res.data.items) {
-				const cart_items = res.data.items;
+
+			if (res.data.items) {
+				// Normalize values before putting into Redux
+				const cart_items = res.data.items.map((item) => ({
+					...item,
+					unit_price: parseFloat(item.unit_price),
+					discount_amount: parseFloat(item.discount_amount),
+					finalPrice: parseFloat(item.final_price), // normalize naming
+					productId: item.product_id,
+					price: parseFloat(item.unit_price),
+					discount: parseFloat(item.discount_amount),
+				}));
+
 				dispatch(replaceCartRedux(cart_items));
 			}
-			// Cập nhật Redux + localStorage bằng dữ liệu từ server
+
 			return res.data.items;
-		} catch (err) {	
+		} catch (err) {
 			return rejectWithValue(err.response?.data || err.message);
 		}
 	}
@@ -33,22 +42,17 @@ export const addToCartThunk = createAsyncThunk(
 	"cart/addToCartThunk",
 	async ({ product, quantity = 1 }, { dispatch, rejectWithValue }) => {
 		const token = localStorage.getItem("access_token");
-		console.log('token in cartThunk:', token)
 		const { id } = product;
-		console.log('this is id in cartThunk:', id)
 
 		try {
-			if(token) {
+			if (token) {
 				await axiosInstance.post("/cart/items", {
 					product_id: id,
-					quantity: 1
-				})
-				console.log('i a going here');
-			console.log("Go in add to cart thunk");
-
+					quantity: 1,
+				});
 			}
 			dispatch(addToCartRedux({ product, quantity }));
-			return true;	
+			return true;
 		} catch (err) {
 			return rejectWithValue(err.response?.data || err.message);
 		}
@@ -58,19 +62,24 @@ export const addToCartThunk = createAsyncThunk(
 // Cập nhật số lượng (server)
 export const updateQuantityThunk = createAsyncThunk(
 	"cart/updateQuantity",
-	async ({ productId, quantity }, { dispatch, rejectWithValue }) => {
+	async ({cartId,  quantity }, { dispatch, rejectWithValue }) => {
 		try {
-			const token = JSON.parse(localStorage.getItem('access_token'));
-			console.log('token:', token)
-			
-			if(token) {
-				const res = await axiosInstance.put(`/api/cart/${productId}`, { quantity });
-				console.log('res when update quantity thunk:', res)
+			const token = localStorage.getItem("access_token");
+			console.log("token:", token);
 
+			if (token) {
+				const res = await axiosInstance.post(
+					`/cart/items/${cartId}`,
+					{
+						quantity,
+					}
+				);
+				console.log("res when update quantity thunk:", res);
 			}
-			dispatch(updateQuantityRedux({ productId, quantity }));
-			return { productId, quantity };
+			dispatch(updateQuantityRedux({ cartId, quantity }));
+			return { quantity };
 		} catch (err) {
+			console.log("oh no error", err.message);
 			return rejectWithValue(err.response?.data || err.message);
 		}
 	}
@@ -81,7 +90,7 @@ export const removeFromCartThunk = createAsyncThunk(
 	"cart/removeFromCart",
 	async (productId, { dispatch, rejectWithValue }) => {
 		try {
-			await axios.delete(`/api/cart/${productId}`);	
+			await axios.delete(`/api/cart/${productId}`);
 			dispatch(removeFromCartRedux(productId));
 			return productId;
 		} catch (err) {

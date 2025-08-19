@@ -8,7 +8,6 @@ import CartItem from "./CartItem";
 import Button from "./Button";
 import NotificationContainer from "./NotificationContainer";
 import formatPriceVND from "../../utils/formatPriceVND";
-import { useCart } from "../../context/CartContext";
 import { useEffect, useState } from "react";
 import productService from "../../services/ProductService";
 import { useSelector } from "react-redux";
@@ -17,6 +16,7 @@ import { useSelector } from "react-redux";
 function HeaderCart() {
 	const { items, cart_quantity, total_price } = useSelector((state) => state.cart);
 	const [productsCart, setProductsCart] = useState([]);
+	console.log('productsCart:', productsCart)
 
 	const handleDeleteCartItem = () => {
 		toast.info("🗑️ Đã xoá sản phẩm khỏi giỏ hàng!", {
@@ -69,16 +69,23 @@ function HeaderCart() {
 							} flex flex-col divide-y divide-gray-200`}
 						>
 							{items.length > 0 ? (
-								items.map((item) => (
-									<CartItem
-										key={item.id}
-										productCart={productsCart.find(product => product.id === item.product_id)}
-										cartItem={item}
-										handleDeleteCartItem={() =>
-											handleDeleteCartItem(item.id)
-										}
-									/>
-								))
+								items.map((item) => {
+									console.log("items in header cart:", item);
+									return (
+										<CartItem
+											key={item.id}
+											productCart={productsCart.find(
+												(product) =>
+													product.id ===
+													item.product_id
+											)}
+											cartItem={item}
+											handleDeleteCartItem={() =>
+												handleDeleteCartItem(item.id)
+											}
+										/>
+									);
+								})
 							) : (
 								<div className="flex flex-col gap-4 items-center justify-center text-black text-sm">
 									<BsCart />

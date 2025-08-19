@@ -36,7 +36,7 @@ const createCartItem = (product, quantity = 1) => ({
 	price: product.price,
 	discount: product.discount || 0,
 	product,
-	finalPrice: (product.price - (product.discount || 0)) * quantity,
+	finalPrice: (product.price - (product.discount_amount || 0)) * quantity,
 });
 
 // Helper to calculate total price
@@ -49,7 +49,10 @@ const cart_items = loadCartFromLocalStorage();
 const initialState = {
 	items: cart_items,
 	cart_quantity: cart_items.reduce((total, item) => total + item.quantity, 0),
-	total_price: cart_items.reduce((total, item) => total + parseInt(item.final_price), 0),
+	total_price: cart_items.reduce(
+		(total, item) => total + (item.finalPrice || 0),
+		0
+	),
 };
 
 const cartSlice = createSlice({
@@ -79,13 +82,13 @@ const cartSlice = createSlice({
 		},
 
 		updateQuantityRedux: (state, action) => {
-			const { productId, quantity } = action.payload;
-			const item = state.items.find((i) => i.productId === productId);
+			const { cartId, quantity } = action.payload;
+			const item = state.items.find((i) => i.cart_id === cartId);
 
 			if (item) {
 				if (quantity <= 0) {
 					state.items = state.items.filter(
-						(i) => i.productId !== productId
+						(i) => i.cart_id !== cartId
 					);
 				} else {
 					item.quantity = quantity;

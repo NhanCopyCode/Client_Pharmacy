@@ -29,12 +29,13 @@ function CartItem({ productCart, cartItem, handleDeleteCartItem }) {
 		setQuantity(cartItem.quantity || 1);
 	}, [cartItem.quantity]);
 
-	const handleDecrease = (product) => {
+	const handleDecrease = (cartItem) => {
 		if (quantity > 1) {
 			const newQuantity = quantity - 1;
+
 			dispatch(
 				updateQuantityThunk({
-					productId: product.id,
+					cartId: cartItem.id,
 					quantity: newQuantity,
 				})
 			);
@@ -43,11 +44,11 @@ function CartItem({ productCart, cartItem, handleDeleteCartItem }) {
 		}
 	};
 
-	const handleIncrease = (product) => {
+	const handleIncrease = (cartItem) => {
 		const newQuantity = quantity + 1;
 		dispatch(
 			updateQuantityThunk({
-				productId: product.id,
+				cartId: cartItem.id,
 				quantity: newQuantity,
 			})
 		);
@@ -120,7 +121,7 @@ function CartItem({ productCart, cartItem, handleDeleteCartItem }) {
 						hoverEffect="hover:bg-primary"
 						fontSize="text-[20px]"
 						background="bg-darkBlue"
-						onClick={() => handleDecrease(productCart)}
+						onClick={() => handleDecrease(cartItem)}
 					>
 						-
 					</Button>
@@ -137,7 +138,7 @@ function CartItem({ productCart, cartItem, handleDeleteCartItem }) {
 						fontSize="text-[20px]"
 						background="bg-darkBlue"
 						hoverEffect="hover:bg-primary"
-						onClick={() => handleIncrease(productCart)}
+						onClick={() => handleIncrease(cartItem)}
 					>
 						+
 					</Button>
