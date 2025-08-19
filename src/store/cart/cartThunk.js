@@ -59,29 +59,25 @@ export const addToCartThunk = createAsyncThunk(
 	}
 );
 
+let debounceTimer;
+
 // Cập nhật số lượng (server)
 export const updateQuantityThunk = createAsyncThunk(
 	"cart/updateQuantity",
-	async ({cartId,  quantity }, { dispatch, rejectWithValue }) => {
-		try {
-			const token = localStorage.getItem("access_token");
-			console.log("token:", token);
+	async ({ cartItemId, quantity }) => {
+		clearTimeout(debounceTimer);
 
-			if (token) {
-				const res = await axiosInstance.post(
-					`/cart/items/${cartId}`,
+		return new Promise((resolve) => {
+			debounceTimer = setTimeout(async () => {
+				const response = await axiosInstance.post(
+					`/cart/items/${cartItemId}`,
 					{
 						quantity,
 					}
 				);
-				console.log("res when update quantity thunk:", res);
-			}
-			dispatch(updateQuantityRedux({ cartId, quantity }));
-			return { quantity };
-		} catch (err) {
-			console.log("oh no error", err.message);
-			return rejectWithValue(err.response?.data || err.message);
-		}
+				resolve(response.data.data);
+			}, 500);
+		});
 	}
 );
 

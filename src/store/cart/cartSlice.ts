@@ -82,13 +82,13 @@ const cartSlice = createSlice({
 		},
 
 		updateQuantityRedux: (state, action) => {
-			const { cartId, quantity } = action.payload;
-			const item = state.items.find((i) => i.cart_id === cartId);
+			const { cartItemId, quantity } = action.payload;
+			const item = state.items.find((i) => i.id === cartItemId);
 
 			if (item) {
 				if (quantity <= 0) {
 					state.items = state.items.filter(
-						(i) => i.cart_id !== cartId
+						(i) => i.id !== cartItemId
 					);
 				} else {
 					item.quantity = quantity;

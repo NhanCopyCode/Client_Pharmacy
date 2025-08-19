@@ -35,7 +35,7 @@ function CartItem({ productCart, cartItem, handleDeleteCartItem }) {
 
 			dispatch(
 				updateQuantityThunk({
-					cartId: cartItem.id,
+					cartItemId: cartItem.id,
 					quantity: newQuantity,
 				})
 			);
@@ -48,7 +48,7 @@ function CartItem({ productCart, cartItem, handleDeleteCartItem }) {
 		const newQuantity = quantity + 1;
 		dispatch(
 			updateQuantityThunk({
-				cartId: cartItem.id,
+				cartItemId: cartItem.id,
 				quantity: newQuantity,
 			})
 		);

@@ -16,7 +16,6 @@ import { useSelector } from "react-redux";
 function HeaderCart() {
 	const { items, cart_quantity, total_price } = useSelector((state) => state.cart);
 	const [productsCart, setProductsCart] = useState([]);
-	console.log('productsCart:', productsCart)
 
 	const handleDeleteCartItem = () => {
 		toast.info("🗑️ Đã xoá sản phẩm khỏi giỏ hàng!", {
@@ -70,7 +69,6 @@ function HeaderCart() {
 						>
 							{items.length > 0 ? (
 								items.map((item) => {
-									console.log("items in header cart:", item);
 									return (
 										<CartItem
 											key={item.id}
