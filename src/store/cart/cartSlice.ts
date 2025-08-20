@@ -84,7 +84,7 @@ const cartSlice = createSlice({
 		updateQuantityRedux: (state, action) => {
 			const { cartItemId, quantity } = action.payload;
 			const item = state.items.find((i) => i.id === cartItemId);
-
+			console.log('item:', item)
 			if (item) {
 				if (quantity <= 0) {
 					state.items = state.items.filter(

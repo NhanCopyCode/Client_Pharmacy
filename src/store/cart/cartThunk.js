@@ -64,7 +64,9 @@ let debounceTimer;
 // Cập nhật số lượng (server)
 export const updateQuantityThunk = createAsyncThunk(
 	"cart/updateQuantity",
-	async ({ cartItemId, quantity }) => {
+	async ({ cartItemId, quantity }, {dispatch}) => {
+
+		dispatch(updateQuantityRedux({ cartItemId, quantity }));
 		clearTimeout(debounceTimer);
 
 		return new Promise((resolve) => {
